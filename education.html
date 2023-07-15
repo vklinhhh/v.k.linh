@@ -11,21 +11,25 @@
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
 
-  <title>Home Page</title>  
-
-<link href="./main.3f6952e4.css" rel="stylesheet"></head>
+  <title>Education</title>  
+  <link href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css" rel="stylesheet">
+  <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+<link href="./main.3f6952e4.css" rel="stylesheet">
+<script type="text/javascript" src="./layout/scripts/jquery.min.js"></script>
 <!-- Waterwheel Carousel -->
 <script type="text/javascript" src="./layout/scripts/carousel/jquery.waterwheelCarousel.min.js"></script>
 <script type="text/javascript" src="./layout/scripts/carousel/jquery.waterwheelCarousel.setup.js"></script>
 <!-- / Waterwheel Carousel -->
-<body class="minimal">
+
+</head>
+<body>
 <div id="site-border-left"></div>
 <div id="site-border-right"></div>
 <div id="site-border-top"></div>
 <div id="site-border-bottom"></div>
-<!-- header -->
+ <!-- header -->
 <header>
-  <nav class="navbar  navbar-fixed-top navbar-inverse">
+  <nav class="navbar  navbar-fixed-top navbar-default">
     <div class="container">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
@@ -38,17 +42,17 @@
         <ul class="nav navbar-nav ">
           <li><a href="./index.html" title="">
             <span class="fa-icon">
-              <i class="fa fa-hand-peace-o" aria-hidden="true" style="font-size:16px;color:rgb(175, 235, 255);text-shadow:2px 2px 4px #1c1d32;"></i>
+              <i class="fa fa-hand-peace-o" aria-hidden="true" style="font-size:16px;color:#000;"></i>
             </span>
             Hello</a></li>
           <li><a href="./works.html" title="">
             <span class="fa-icon">
-              <i class="fa fa-bar-chart" aria-hidden="true" style="font-size:16px;color:rgb(175, 235, 255);text-shadow:2px 2px 4px #1c1d32;"></i>
+              <i class="fa fa-bar-chart" aria-hidden="true" style="font-size:16px;color:#000;"></i>
             </span>
             My Works</a></li>
           <li><a href="./about.html" title="">
             <span class="fa-icon">
-              <i class="fa fa-user-secret" aria-hidden="true" style="font-size:16px;color:rgb(175, 235, 255);text-shadow:2px 2px 4px #1c1d32;"></i>
+              <i class="fa fa-user-secret" aria-hidden="true" style="font-size:16px;color:#000;"></i>
             </span>
             Who am I?</a></li>
           <li><a href="./education.html" title="">
@@ -57,44 +61,62 @@
             </span>
             My Education</a></li>
         </ul>
-
       </div> 
     </div>
   </nav>
 </header>
-<!-- Add your site or app content here -->
-<div class="hero-full-container background-image-container white-text-container" style="background-image: url('./assets/images/background.gif')">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="hero-full-wrapper">
-          <div class="text-content">
-            <h1 style="font-size: 28px; font-family: 'Lucida Console','Courier New', monospace;">
-              <span style="font-size: 40px;">Greetings,</span><br>
-              Fellow data aficionados!<br>
-              <span>I'm Linh Võ</span><br>
-              <span id="typed-strings">
-                <span>A Data Analyst</span>
-                <span>On the way to be Data Scientist</span>
-              </span>
-              <span id="typed"></span>
-            </h1>
+<div class="row">
+    <div class="section-container">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="section-container-spacer text-center">
+              <h1 class="h2">
+                My Learning Journey
+              </h1>
+        </div>
+            <div class="row">
+                <div class="section-container-spacer">
+                    <div class="text-center">
+                      <p><i><strong>"A journey of a thousand miles begins with a single step." </i><br> 
+                        - Khổng Tử
+                      </strong></p>
+                    </div>
+                  </div>
+            </div> 
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Roadmap/Timeline section -->
+    <!-- Certificate section -->
+<style>
+    #waterwheelCarousel img {
+    border: 3px solid #000000;
+    }
+</style>
+<div id="waterwheelCarousel">
+    <img src="./assets/images/Coursera1.jpg" alt="" />
+    <img src="./assets/images/Coursera2.png" alt="" />
+    <img src="./assets/images/Coursera4.png" alt="" />
+    <img src="./assets/images/4.gif" alt="" />
 </div>
 
+</body>
+<footer class="footer-container text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+        </div>
+      </div>
+    </div>
+  </footer>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function (event) {
-     type();
-     movingBackgroundImage();
-  });
-</script>
 
+  <script type="text/javascript" src="./main.70a66962.js"></script>
 
-<script type="text/javascript" src="./main.70a66962.js"></script></body>
+</body>
 
 </html>
