@@ -10,10 +10,10 @@
 
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
-  
+
   <link href="./assets/favicon.ico" rel="icon">
 
-  <title>Title page</title>  
+  <title>Landmark Work Project</title>  
 
 <link href="./main.3f6952e4.css" rel="stylesheet"></head>
 
@@ -50,8 +50,8 @@
 
           <ul class="nav navbar-nav navbar-right navbar-small visible-md visible-lg">
             <li><a href="./work1_dog_breed.html" title="">001</a></li>
-            <li><a href="./work2_customer_testimonial.html" title="" class="active">002</a></li>
-            <li><a href="./work3_landmark.html" title="">003</a></li>
+            <li><a href="./work2_customer_testimonial.html" title="">002</a></li>
+            <li><a href="./work3_landmark.html" title="" class="active">003</a></li>
             <li><a href="./index.html" title="">004</a></li>
             <li><a href="./index.html" title="">005</a></li>
             <li><a href="./index.html" title="">006</a></li>
@@ -66,18 +66,25 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <img src="./assets/images/customer_testimonial/pic0.jpg" class="img-responsive" alt="">
+        <img src="./assets/images/landmark/background.jpg" class="img-responsive" alt="">
         <div class="card-container">
           <div class="text-center">
-            <h1 class="h2">002 : Customer Testimonial Analysis</h1>
+            <h1 class="h2">003 : LandMark Classification</h1>
           </div>
           <p class="text-center">
-            The report uses <mark>R code</mark> to set up an environment and perform data analysis on a survey dataset related to customer satisfaction and preferences for various cuisines.<br>
-            The dataset is imported from a CSV file and cleaned using the <mark>"janitor"</mark> package.<br>
-            The analysis includes visualizations using <mark>"ggplot2"</mark> and <mark>"ggpubr"</mark> to explore relationships between cuisine types, customer satisfaction, and various factors like approach channels, tools used, price, product quality, fulfillment rate, product variety, shipping service, and customer service.<br>
-            The data is analyzed based on whether customers will order second time and whether they plan to increase their volume of orders.<br>
-            The context of this analysis appears to be related to understanding customer preferences and identifying areas for improvement in a food-related business.
+           The Landmark Classification project focuses on accurately predicting 30 famous landmarks in Vietnam using deep learning techniques.<br>
           </p>
+            <p align="justify">
+            <strong >Project Summary:</strong><br>
+            The dataset undergoes data augmentation, including normalization, brightness adjustment, width shift, rotation, horizontal and vertical flips, and 10% validation split for model evaluation.<br>
+            The model architecture employs a <mark>transfer learning approach</mark> with the VGG16 base model pre-trained on the ImageNet dataset.
+            The top layers of VGG16 are removed, and new layers are added for fine-tuning.<br>
+            The final layers consist of a flatten layer, a dense layer with 2048 units and ReLU activation, a dropout layer, and an output dense layer with softmax activation to produce class probabilities.<br>  
+            During training, the model utilizes the Adam optimizer with a learning rate of 0.0001 and categorical cross-entropy as the loss function.<br>
+            The training process is monitored for early stopping based on validation loss to prevent overtraining. The model achieves an impressive <mark>overall categorical accuracy of <strong>86.63%</strong></mark> after 15 epochs.<br>
+            The Landmark Classification project showcases the effective use of transfer learning and data augmentation techniques to accurately identify and classify Vietnam's famous landmarks. <br>
+            The high accuracy achieved demonstrates its potential for practical applications in the fields of tourism, cultural preservation, and geographical analysis.
+            </p>
 
           <!--blockquote>
             <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante."</p>
@@ -91,18 +98,22 @@
       <div class="col-md-8 col-md-offset-2 section-container-spacer">
         <div class="row">
           <div class="col-xs-12 col-md-6">
-            <img src="./assets/images/customer_testimonial/pic1.png" class="img-responsive" alt="">
-            <p>The number of customers by approaching channels</p>
+            <img src="./assets/images/landmark/pic1.png" class="img-responsive" alt="">
+            <p>Model</p>
           </div>
           <div class="col-xs-12 col-md-6">
-            <img src="./assets/images/customer_testimonial/pic2.png" class="img-responsive" alt="">
-            <p>Will customer intend to place second order next time?</p>
+            <img src="./assets/images/landmark/pic2.png" class="img-responsive" alt="">
+            <p>Training history</p>
           </div>
         </div>
       </div>
+      <p align="justify">
+        The following figure provides an insightful way to evaluate the performance of the landmark classification model and visually inspect the correctness of the predictions on sample images. <br>
+        For each image, the figure displays the image and annotates it with the predicted class and true class. The plot is color-coded, showing <strong><font color="green">green</strong> for correct predictions</font> and <font color = "red"><strong>red</strong> for incorrect ones</font>.
+      </p>
 
       <div class="col-xs-12">
-        <img src="./assets/images/customer_testimonial/pic3.png" class="img-responsive" alt="">
+        <img src="./assets/images/landmark/pic3.png" class="img-responsive" alt="">
       </div>
 
     </div>
