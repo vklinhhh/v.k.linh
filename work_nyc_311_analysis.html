@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <meta content="description" name="description">
+  <meta name="google" content="notranslate" />
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <link href="./assets/favicon.ico" rel="icon">
+
+  <title>NYC 311 Analysis</title>
+
+
+  <link href="./main.3f6952e4.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: black;
+      color: white;
+    }
+
+    .custom-header {
+      background-color: black;
+      color: white;
+    }
+  </style>
+</head>
+
+<body class="">
+  <div id="site-border-left"></div>
+  <div id="site-border-right"></div>
+  <div id="site-border-top"></div>
+  <div id="site-border-bottom"></div>
+  <!-- Add your content of header -->
+  <header>
+    <nav class="navbar navbar-fixed-top navbar-default custom-header">
+      <div class="container">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
+          aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="./index.html" title="" style="color: #fff;">
+                <span class="fa-icon">
+                  <i class="fa fa-hand-peace-o" aria-hidden="true" style="font-size:16px;color:#fff;"></i>
+                </span>
+                Back to My Hello Page</a></li>
+            <li><a href="./works.html" title="" style="color: #fff;">
+                <span class="fa-icon">
+                  <i class="fa fa-bar-chart" aria-hidden="true" style="font-size:16px;color:#fff;"></i>
+                </span>
+                Back to My Works</a></li>
+          </ul>
+
+
+          <ul class="nav navbar-nav navbar-right navbar-small visible-md visible-lg">
+            <li><a href="./work1_dog_breed.html" title="" style="color: #fff;">001</a></li>
+            <li><a href="./work2_customer_testimonial.html" title="" style="color: #fff;">002</a></li>
+            <li><a href="./work3_landmark.html" title="" style="color: #fff;">003</a></li>
+            <li><a href="./work4_nyc_311_analysis.html" title="" class="active" style="color: #fff;">004</a></li>
+            <li><a href="./index.html" title="" style="color: #fff;">005</a></li>
+            <li><a href="./index.html" title="" style="color: #fff;">006</a></li>
+          </ul>
+
+
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="section-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <img src="./assets/images/nyc_311/background.gif" class="img-responsive" alt="">
+          <div class="card-container custom-header">
+            <div class="text-center">
+              <h1 class="h2 custom-header">004 : NYC 311 Analysis</h1>
+            </div>
+            <p align="justify">The NYC 311 Service Requests Analysis project aims to delve into the rich dataset
+              provided by New York City's 311 system to uncover valuable insights and trends related to various service
+              requests made by residents and visitors.<br>
+              The NYC 311 system serves as a central hub for individuals to report non-emergency issues, request
+              information, and seek assistance from the city's agencies. <br>
+              This analysis will involve collecting and analyzing a vast array of service request data, including the
+              type of request, location, time of submission, agency response time, and resolution status. By applying
+              data mining, statistical analysis, and visualization techniques,
+              I will uncover patterns, anomalies, and trends that can provide a deeper understanding of the city's urban
+              challenges, public service effectiveness, and community needs.
+            </p>
+
+          </div>
+        </div>
+        <div class="col-xs-12 section-container-spacer">
+          <p align="justify">Project color palette: </p>
+          <img src="./assets/images/nyc_311/palette.png" class="img-responsive" alt="" align="text-center">
+          <p align="justify"><br> Project dataset: </p>
+          <img src="./assets/images/nyc_311/project_dataset.png" class="img-responsive" alt="">
+        </div>
+        <div class="col-xs-12 text-center">
+          <hr style="width:50%">
+          <h3 class="h3 custom-header">
+            <font color="#84c600">Basic EDA </font>
+          </h3>
+          <hr style="width:50%">
+          <p align="justify">The dataset has <strong>53 </strong>attributes and <strong>364.588</strong> observations.
+            In which, there are object type and numeric type of data.<br>
+            Let's observe the data descriptive information.</p>
+          <img src="./assets/images/nyc_311/descriptive_data.png" class="img-responsive" alt="">
+          <p align="justify">
+            It could be seen that, for numerical atrributes: <font color="#d6ecaa"><strong>School or Citywide Complaint,
+                Verhicle Type, Taxi Company Borough, Taxi Pick Up Location</strong></font> and <font color="#d6ecaa">
+              <strong>Garage Lot Name</strong>
+            </font> are all missing values with their count of row equals to 0 and all
+            other statistical value are NaN.
+            Hence, we should dropna for these 5 columns.<br>
+            Moreover, for object attributes, it looks like there are many incomplete columns and some columns have only
+            1 unique value, which may not be very informative and useful.<br>
+          </p>
+          <img src="./assets/images/nyc_311/missingno_obj.png" class="img-responsive" , alt="missing no obj">
+          <img src="./assets/images/nyc_311/missingno_number.png" class="img-responsive" , alt="missing no number">
+          <p align="justify">We could see many columns are filled with NaN.
+            Somes even fill with 100% null values like: <font color="#d6ecaa"><strong>Road Ramp, Ferry Direction,
+                Verhicle Type, ..</strong></font>.<br>
+            Which ones we should replace and which ones we should drop it? <br>
+            Let's see its weight on the whole dataset.
+          </p>
+          <img src="./assets/images/nyc_311/plotly_obj_missing.png" class="img-responsive">
+          <img src="./assets/images/nyc_311/plotly_num_missing.png" class="img-responsive">
+          <p align="justify">
+            We will drop columns with greater then >10% null percentage => obj + numberic columns = 18 columns will be
+            dropped.<br>
+            Since we have 4 columns indicated the position of incident on map, which are lat/long and x/y coordinate.
+            <br>
+            I would refer to use lat/long so I will drop these 2 x/y coordinate columns as well as location column
+            (which contains the paired of lat/long).
+            And I also don't need the Incident Zip. <br>
+            Below is the remain columns which still contain NaN values and their "missing value relationship".
+          </p>
+          <img src="./assets/images/nyc_311/dendogram.png" class="img-responsive">
+          <p align="justify">
+            For <font color="#d6ecaa"><strong>Descriptor, Location Type, Address Type, City, Facility Type</strong>
+            </font> column,
+            I will fill the null with <strong>"Unspecified"</strong>. <br>
+            For <font color="#d6ecaa"><strong>Longitude - Latitude</strong></font>, since the dataset is all centered in
+            NYC. I will replace null value with the mode.
+          </p>
+          <img src="./assets/images/nyc_311/school_column.png" class="img-responsive">
+          <img src="./assets/images/nyc_311/ferry_type.png" class="img-responsive">
+          <p align="justify">
+            We could see that all the columns start with <strong>"School"</strong> have the top is unspecified. And the
+            <font color="#d6ecaa"><strong>School Not Found</strong></font> has only 1 value is 'N' which is not
+            informative. <br>
+            Also, the complaint type <strong>Ferry Complaint</strong> has no Due Date and Closed Date and 1 missing
+            Value on Resolution Action Updated Date,
+            which is not informative too. <br>
+            Hence, we will drop all these columns for school and all these rows that related to Ferry Complaint.
+          </p>
+          <img src="./assets/images/nyc_311/date_column.png" class="img-responsive">
+          <p align="justify">
+            Hold on! It looks like we have date-type columns, before cleaning these columns, let's convert its
+            object-type to datetime.
+          </p>
+          <img src="./assets/images/nyc_311/dataset_info.png" class="img-responsive">
+          <p align="justify">Perfect! <br>
+            The <font color="#d6ecaa"><strong>Due Date</strong></font> column is missing only 1 observation. Let's take
+            a look on it.
+          </p>
+          <img src="./assets/images/nyc_311/duedate_missing.png" class="img-responsive">
+          <p align="justify">
+            For the remain row of <font color="#d6ecaa"><strong>Due Date</strong></font> is NaT and
+            <font color="#d6ecaa"><strong>Resolution Action Updated Date</strong></font> is NaT. We could see that the
+            <font color="#d6ecaa"><strong>Closed Date</strong></font> is same day with the <font color="#d6ecaa">
+              <strong>Created Date</strong>
+            </font>.<br>
+            So I will fill NaT for <font color="#d6ecaa"><strong>Due Date</strong></font> and <font color="#d6ecaa">
+              <strong>Resolution Action Updated Date</strong>
+            </font> with the same value as <font color="#d6ecaa">
+              <strong>Closed Date</strong>
+            </font>.
+          </p>
+          <img src="./assets/images/nyc_311/closed_date.png" class="img-responsive">
+          <p align="justify">
+            We could seen that some <font color="#d6ecaa"><strong>Closed Date</strong></font> observation are NaT
+            because their <font color="#d6ecaa"><strong>Status</strong></font> haven't closed yet. So there is no
+            problem with this column. <br>
+            But the <strong>"Draft"</strong> status seems to be useless so I will drop that row. <br>
+            For the <font color="#d6ecaa"><strong>Resolution Action Updated Date</strong></font>, I have performed some
+            investigation.<br>
+            So here is the findings and my solution:<br>
+            <li align="justify">The <font color="#d6ecaa"><strong>Resolution Action Updated Date</strong></font> was
+              missing for closed status (2 rows only).
+              But there were closed date already so I will replace these missings with its closed-date.</li>
+            <li align="justify">The <strong>'Your complaint has been forwarded to the New York Police Department for a
+                non-emergency response. 311 will have additional information in 8 hours. Please note your service
+                request number for future reference.'</strong>
+              solution has 100% null values for <font color="#d6ecaa"><strong>Resolution Action Updated Date</strong>
+              </font>.
+              <br>Same as <strong>'Your complaint has been forwarded to the New York Police Department for a
+                non-emergency response. If the police determine the vehicle is illegally parked, they will ticket the
+                vehicle and then you may either contact a private towing company to remove the vehicle or ask your local
+                precinct to contact 'rotation tow'. Any fees charged for towing will have to be paid by the vehicle
+                owner. 311 will have additional information in 8 hours. Please note your service request number for
+                future reference.'</strong><br>
+              <strong>==></strong> For these 2 <font color="#d6ecaa"><strong>Resolution Descriptor</strong></font>, we
+              will replace it with the <font color="#d6ecaa"><strong>Created Date</strong></font> + 15 minutes
+            </li>
+        
+            <li align="justify">For the remain null value of <font color="#d6ecaa"><strong>Resolution Action Updated
+                  Date</strong></font>, we will replace with the max duration between <font color="#d6ecaa">
+                <strong>Resolution Action Updated Date</strong>
+              </font> and <font color="#d6ecaa"><strong>Created
+                  Date</strong></font>
+              group by each <font color="#d6ecaa"><strong>Resolution Descriptor</strong></font>
+            </li>
+          </p>
+          <img src="./assets/images/nyc_311/park_cleaning.png" class="img-responsive">
+          <p align="justify">The <font color="#d6ecaa"><strong>Park Borough</strong></font> has the same value with
+            <font color="#d6ecaa"><strong>Borough</strong></font>, so we just need to keep one of them
+            Moreover, the <font color="#d6ecaa"><strong>Park Facility Name</strong></font> has a huge unspecified value,
+            so we will drop this columnn.<br>
+          </p>
+        
+          <h3 class="h3 custom-header">
+            <hr style="width:50%">
+            <font color="#84c600">Analysis</font>
+            <hr style="width:50%">
+          </h3>
+          <h4 class="h4" style="font-size: 15px;">
+            <font color="#2ec7ab">How many agencies here?</font>
+          </h4>
+          <img src="./assets/images/nyc_311/agency.png" class="img-responsive">
+          <p align="justify">
+            We could see that only one agency value has 3 different Agency Name.<br>
+            In fact, the <strong>Internal Affairs Bureau ("IAB")</strong> was set up as a unit within the NYPD that investigates serious police
+            misconduct as well as police corruption.<br>
+            Hence, we only have one agency here, it is NYDC or New York City Police Department.
+            So actually, these 2 columns aren't necessary.
+            We could drop them but I don't mind to keep them in the dataframe.
+          </p>
+          <h4 class="h4" style="font-size: 15px;">
+            <font color="#2ec7ab">How many complaint type are there?</font>
+          </h4>
+          <p align="justify">There are <strong>23 types of complaint</strong> raised by people in NYC.<br>
+            Let's see their contribution and distribution type in each Borough.
+          </p>
+          <img src="./assets/images/nyc_311/most_complaint_type_in_NY.png" class="img-responsive">
+          <img src="./assets/images/nyc_311/complaint_dist_by_borough.png" class="img-responsive">
+          <img src="./assets/images/nyc_311/complaint_type_by_each_borough.png" class="img-responsive">
+          <p align="justify">
+            In a concise overview, the <strong>majority (60.2%)</strong> of reported issues stem from the neighborhoods of BROOKLYN and QUEENS.<br>
+            The prevailing concerns appear to revolve around cases of Blocked Driveways and Illegal Parking.<br>
+            Interestingly, these two complaint types stand out as the most common across BRONX, BROOKLYN, QUEENS, and STATEN ISLAND, 
+            drawing the highest number of tickets issued by the NYPD. <br>
+            However, when we shift our attention to MANHATTAN, a distinct pattern emerges. This borough faces a distinctive challenge with Noise problems, with the primary culprits being Noise complaints originating from Street/Sidewalk disturbances and Commercial events. <br>
+            It's noteworthy that MANHATTAN's top two issues both relate to noise, setting it apart from the other boroughs. MANHATTAN government should take an eye on this.
+          </p>
+          <img src="./assets/images/nyc_311/blocked_driveway_illegal_park.png" class="img-responsive">
+          <p align="justify"> Take a closer look to top 2 common issues :
+            <li align="justify">Regarding the Blocked Driveway problem, a significant 75% of the descriptors are linked to the issue of 'No Access'.</li>
+            <li align="justify">On the other hand, when it comes to Illegal Parking complaints, the majority of the concerns (29%) pertain to Violations of Posted Parking signs, closely followed by instances (22%) of Blocked Hydrants.</li>
+          </p>
+          <h4 class="h4" style="font-size: 15px;">
+            <font color="#2ec7ab">Status and Complaint Type Process</font>
+          </h4>
+          <img src="./assets/images/nyc_311/request_status.png" class="img-responsive">
+          <p align="justify">
+            Most of the complaint request has been closed (99,3%) . This means it had been resolved.
+            There are 1638 requests are still opens and 802 requests have been assigned PIC.
+          </p>
+          <img src="./assets/images/nyc_311/duration_plot_in_hour.png" class="img-responsive">
+          <p align="justify">
+            The majority of complaint types are typically addressed and resolved within a relatively short span of two weeks,
+            equivalent to around 336 hours.<br>
+            However, it's worth noting that the two complaint types that demand the most extended period for resolution are Noise - Street/Sidewalk and Noise - Commercial.
+          </p>
+          <img src="./assets/images/nyc_311/complaint_through_year.png" class="img-responsive">
+          <p align="justify">
+            Since May 2015, there has been a noticeable uptick in the number of complaints, primarily attributed to Noise - Street/Sidewalk issues. <br>
+            Interestingly, during the same period, the frequency of Blocked Driveway complaints experienced a decline from May through the end of September.
+          </p>
+          <img src="./assets/images/nyc_311/complaint_through_hour.png" class="img-responsive">
+          <p align="justify">
+            One can readily observe that the count of complaints initiated experiences a gradual rise from 5 A.M., 
+            peaking around midnight.<br>
+            This trend suggests a consistent increase in complaint creation throughout the day, with the highest numbers recorded during the late hours.
+          </p>
+          <img src="./assets/images/nyc_311/complaint_through_weekday.png" class="img-responsive">
+          <p align="justify">
+            The NYC department's busiest period occurs over the weekends.<br>
+            Notably, both Saturday and Sunday witness a rise in Noise complaints stemming from Commercial and Street/Sidewalk sources. 
+            This pattern can likely be attributed to the surge in social activities that typically unfold during the weekends.
+          </p>
+          <h4 class="h4" style="font-size: 15px;">
+            <font color="#2ec7ab">Location investigation</font>
+          </h4>
+          <p align="justify">Complaint ticket counted:</p>
+          <img src="./assets/images/nyc_311/map_overall.png" class="img-responsive">
+          <img src="./assets/images/nyc_311/map_complaint_type.png" class="img-responsive">
+          <p align="justify">
+            An interesting insight from the map analysis is that distinct issue patterns seem to emerge based on varying geographical ranges.<br>
+            It becomes evident that the same type of issue tends to recur within specific areas,
+            implying that different locales don't encounter identical problems universally.<br>
+            This discrepancy could potentially be attributed to the unique urban dynamics, borough characteristics, street cultures, and inherent behavioral patterns across the city.
+          </p>
+          <img src="./assets/images/nyc_311/map_borough.png" class="img-responsive">
+          <p align="justify">
+            Upon examining the plotted map, a distinct observation comes to light: Unspecified data points are notably clustered
+            within the BRONX region. <br>
+            What's intriguing is that a significant portion of these data points correspond to Noise-related issues and instances
+            of illegal parking, fewer is about Derelict Vehicle and Vending.
+          </p>
+
+
+
+
+
+
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+      navActivePage();
+    });
+  </script>
+
+
+  <script type="text/javascript" src="./main.70a66962.js"></script>
+</body>
+
+</html>
