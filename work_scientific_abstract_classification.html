@@ -26,6 +26,21 @@
     background-color: black;
     color: white;
   }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #3a0ca3;
+  }
 
 </style>
 </head>
@@ -149,7 +164,143 @@
             <h3 class="h3 custom-header text-center">
               <font color="#4CC9F0">Dataset for Experiment</font>
             </h3>
+            <hr
+              style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <p>The dataset provided for the sharing task of "The First Workshop and Shared Task on Topic Classification in
+              Scientific Articles" (SPDRA 2021) includes 16,800 training examples, 11,200 validation examples, and 7,000 test
+              examples.</p>
+            <table>
+              <tr>
+                <th>Category</th>
+                <th>Train</th>
+                <th>Validation</th>
+                <th>Test</th>
+              </tr>
+              <tr>
+                <td>Computation and Language (CL)</td>
+                <td>2,740</td>
+                <td>1,866</td>
+                <td>1,194</td>
+              </tr>
+              <tr>
+                <td>Cryptography and Security (CR)</td>
+                <td>2,660</td>
+                <td>1,835</td>
+                <td>1,105</td>
+              </tr>
+              <tr>
+                <td>Distributed and Cluster Computing (DC)</td>
+                <td>1,042</td>
+                <td>1,355</td>
+                <td>803</td>
+              </tr>
+              <tr>
+                <td>Data Structures and Algorithms (DS)</td>
+                <td>2,737</td>
+                <td>1,774</td>
+                <td>1,089</td>
+              </tr>
+              <tr>
+                <td>Logic ib Computer Science (LO)</td>
+                <td>1,811</td>
+                <td>1,217</td>
+                <td>772</td>
+              </tr>
+              <tr>
+                <td>Networking and Internet Architecture (NI)</td>
+                <td>2,764</td>
+                <td>1,826</td>
+                <td>1,210</td>
+              </tr>
+              <tr>
+                <td>Software Engineering (SE)</td>
+                <td>2,046</td>
+                <td>1,327</td>
+                <td>827</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td>16,800</td>
+                <td>11,200</td>
+                <td>7,000</td>
+              </tr>
+            </table>
+            <p>
+              <cite>Reddy, Saichethan; Saini, Naveen (2021), “SDPRA 2021 Shared Task Data”</cite>,
+              <a href="https://doi.org/10.17632/njb74czv49.1">Mendeley Data, V1, doi: 10.17632/njb74czv49.1</a>
+            </p>
+            <p>
+              However, due to time and computational constraints, the report only utilizes a random sample of 100 documents.
+              The distribution of topics and documents across training, validation, and test sets is as follows:
+            </p>
+            <table>
+              <tr>
+                <th style="background-color: #7209b7;">Category</th>
+                <th style="background-color: #7209b7;">Train</th>
+                <th style="background-color: #7209b7;">Validation</th>
+                <th style="background-color: #7209b7;">Test</th>
+              </tr>
+              <tr>
+                <td>Computation and Language (CL)</td>
+                <td>100</td>
+                <td>20</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>Cryptography and Security (CR)</td>
+                <td>100</td>
+                <td>20</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>Distributed and Cluster Computing (DC)</td>
+                <td>100</td>
+                <td>20</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>Data Structures and Algorithms (DS)</td>
+                <td>100</td>
+                <td>20</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>Logic ib Computer Science (LO)</td>
+                <td>100</td>
+                <td>20</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>Networking and Internet Architecture (NI)</td>
+                <td>100</td>
+                <td>20</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>Software Engineering (SE)</td>
+                <td>100</td>
+                <td>20</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td>700</td>
+                <td>140</td>
+                <td>140</td>
+              </tr>
+            </table>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <h3 class="h3 custom-header text-center">
+              <font color="#4CC9F0">Experimental Result</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <h3 class="h3 custom-header text-center">
+              <font color="#4CC9F0">Deployment</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <img src="./assets/images/scientifc_classification/demo.gif" class="img-responsive">
           </div>
         </div>
       </div>
