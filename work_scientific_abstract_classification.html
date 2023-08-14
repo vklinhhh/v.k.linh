@@ -12,10 +12,10 @@
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
   <link href="./assets/favicon.ico" rel="icon">
-
+  <link href="./main.3f6952e4.css" rel="stylesheet">
   <title>Scientific Abstract Classification</title>  
 
-<link href="./main.3f6952e4.css" rel="stylesheet">
+  
 <style>
   body {
     background-color: black;
@@ -41,6 +41,7 @@
   th {
     background-color: #3a0ca3;
   }
+  
 
 </style>
 </head>
@@ -294,13 +295,43 @@
               <font color="#4CC9F0">Experimental Result</font>
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <p align="justify">
+              <strong><u>Confusion Matrix:</u></strong> <br>
+              A confusion matrix is a matrix chart used to evaluate the performance of a classification model.
+              It helps measure the differences between predictions made by the model and the actual labels. <br>
+              <br>
+              How to interpret the confusion matrix:
+              <ul>
+                <li>For each class, the number of actual samples correctly classified into that class is along the main diagonal from the
+              top-left to the bottom-right.</li>
+                <li>The number of misclassified samples into other classes is in cells outside the main diagonal.</li>
+              </ul>
+            </p>
             <img src="./assets/images/scientifc_classification/confusion_matrix.png" class="img-responsive">
+            <p>
+              The model predicts results for 140 text segments from the test set. <br>
+              
+              The results of the confusion matrix show that the standalone RoBERTa group has scattered prediction results and a lower
+              number of correct predictions compared to the other models. <br>
+              Combining predictions from multiple models and using voting effectively mitigated the weaknesses of standalone RoBERTa. However, the TF-IDF + Logistic Regression model provides the
+              best results. <br>
+              <strong>==></strong> Therefore, for this project, model enhancement could involve assigning weights to the model votes (Weighted Votings) to further improve
+              ensemble model performance. <br>
+              <br>
+              <strong><u>Model Accuracy:</u></strong><br>
+              Model has the accuracy score reachs 59%. <br>
+              However, resource and time constraints have hindered achieving a better result.
+              The above is a demonstration on a very small subset of the dataset. When performed on the entire dataset, it is possible to expect an accuracy of over 90%. <br>
+
+              <img src="./assets/images/scientifc_classification/accuracy.png" class="img-responsive text-center">
+            </p>
+            
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <h3 class="h3 custom-header text-center">
               <font color="#4CC9F0">Deployment</font>
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
-            <img src="./assets/images/scientifc_classification/demo.gif" class="img-responsive">
+            <img src="./assets/images/scientifc_classification/demo.gif" class="img-responsive">           
           </div>
         </div>
       </div>
@@ -315,6 +346,7 @@
   });
 </script>
 <script type="text/javascript" src="./main.70a66962.js"></script>
+
 </body>
 
 </html>
