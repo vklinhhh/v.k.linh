@@ -29,7 +29,7 @@
       position: relative;
       background-color: black;      
       padding: 10px;
-      margin: 10px 0;
+      margin: 5px 0;
     }
     .code-toggle {
       position: absolute;
@@ -542,49 +542,205 @@
             However, when we shift our attention to MANHATTAN, a distinct pattern emerges. This borough faces a distinctive challenge with Noise problems, with the primary culprits being Noise complaints originating from Street/Sidewalk disturbances and Commercial events. <br>
             It's noteworthy that MANHATTAN's top two issues both relate to noise, setting it apart from the other boroughs. MANHATTAN government should take an eye on this.
           </p>
-
           
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                blocked_driveway_df = nyc_df_clean[nyc_df_clean[<font color="#ff8214">"Complaint Type"</font>] == <font color="#ff8214">"Blocked Driveway"</font>].groupby(<font color="#ff8214">"Descriptor"</font>).size().reset_index(name = <font color="#ff8214">"Count"</font>)
+                illegal_parking_df = nyc_df_clean[nyc_df_clean[<font color="#ff8214">"Complaint Type"</font>] == <font color="#ff8214">"Illegal Parking"</font>].groupby(<font color="#ff8214">"Descriptor"</font>).size().reset_index(name = <font color="#ff8214">"Count"</font>)
+
+                fig = make_subplots(rows=1, cols=2, subplot_titles=[<font color="#ff8214">"Blocked Driveway"</font>, <font color="#ff8214">"Illegal Parking"</font>],
+                                    specs=[[{<font color="#ff8214">'type'</font>:<font color="#ff8214">'domain'</font>}, {<font color="#ff8214">'type'</font>:<font color="#ff8214">'domain'</font>}]])
+                fig.add_trace(
+                    go.Pie(labels=blocked_driveway_df[<font color="#ff8214">"Descriptor"</font>], values=blocked_driveway_df[<font color="#ff8214">"Count"</font>], name=<font color="#ff8214">"Blocked Driveway"</font>),
+                    row=1, col=1
+                )
+                fig.add_trace(
+                    go.Pie(labels=illegal_parking_df[<font color="#ff8214">"Descriptor"</font>], values=illegal_parking_df[<font color="#ff8214">"Count"</font>], name=<font color="#ff8214">"Illegal Parking"</font>),
+                    row=1, col=2
+                )
+                fig.update_layout(
+                    title_text=<font color="#ff8214">"Descriptor Distribution for Blocked Driveway and Illegal Parking"</font>,
+                    title_x= <font color="#ff8214">0.5</font>
+                )
+                fig.update_traces( marker=dict(colors=colors, line=dict(color=<font color="#ff8214">"#ffffff"</font>, width=1)))
+                fig.show()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/blocked_driveway_illegal_park.png" class="img-responsive">
           <p align="justify"> Take a closer look to top 2 common issues :
-            <li align="justify">Regarding the Blocked Driveway problem, a significant 75% of the descriptors are linked to the issue of 'No Access'.</li>
-            <li align="justify">On the other hand, when it comes to Illegal Parking complaints, the majority of the concerns (29%) pertain to Violations of Posted Parking signs, closely followed by instances (22%) of Blocked Hydrants.</li>
+            <ul>
+              <li align="justify">Regarding the Blocked Driveway problem, a significant 75% of the descriptors are linked to the issue of 'No Access'.</li>
+              <li align="justify">On the other hand, when it comes to Illegal Parking complaints, the majority of the concerns (29%) pertain to Violations of Posted Parking signs, closely followed by instances (22%) of Blocked Hydrants.</li>
+            </ul>
           </p>
           <h4 class="h4" style="font-size: 15px;">
             <font color="#2ec7ab">Status and Complaint Type Process</font>
           </h4>
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                nyc_df_status = nyc_df_clean[<font color="#ff8214">"Status"</font>].value_counts().reset_index(name=<font color="#ff8214">"Count"</font>)
+                px.pie(nyc_df_status, values=<font color="#ff8214">"Count"</font>, names=<font color="#ff8214">"Status"</font>, color_discrete_sequence=colors, 
+                        title=<font color="#ff8214">"Distribution of Complaint Request Status"</font>)
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/request_status.png" class="img-responsive">
           <p align="justify">
             Most of the complaint request has been closed (99,3%) . This means it had been resolved.
             There are 1638 requests are still opens and 802 requests have been assigned PIC.
           </p>
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                max_duration_closed = closed_df.groupby(<font color="#ff8214">"Complaint Type"</font>)[<font color="#ff8214">"Duration in Hours"</font>].max().reset_index(name=<font color="#ff8214">"Maximum"</font>).sort_values(<font color="#ff8214">"Maximum"</font>, ascending=<font color="green">False</font>)
+                fig = px.bar(max_duration_closed, x=<font color="#ff8214">"Complaint Type"</font>, y =<font color="#ff8214">"Maximum"</font>,color=<font color="#ff8214">"Complaint Type"</font>,
+                              color_discrete_sequence=colors, title = <font color="#ff8214">"Maximum duration to close a ticket by Complaint Type"</font>)
+                fig.update_layout(xaxis_title = <font color="#ff8214">"Complaint Type"</font>, yaxis_title = <font color="#ff8214">"Max Duration in Hours"</font>)
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/duration_plot_in_hour.png" class="img-responsive">
           <p align="justify">
             The majority of complaint types are typically addressed and resolved within a relatively short span of two weeks,
             equivalent to around 336 hours.<br>
             However, it's worth noting that the two complaint types that demand the most extended period for resolution are Noise - Street/Sidewalk and Noise - Commercial.
           </p>
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                nyc_df_clean[<font color="#ff8214">"Created Date by Day"</font>] = nyc_df_clean[<font color="#ff8214">"Created Date"</font>].dt.date
+                complaint_over_year = nyc_df_clean.groupby([<font color="#ff8214">"Created Date by Day"</font>, <font color="#ff8214">"Complaint Type"</font>]).size().reset_index(name=<font color="#ff8214">"Count"</font>).sort_values(<font color="#ff8214">"Created Date by Day"</font>, ascending=<font color="green">True</font>)
+                fig = px.area(complaint_over_year, x=<font color="#ff8214">"Created Date by Day"</font>, y = <font color="#ff8214">"Count"</font>,
+                              color=<font color="#ff8214">"Complaint Type"</font>, color_discrete_sequence=colors)
+                fig.update_layout(xaxis_title=<font color="#ff8214">"Date"</font>, yaxis_title=<font color="#ff8214">"Number of Complaint"</font>,
+                              title = <font color="#ff8214">"Number of Complaint Through Year"</font>)
+                fig.show()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/complaint_through_year.png" class="img-responsive">
           <p align="justify">
             Since May 2015, there has been a noticeable uptick in the number of complaints, primarily attributed to Noise - Street/Sidewalk issues. <br>
             Interestingly, during the same period, the frequency of Blocked Driveway complaints experienced a decline from May through the end of September.
           </p>
+          
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                nyc_df_clean[<font color="#ff8214">"Created Date by Hour"</font>] = nyc_df_clean[<font color="#ff8214">"Created Date"</font>].dt.hour
+                complaint_over_hour = nyc_df_clean.groupby([<font color="#ff8214">"Created Date by Hour"</font>,<font color="#ff8214">"Complaint Type"</font>]).size().reset_index(name=<font color="#ff8214">"Count"</font>)
+                fig = px.area(complaint_over_hour, x=<font color="#ff8214">"Created Date by Hour"</font>, y='Count', color=<font color="#ff8214">"Complaint Type"</font>, color_discrete_sequence=colors, pattern_shape=<font color="#ff8214">"Complaint Type"</font>)
+                fig.update_layout(xaxis_title=<font color="#ff8214">"Number of Complaint"</font>, yaxis_title = <font color="#ff8214">"Hour"</font>, title =<font color="#ff8214">"Number of Complaint in year 2015 by Hour"</font>)
+                fig.show()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/complaint_through_hour.png" class="img-responsive">
           <p align="justify">
             One can readily observe that the count of complaints initiated experiences a gradual rise from 5 A.M., 
             peaking around midnight.<br>
             This trend suggests a consistent increase in complaint creation throughout the day, with the highest numbers recorded during the late hours.
           </p>
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                day_of_week = {
+                  <font color="#ff8214">0</font>: <font color="#ff8214">"Monday"</font>,
+                  <font color="#ff8214">1</font>: <font color="#ff8214">"Tuesday"</font>,
+                  <font color="#ff8214">2</font>: <font color="#ff8214">"Wednesday"</font>,
+                  <font color="#ff8214">3</font>: <font color="#ff8214">"Thursday"</font>,
+                  <font color="#ff8214">4</font>: <font color="#ff8214">"Friday"</font>,
+                  <font color="#ff8214">5</font>: <font color="#ff8214">"Saturday"</font>,
+                  <font color="#ff8214">6</font>: <font color="#ff8214">"Sunday"</font>
+              }
+              
+              nyc_df_clean[<font color="#ff8214">"Created Date by Weekday"</font>] = nyc_df_clean[<font color="#ff8214">"Created Date"</font>].dt.weekday.map(day_of_week)
+              complaint_over_week = nyc_df_clean.groupby([<font color="#ff8214">"Created Date by Weekday"</font>, <font color="#ff8214">"Complaint Type"</font>]).size().reset_index(name=<font color="#ff8214">"Count"</font>)
+              fig = px.bar(complaint_over_week, x=<font color="#ff8214">"Created Date by Weekday"</font>, y=<font color="#ff8214">"Count"</font>, color=<font color="#ff8214">"Complaint Type"</font>,
+                          color_discrete_sequence=colors, pattern_shape=<font color="#ff8214">"Complaint Type"</font>,
+                          category_orders={<font color="#ff8214">"Created Date by Weekday"</font>: [<font color="#ff8214">"Monday"</font>,
+                          <font color="#ff8214">"Tuesday"</font>,
+                          <font color="#ff8214">"Wednesday"</font>,
+                          <font color="#ff8214">"Thursday"</font>,
+                          <font color="#ff8214">"Friday"</font>,
+                          <font color="#ff8214">"Saturday"</font>,
+                          <font color="#ff8214">"Sunday"</font>]})
+              fig.update_layout(xaxis_title=<font color="#ff8214">"Weekday"</font>, yaxis_title=<font color="#ff8214">"Number of complaint"</font>,
+                                title=<font color="#ff8214">"Number of complaint in year 2015 by Weekday"</font>)
+              fig.show()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/complaint_through_weekday.png" class="img-responsive">
           <p align="justify">
             The NYC department's busiest period occurs over the weekends.<br>
             Notably, both Saturday and Sunday witness a rise in Noise complaints stemming from Commercial and Street/Sidewalk sources. 
             This pattern can likely be attributed to the surge in social activities that typically unfold during the weekends.
           </p>
+
           <h4 class="h4" style="font-size: 15px;">
             <font color="#2ec7ab">Location investigation</font>
           </h4>
+          
           <p align="justify">Complaint ticket counted:</p>
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                geo_df = nyc_df_clean.groupby([<font color="#ff8214">"Latitude"</font>,<font color="#ff8214">"Longitude"</font>]).size().reset_index(name=<font color="#ff8214">"Count"</font>)
+                fig = px.scatter_mapbox(geo_df,
+                        lat=<font color="#ff8214">"Latitude"</font>,
+                        lon=<font color="#ff8214">"Longitude"</font>',
+                        color=<font color="#ff8214">"Count"</font>,
+                        color_continuous_scale=<font color="#ff8214">"viridis"</font>,
+                        size=<font color="#ff8214">"Count"</font>,
+                        hover_name=<font color="#ff8214">"Count"</font>,
+                        hover_data=[<font color="#ff8214">"Latitude"</font>, <font color="#ff8214">"Longitude"</font>],
+                        mapbox_style=<font color="#ff8214">"open-street-map"</font>,
+                        center=dict(lat=<font color="#ff8214">40.7128</font>, lon=<font color="#ff8214">-74.0060</font>),  # Center around NYC
+                        zoom=10  # Zoom level
+                        )
+                fig.show()
+              </pre>
+            </div>
+          </div>
+          
           <img src="./assets/images/nyc_311/map_overall.png" class="img-responsive">
+          
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                geo_complaint_df = nyc_df_clean.groupby([<font color="#ff8214">"Complaint Type"</font>,<font color="#ff8214">"Latitude"</font>,<font color="#ff8214">"Longitude"</font>]).size().reset_index(name=<font color="#ff8214">"Count"</font>)
+                fig = px.scatter_mapbox(geo_complaint_df,
+                        lat=<font color="#ff8214">"Latitude"</font>,
+                        lon=<font color="#ff8214">"Longitude"</font>',
+                        color=<font color="#ff8214">"Complaint Type"</font>,
+                        size=<font color="#ff8214">"Count"</font>,
+                        hover_name=<font color="#ff8214">"Complaint Type"</font>,
+                        hover_data=[<font color="#ff8214">"Count"</font>],
+                        mapbox_style=<font color="#ff8214">"carto-positron"</font>,
+                        title=<font color="#ff8214">"Cluster Plot for All Complaint Types"</font>,
+                        center=dict(lat=<font color="#ff8214">40.7128</font>, lon=<font color="#ff8214">-74.0060</font>),  # Center around NYC
+                        zoom=10  # Zoom level
+                        )
+                fig.show()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/map_complaint_type.png" class="img-responsive">
           <p align="justify">
             An interesting insight from the map analysis is that distinct issue patterns seem to emerge based on varying geographical ranges.<br>
@@ -592,6 +748,28 @@
             implying that different locales don't encounter identical problems universally.<br>
             This discrepancy could potentially be attributed to the unique urban dynamics, borough characteristics, street cultures, and inherent behavioral patterns across the city.
           </p>
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                geo_borough_df = nyc_df_clean.groupby([<font color="#ff8214">"Borough"</font>,<font color="#ff8214">"Latitude"</font>,<font color="#ff8214">"Longitude"</font>]).size().reset_index(name=<font color="#ff8214">"Count"</font>)
+                fig = px.scatter_mapbox(geo_borough_df,
+                        lat=<font color="#ff8214">"Latitude"</font>,
+                        lon=<font color="#ff8214">"Longitude"</font>',
+                        color=<font color="#ff8214">"Borough"</font>,
+                        size=<font color="#ff8214">"Count"</font>,
+                        hover_name=<font color="#ff8214">"Borough"</font>,
+                        hover_data=[<font color="#ff8214">"Count"</font>],
+                        mapbox_style=<font color="#ff8214">"carto-positron"</font>,
+                        title=<font color="#ff8214">"Cluster Plot for All Borough"</font>,
+                        center=dict(lat=<font color="#ff8214">40.7128</font>, lon=<font color="#ff8214">-74.0060</font>),  # Center around NYC
+                        zoom=10  # Zoom level
+                        )
+                fig.show()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/map_borough.png" class="img-responsive">
           <p align="justify">
             Upon examining the plotted map, a distinct observation comes to light: Unspecified data points are notably clustered
