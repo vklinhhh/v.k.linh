@@ -21,10 +21,29 @@
       background-color: black;
       color: white;
     }
-
     .custom-header {
       background-color: black;
       color: white;
+    }
+    .code-container {
+      position: relative;
+      background-color: black;      
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .code-toggle {
+      position: absolute;
+      top: 2px;
+      right: 5px;
+      cursor: pointer;
+      color: #ffb4cb;
+      font-weight: bold;
+    }
+    .code-content {
+      display: none;
+      white-space: pre-wrap;
+      background-color: black;
+      text-align: left;
     }
   </style>
 </head>
@@ -59,7 +78,6 @@
                 </span>
                 Back to My Works</a></li>
           </ul>
-
 
           <ul class="nav navbar-nav navbar-right navbar-small visible-md visible-lg">
             <li><a href="./work_nyc_311_analysis.html" title="" class="active" style="color: #fff;">001</a></li>
@@ -101,8 +119,31 @@
         <div class="col-xs-12 section-container-spacer">
           <div class="row">
             <p align="justify">Project color palette: </p>
+            <div class="code-container">
+              <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+              <div class="code-content">
+                <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                  colors = [<font color="#ff8214">"#5f8e00"</font>,<font color="#ff8214">"#84c600"</font>,<font color="#ff8214">"#d6ecaa"</font>,<font color="#ff8214">"#1c335e"</font>,<font color="#ff8214">"#2ec7ab"</font>,<font color="#ff8214">"#b9ece3"</font>,
+                  <font color="#ff8214">"#e8ac65"</font>,<font color="#ff8214">"#c7006a"</font>,<font color="#ff8214">"#ff1f62"</font>,<font color="#ff8214">"#ffb4cb"</font>,<font color="#ff8214">"#ff8214"</font>]
+                  palette = sns.color_palette(palette = colors)
+                  sns.palplot(palette, size =1)
+                  plt.show()
+                </pre>
+              </div>
+            </div>
             <img src="./assets/images/nyc_311/palette.png" class="img-responsive" alt="" align="text-center">
+          </div>
+          <div class="row">
             <p align="justify"><br> Project dataset: </p>
+            <div class="code-container">
+              <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+              <div class="code-content">
+                <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                  nyc_df = pd.read_csv(<font color="#ff8214">"311_Service_Requests_from_2010_to_Present.csv"</font>)
+                  nyc_df.head()
+                </pre>
+              </div>
+            </div>
             <img src="./assets/images/nyc_311/project_dataset.png" class="img-responsive" alt="">
           </div>
         </div>
@@ -116,8 +157,18 @@
           <p align="justify">The dataset has <strong>53 </strong>attributes and <strong>364.588</strong> observations.
             In which, there are object type and numeric type of data.<br>
             Let's observe the data descriptive information.</p>
-          <img src="./assets/images/nyc_311/descriptive_data.png" class="img-responsive" alt="">
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                nyc_df.describe(include= <font color="#ff8214">"number"</font>)
+                nyc_df.describe(include= <font color="#ff8214">"object"</font>)
+              </pre>
+            </div>
+          </div>
+          <img src="./assets/images/nyc_311/descriptive_data.png" class="img-responsive" >
           <p align="justify">
+            <br>
             It could be seen that, for numerical atrributes: <font color="#d6ecaa"><strong>School or Citywide Complaint,
                 Verhicle Type, Taxi Company Borough, Taxi Pick Up Location</strong></font> and <font color="#d6ecaa">
               <strong>Garage Lot Name</strong>
@@ -127,6 +178,15 @@
             Moreover, for object attributes, it looks like there are many incomplete columns and some columns have only
             1 unique value, which may not be very informative and useful.<br>
           </p>
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                mn.matrix(nyc_df.select_dtypes(include= <font color="#ff8214">"object"</font>))
+                mn.matrix(nyc_df.select_dtypes(include= <font color="#ff8214">"number"</font>))
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/missingno_obj.png" class="img-responsive" , alt="missing no obj">
           <img src="./assets/images/nyc_311/missingno_number.png" class="img-responsive" , alt="missing no number">
           <p align="justify">We could see many columns are filled with NaN.
@@ -135,7 +195,43 @@
             Which ones we should replace and which ones we should drop it? <br>
             Let's see its weight on the whole dataset.
           </p>
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                columns = []
+                perc_null = []
+                for column in nyc_df.select_dtypes(include=<font color="#ff8214">"object"</font>):
+                    columns.append(column)
+                    perc_null.append(<font color="#ff8214">round</font>(nyc_df[column].isna().sum()<font color="#ff8214">*100</font>/nyc_df.shape[<font color="#ff8214">0</font>], <font color="#ff8214">2</font>))
+                obj_null_calc = pd.DataFrame(list(zip(columns,perc_null)), columns=[<font color="#ff8214">"Column"</font>,<font color="#ff8214">"Null Percentage</font>])
+                fig = px.bar(<font color="#ff8214">data_frame</font>=obj_null_calc, x=<font color="#ff8214">"Column"</font>, y =<font color="#ff8214">"Null Percentage"</font>, color=<font color="#ff8214">"Column"</font>, color_discrete_sequence = colors,
+                            title= <font color="#ff8214">"[Object] Null percentage per column"</font>, text=<font color="#ff8214">"Null Percentage"</font>)
+                fig.update_layout(showlegend = <font color="green">False</font>)
+                fig.update_traces(textposition=<font color="#ff8214">"inside"</font>)
+                fig.show()
+                            </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/plotly_obj_missing.png" class="img-responsive">
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                columns = []
+                perc_null = []
+                for column in nyc_df.select_dtypes(include=<font color="#ff8214">"number"</font>):
+                    columns.append(column)
+                    perc_null.append(<font color="#ff8214">round</font>(nyc_df[column].isna().sum()<font color="#ff8214">*100</font>/nyc_df.shape[<font color="#ff8214">0</font>], <font color="#ff8214">2</font>))
+                num_null_calc = pd.DataFrame(list(zip(columns,perc_null)), columns=[<font color="#ff8214">"Column"</font>,<font color="#ff8214">"Null Percentage</font>])
+                fig = px.bar(<font color="#ff8214">data_frame</font>=num_null_calc, x=<font color="#ff8214">"Column"</font>, y =<font color="#ff8214">"Null Percentage"</font>, color=<font color="#ff8214">"Column"</font>, color_discrete_sequence = colors,
+                            title= <font color="#ff8214">"[Numeric] Null percentage per column"</font>, text=<font color="#ff8214">"Null Percentage"</font>)
+                fig.update_layout(showlegend = <font color="green">False</font>)
+                fig.update_traces(textposition=<font color="#ff8214">"inside"</font>)
+                fig.show()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/plotly_num_missing.png" class="img-responsive">
           <p align="justify">
             We will drop columns with greater then >10% null percentage => obj + numberic columns = 18 columns will be
@@ -147,15 +243,49 @@
             And I also don't need the Incident Zip. <br>
             Below is the remain columns which still contain NaN values and their "missing value relationship".
           </p>
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                limit_null = nyc_df.shape[<font color="#ff8214">0</font>]<font color="#ff8214">*0.9</font>                
+                nyc_df_clean = nyc_df.dropna(axis=1, thresh= limit_null)
+                nyc_df_clean.drop(columns=[<font color="#ff8214">"X Coordinate (State Plane)"</font>,<font color="#ff8214">"Y Coordinate (State Plane)"</font>, <font color="#ff8214">"Location"</font>, <font color="#ff8214">"Incident Zip"</font>],
+                inplace=<font color="green">True</font>)
+                mn.dendrogram(nyc_df_clean)
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/dendogram.png" class="img-responsive">
           <p align="justify">
+            <br>
             For <font color="#d6ecaa"><strong>Descriptor, Location Type, Address Type, City, Facility Type</strong>
             </font> column,
             I will fill the null with <strong>"Unspecified"</strong>. <br>
             For <font color="#d6ecaa"><strong>Longitude - Latitude</strong></font>, since the dataset is all centered in
             NYC. I will replace null value with the mode.
           </p>
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                fill_unspecified_list = [<font color="#ff8214">"Descriptor"</font>, <font color="#ff8214">"Location Type"</font>, <font color="#ff8214">"Address Type"</font>, <font color="#ff8214">"City"</font>, <font color="#ff8214">"Facility Type"</font>]
+                for col in fill_unspecified_list:
+                  nyc_df_clean[col] = nyc_df_clean[col].fillna(<font color="#ff8214">"Unspecified"</font>)
+                
+                nyc_df_clean.loc[:,nyc_df_clean.columns.str.startswith(<font color="#ff8214">"School"</font>)].describe()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/school_column.png" class="img-responsive">
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                display(nyc_df_clean[nyc_df_clean[<font color="#ff8214">"Complaint Type"</font>]==<font color="#ff8214">"Ferry Complaint"</font>][[<font color="#ff8214">"Complaint Type"</font>,<font color="#ff8214">"Created Date"</font>, <font color="#ff8214">"Due Date"</font>,<font color="#ff8214">"Closed Date"</font>]])
+              </pre>
+            </div>
+          </div>
+
           <img src="./assets/images/nyc_311/ferry_type.png" class="img-responsive">
           <p align="justify">
             We could see that all the columns start with <strong>"School"</strong> have the top is unspecified. And the
@@ -166,16 +296,47 @@
             which is not informative too. <br>
             Hence, we will drop all these columns for school and all these rows that related to Ferry Complaint.
           </p>
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                nyc_df_clean.loc[:,nyc_df_clean.columns.str.endswith(<font color="#ff8214">"Date"</font>)]
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/date_column.png" class="img-responsive">
           <p align="justify">
             Hold on! It looks like we have date-type columns, before cleaning these columns, let's convert its
             object-type to datetime.
           </p>
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                date_type_column = nyc_df_clean.loc[:, nyc_df_clean.columns.str.endswith(<font color="#ff8214">"Date"</font>)].columns.values
+                for col in date_type_column:
+                  nyc_df_clean[col] = pd.to_datetime(nyc_df_clean[col], format=<font color="#ff8214">"%m/%d/%Y %I:%M:%S %p"</font>) 
+              
+                nyc_df_clean.info()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/dataset_info.png" class="img-responsive">
           <p align="justify">Perfect! <br>
             The <font color="#d6ecaa"><strong>Due Date</strong></font> column is missing only 1 observation. Let's take
             a look on it.
           </p>
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                nyc_df_clean[nyc_df_clean[<font color="#ff8214">"Due Date"</font>].isnull()]
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/duedate_missing.png" class="img-responsive">
           <p align="justify">
             For the remain row of <font color="#d6ecaa"><strong>Due Date</strong></font> is NaT and
@@ -189,6 +350,18 @@
               <strong>Closed Date</strong>
             </font>.
           </p>
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                mask = (nyc_df_clean[<font color="#ff8214">"Due Date"</font>].isnull()) & (nyc_df_clean[<font color="#ff8214">"Resolution Action Updated Date"</font>].isnull())
+                nyc_df_clean.loc[mask, [<font color="#ff8214">"Due Date"</font>, <font color="#ff8214">"Resolution Action Updated Date"</font>]] = nyc_df_clean.loc[mask, <font color="#ff8214">"Closed Date"</font>]
+
+                nyc_df_clean.groupby(<font color="#ff8214">"Status"</font>)[<font color="#ff8214">"Closed Date"</font>].apply(lambda x: x.isnull().sum())
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/closed_date.png" class="img-responsive">
           <p align="justify">
             We could seen that some <font color="#d6ecaa"><strong>Closed Date</strong></font> observation are NaT
@@ -198,6 +371,7 @@
             For the <font color="#d6ecaa"><strong>Resolution Action Updated Date</strong></font>, I have performed some
             investigation.<br>
             So here is the findings and my solution:<br>
+            <ul>
             <li align="justify">The <font color="#d6ecaa"><strong>Resolution Action Updated Date</strong></font> was
               missing for closed status (2 rows only).
               But there were closed date already so I will replace these missings with its closed-date.</li>
@@ -223,7 +397,46 @@
                   Date</strong></font>
               group by each <font color="#d6ecaa"><strong>Resolution Descriptor</strong></font>
             </li>
+            </ul>
           </p>
+          
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                mask2 = (nyc_df_clean[<font color="#ff8214">"Status"</font>] == <font color="#ff8214">"Closed"</font>) & (nyc_df_clean[<font color="#ff8214">"Resolution Action Updated Date"</font>].isnull())
+                nyc_df_clean.loc[mask2,'<font color="#ff8214">"Resolution Action Updated Date"</font>] = nyc_df_clean.loc[mask2, <font color="#ff8214">"Closed Date"</font>]
+
+                mask3 = nyc_df_clean[<font color="#ff8214">"Resolution Description"</font>] == <font color="#ff8214">"Your complaint has been forwarded to the New York Police Department 
+                for a non-emergency response. 311 will have additional information in 8 hours. 
+                Please note your service request number for future reference."</font>
+                nyc_df_clean.loc[mask3, [<font color="#ff8214">"Created Date"</font>,<font color="#ff8214">"Closed Date"</font>,<font color="#ff8214">"Due Date"</font>]]
+
+                mask4 = (nyc_df_clean[<font color="#ff8214">"Resolution Description"</font>] == <font color="#ff8214">"Your complaint has been forwarded to the New York Police Department
+                  for a non-emergency response. If the police determine the vehicle is illegally parked, 
+                  they will ticket the vehicle and then you may either contact a private towing company to remove the vehicle or ask your local precinct to contact 'rotation tow'.
+                  Any fees charged for towing will have to be paid by the vehicle owner.
+                  311 will have additional information in 8 hours.
+                  Please note your service request number for future reference."</font>)\
+                  & (nyc_df_clean[<font color="#ff8214">"Closed Date"</font>].notnull())
+                nyc_df_clean.loc[mask4, [<font color="#ff8214">"Created Date"</font>,<font color="#ff8214">"Closed Date"</font>,<font color="#ff8214">"Due Date"</font>]]
+
+                def fill_na_resolution_date(row):
+                  if pd.isnull(row[<font color="#ff8214">"Resolution Action Updated Date"</font>]) and row[<font color="#ff8214">"Resolution Description"</font>] in 
+                    [<font color="#ff8214">"Your complaint has been forwarded to the New York Police Department for a non-emergency response. 311 will have additional information in 8 hours.
+                      Please note your service request number for future reference."</font>,
+                      <font color="#ff8214">"Your complaint has been forwarded to the New York Police Department for a non-emergency response. If the police determine the vehicle is illegally parked, they will ticket the vehicle and then you may either contact a private towing company to remove the vehicle or ask your local precinct to contact 'rotation tow'. Any fees charged for towing will have to be paid by the vehicle owner. 311 will have additional information in 8 hours.
+                      Please note your service request number for future reference."</font>]:
+                    return row[<font color="#ff8214">"Created Date"</font>] + pd.Timedelta(minutes=15)
+                  return row[<font color="#ff8214">"Resolution Action Updated Date"</font>]
+
+                nyc_df_clean[<font color="#ff8214">"Resolution Action Updated Date"</font>] = nyc_df_clean.apply(fill_na_resolution_date, axis=1)
+
+                print(nyc_df_clean[<font color="#ff8214">"Park Facility Name"</font>].value_counts())
+                print((nyc_df_clean[<font color="#ff8214">"Borough"</font>]==nyc_df_clean[<font color="#ff8214">"Park Borough"</font>]).sum())
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/park_cleaning.png" class="img-responsive">
           <p align="justify">The <font color="#d6ecaa"><strong>Park Borough</strong></font> has the same value with
             <font color="#d6ecaa"><strong>Borough</strong></font>, so we just need to keep one of them
@@ -239,6 +452,15 @@
           <h4 class="h4" style="font-size: 15px;">
             <font color="#2ec7ab">How many agencies here?</font>
           </h4>
+          
+          <div class = "code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                nyc_df_clean.groupby(<font color="#ff8214">"Agency"</font>)[<font color="#ff8214">"Agency Name"</font>].value_counts()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/agency.png" class="img-responsive">
           <p align="justify">
             We could see that only one agency value has 3 different Agency Name.<br>
@@ -254,8 +476,63 @@
           <p align="justify">There are <strong>23 types of complaint</strong> raised by people in NYC.<br>
             Let's see their contribution and distribution type in each Borough.
           </p>
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                complaint_type_counts = nyc_df_clean[<font color="#ff8214">"Complaint Type"</font>].value_counts()
+                fig = px.bar(x = complaint_type_counts.index, y = complaint_type_counts.values, color=complaint_type_counts.index,
+                              color_discrete_sequence=colors,
+                              title=<font color="#ff8214">"Which one is the most complaint in NY?"</font>)
+                fig.update_layout(showlegend = <font color="green">False</font>, xaxis_title = <font color="#ff8214">"Complaint Type"</font>, yaxis_title=<font color="#ff8214">"Number of Complaint"</font>)
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/most_complaint_type_in_NY.png" class="img-responsive">
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                borough_counts = nyc_df_clean.groupby(<font color="#ff8214">"Borough"</font>).size().reset_index(name=<font color="#ff8214">"Count"</font>)
+                fig = px.pie(borough_counts, values=<font color="#ff8214">"Count"</font>, names=<font color="#ff8214">"Borough"</font>, color_discrete_sequence=colors, 
+                              title= <font color="#ff8214">"Complaint Distribution by Borough"</font>)
+                fig.show()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/complaint_dist_by_borough.png" class="img-responsive">
+
+          <div class="code-container">
+            <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+            <div class="code-content">
+              <pre style="background-color: rgb(73, 20, 20, 0.7); color: #fff; border-radius: 5px;">
+                complaint_counts = nyc_df_clean.groupby([<font color="#ff8214">"Borough"</font>, <font color="#ff8214">"Complaint Type"</font>]).size().reset_index(name=<font color="#ff8214">"Count"</font>)
+                complaint_counts = complaint_counts.sort_values(by=[<font color="#ff8214">"Borough"</font>, <font color="#ff8214">"Count"</font>], ascending=[<font color="green">True</font>, <font color="green">False</font>])
+
+                num_boroughs = len(complaint_counts[<font color="#ff8214">"Borough"</font>].unique())
+                fig = make_subplots(rows=3, cols=2, subplot_titles=complaint_counts[<font color="#ff8214">"Borough"</font>].unique())
+                color_borough = colors[:len(complaint_counts[<font color="#ff8214">"Borough"</font>].unique())]
+
+                for i, (borough, color) in enumerate(zip(complaint_counts[<font color="#ff8214">"Borough"</font>].unique(), color_borough), 1):
+                    data_borough = complaint_counts[complaint_counts[<font color="#ff8214">"Borough"</font>] == borough]
+
+                    fig.add_trace(
+                        go.Bar(x=data_borough[<font color="#ff8214">"Complaint Type"</font>], y=data_borough[<font color="#ff8214">"Count"</font>], name=borough, marker=dict(color=color)),
+                        row= <font color="#ff8214">(i - 1) // 2 + 1 </font>, col=<font color="#ff8214">(i - 1) % 2 + 1 </font>
+                    )
+
+                fig.update_layout(
+                    height= <font color="#ff8214">600 *</font>(num_boroughs/<font color="#ff8214">2</font>), 
+                    showlegend=<font color="green">False</font>,
+                    title_text=<font color="#ff8214">"Number of Complaint Types in each Borough (Sorted by Highest Count)"</font>,
+                    title_x=<font color="#ff8214">0.5</font>
+                )
+                fig.show()
+              </pre>
+            </div>
+          </div>
           <img src="./assets/images/nyc_311/complaint_type_by_each_borough.png" class="img-responsive">
           <p align="justify">
             In a concise overview, the <strong>majority (60.2%)</strong> of reported issues stem from the neighborhoods of BROOKLYN and QUEENS.<br>
@@ -265,6 +542,8 @@
             However, when we shift our attention to MANHATTAN, a distinct pattern emerges. This borough faces a distinctive challenge with Noise problems, with the primary culprits being Noise complaints originating from Street/Sidewalk disturbances and Commercial events. <br>
             It's noteworthy that MANHATTAN's top two issues both relate to noise, setting it apart from the other boroughs. MANHATTAN government should take an eye on this.
           </p>
+
+          
           <img src="./assets/images/nyc_311/blocked_driveway_illegal_park.png" class="img-responsive">
           <p align="justify"> Take a closer look to top 2 common issues :
             <li align="justify">Regarding the Blocked Driveway problem, a significant 75% of the descriptors are linked to the issue of 'No Access'.</li>
@@ -332,8 +611,19 @@
       navActivePage();
     });
   </script>
-
-
+  <!-- Script for code toggle block -->
+  <script>
+    function toggleCode(button) {
+      var content = button.nextElementSibling;
+      if (content.style.display === "none") {
+        content.style.display = "block";
+        button.innerText = "Hide";
+      } else {
+        content.style.display = "none";
+        button.innerText = "Code";
+      }
+    }
+    </script>
   <script type="text/javascript" src="./main.70a66962.js"></script>
 </body>
 
