@@ -13,16 +13,17 @@
 
   <link href="./assets/favicon.ico" rel="icon">
 
-  <title>Title page</title>  
+  <title>Dog Breed Prediction</title>
 
-<link href="./main.3f6952e4.css" rel="stylesheet">
-<style>
-  .code-container {
+  <link href="./main.3f6952e4.css" rel="stylesheet">
+  <style>
+    .code-container {
       position: relative;
-      background-color: black;      
+      background-color: black;
       padding: 10px;
       margin: 5px 0;
     }
+
     .code-toggle {
       position: absolute;
       top: 2px;
@@ -31,137 +32,752 @@
       color: #ffb4cb;
       font-weight: bold;
     }
+
     .code-content {
       display: none;
       white-space: pre-wrap;
       background-color: black;
       text-align: left;
     }
-    hr.context {
-    height: 12px;
-    border: 0;
-    box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
+
+    .dashLine {
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+      height: 2px;
+      /* Adjust the height as needed */
+      position: relative;
+      overflow: hidden;
+      /* Ensure the animation stays within the container */
     }
 
-</style>
+    .dashLine::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: linear-gradient(90deg, #ffe6a7, #6f1d1b, #bb9457, #99582a);
+      background-size: 200% 100%;
+      /* Double the width to accommodate animation */
+      background-position: 100% 0;
+      /* Initial position */
+      animation: dash 4s infinite linear;
+    }
+
+    @keyframes dash {
+      0% {
+        background-position: 100% 0;
+      }
+
+      100% {
+        background-position: -100% 0;
+      }
+    }
+
+    ul {
+      margin-left: 0;
+      padding-left: 2.5em;
+    }
+
+    /*Dog*/
+    *,
+    *::after,
+    *::before {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    /* Generic */
+    .main {
+      position: center;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .leg {
+      position: absolute;
+      bottom: 0;
+      width: 3vmax;
+      height: 4.125vmax;
+    }
+
+    .paw {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 3.75vmax;
+      height: 1.875vmax;
+      overflow: hidden;
+    }
+
+    .paw::before {
+      content: '';
+      position: absolute;
+      width: 3.75vmax;
+      height: 3.75vmax;
+      border-radius: 50%;
+    }
+
+    .top {
+      position: absolute;
+      bottom: 0;
+      left: 0.75vmax;
+      height: 4.5vmax;
+      width: 2.625vmax;
+      border-top-left-radius: 1.425vmax;
+      border-top-right-radius: 1.425vmax;
+      transform-origin: bottom right;
+      transform: rotateZ(90deg) translateX(-0.1vmax) translateY(1.5vmax);
+      z-index: -1;
+      background-image: linear-gradient(70deg, transparent 20%, #ff8b56 20%);
+    }
+
+    .dog {
+      position: relative;
+      width: 22.5vmax;
+      height: 8.25vmax;
+    }
+
+    .dog::before {
+      content: '';
+      position: absolute;
+      bottom: -0.75vmax;
+      right: -0.15vmax;
+      width: 100%;
+      height: 1.5vmax;
+      background-color: rgba(28, 49, 48, 0.1);
+      border-radius: 50%;
+      z-index: -1000;
+      animation: shadow 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+    }
+
+    .dog__head {
+      position: absolute;
+      left: 1.5vmax;
+      bottom: 0;
+      width: 9.75vmax;
+      height: 8.25vmax;
+      border-top-left-radius: 4.05vmax;
+      border-top-right-radius: 4.05vmax;
+      border-bottom-right-radius: 3.3vmax;
+      border-bottom-left-radius: 3.3vmax;
+      background-color: #FF8147;
+      animation: head 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+    }
+
+    .dog__head-c {
+      position: absolute;
+      left: 1.5vmax;
+      bottom: 0;
+      width: 9.75vmax;
+      height: 8.25vmax;
+      animation: head 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+      z-index: -1;
+    }
+
+    .dog__snout {
+      position: absolute;
+      left: -1.5vmax;
+      bottom: 0;
+      width: 7.5vmax;
+      height: 3.75vmax;
+      border-top-right-radius: 3vmax;
+      border-bottom-right-radius: 3vmax;
+      border-bottom-left-radius: 4.5vmax;
+      background-color: #D7DBD2;
+      animation: snout 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+    }
+
+    .dog__snout::before {
+      content: '';
+      position: absolute;
+      left: -0.1125vmax;
+      top: -0.15vmax;
+      width: 1.875vmax;
+      height: 1.125vmax;
+      border-top-right-radius: 3vmax;
+      border-bottom-right-radius: 3vmax;
+      border-bottom-left-radius: 4.5vmax;
+      background-color: #1C3130;
+      animation: snout-b 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+    }
+
+    .dog__nose {
+      position: absolute;
+      top: -1.95vmax;
+      left: 40%;
+      width: 0.75vmax;
+      height: 2.4vmax;
+      border-radius: 0.525vmax;
+      transform-origin: bottom;
+      transform: rotateZ(10deg);
+      background-color: #D7DBD2;
+    }
+
+    .dog__eye-l,
+    .dog__eye-r {
+      position: absolute;
+      top: -0.9vmax;
+      width: 0.675vmax;
+      height: 0.375vmax;
+      border-radius: 50%;
+      background-color: #1C3130;
+      animation: eye 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+    }
+
+    .dog__eye-l {
+      left: 27%;
+    }
+
+    .dog__eye-r {
+      left: 65%;
+    }
+
+    .dog__ear-l,
+    .dog__ear-r {
+      position: absolute;
+      width: 10.5vmax;
+      height: 3.375vmax;
+      border-top-left-radius: 0vmax;
+      border-top-right-radius: 0vmax;
+      border-bottom-right-radius: 3.3vmax;
+      border-bottom-left-radius: 3.3vmax;
+      background-color: #E26538;
+    }
+
+    .dog__ear-l {
+      top: 1.5vmax;
+      left: 6vmax;
+      transform-origin: bottom left;
+      transform: rotateZ(-50deg);
+      z-index: -1;
+      animation: ear-l 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+    }
+
+    .dog__ear-r {
+      top: 1.5vmax;
+      right: 3vmax;
+      transform-origin: bottom right;
+      transform: rotateZ(20deg);
+      z-index: -2;
+      animation: ear-r 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+    }
+
+    .dog__body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      position: absolute;
+      bottom: 0.3vmax;
+      left: 3.75vmax;
+      width: 18.75vmax;
+      height: 7.2vmax;
+      border-top-left-radius: 3vmax;
+      border-top-right-radius: 6vmax;
+      border-bottom-right-radius: 1.5vmax;
+      border-bottom-left-radius: 6vmax;
+      background-color: #ff702e;
+      z-index: -2;
+      animation: body 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+    }
+
+    .dog__tail {
+      position: absolute;
+      right: -3vmax;
+      height: 1.5vmax;
+      width: 4.5vmax;
+      background-color: #E96839;
+      border-radius: 1.5vmax;
+    }
+
+    .dog__paws {
+      position: absolute;
+      bottom: 0;
+      left: 7.5vmax;
+      width: 12vmax;
+      height: 3vmax;
+    }
+
+    .dog__bl-leg {
+      left: -3vmax;
+      z-index: -10;
+    }
+
+    .dog__bl-paw::before {
+      background-color: #bec4b6;
+    }
+
+    .dog__bl-top {
+      background-image: linear-gradient(80deg, transparent 20%, #E96839 20%);
+    }
+
+    .dog__fl-leg {
+      z-index: 10;
+    }
+
+    .dog__fl-leg {
+      left: 0;
+    }
+
+    .dog__fl-paw::before {
+      background-color: #D7DBD2;
+    }
+
+    .dog__fr-leg {
+      right: 0;
+    }
+
+    .dog__fr-paw::before {
+      background-color: #D7DBD2;
+    }
+
+    /*==============================*/
+    @keyframes head {
+
+      0%,
+      10%,
+      20%,
+      26%,
+      28%,
+      90%,
+      100% {
+        height: 8.25vmax;
+        bottom: 0;
+        transform-origin: bottom right;
+        transform: rotateZ(0);
+      }
+
+      5%,
+      15%,
+      22%,
+      24%,
+      30% {
+        height: 8.1vmax;
+      }
+
+      32%,
+      50% {
+        height: 8.25vmax;
+      }
+
+      55%,
+      60% {
+        bottom: 0.75vmax;
+        transform-origin: bottom right;
+        transform: rotateZ(0);
+      }
+
+      70%,
+      80% {
+        bottom: 0.75vmax;
+        transform-origin: bottom right;
+        transform: rotateZ(10deg);
+      }
+    }
+
+    @keyframes body {
+
+      0%,
+      10%,
+      20%,
+      26%,
+      28%,
+      32%,
+      100% {
+        height: 7.2vmax;
+      }
+
+      5%,
+      15%,
+      22%,
+      24%,
+      30% {
+        height: 7.05vmax;
+      }
+    }
+
+    @keyframes ear-l {
+
+      0%,
+      10%,
+      20%,
+      26%,
+      28%,
+      82%,
+      100% {
+        transform: rotateZ(-50deg);
+      }
+
+      5%,
+      15%,
+      22%,
+      24% {
+        transform: rotateZ(-48deg);
+      }
+
+      30%,
+      31% {
+        transform: rotateZ(-30deg);
+      }
+
+      32%,
+      80% {
+        transform: rotateZ(-60deg);
+      }
+    }
+
+    @keyframes ear-r {
+
+      0%,
+      10%,
+      20%,
+      26%,
+      28% {
+        transform: rotateZ(20deg);
+      }
+
+      5%,
+      15%,
+      22%,
+      24% {
+        transform: rotateZ(18deg);
+      }
+
+      30%,
+      31% {
+        transform: rotateZ(10deg);
+      }
+
+      32% {
+        transform: rotateZ(25deg);
+      }
+    }
+
+    @keyframes snout {
+
+      0%,
+      10%,
+      20%,
+      26%,
+      28%,
+      82%,
+      100% {
+        height: 3.75vmax;
+      }
+
+      5%,
+      15%,
+      22%,
+      24% {
+        height: 3.45vmax;
+      }
+    }
+
+    @keyframes snout-b {
+
+      0%,
+      10%,
+      20%,
+      26%,
+      28%,
+      98%,
+      100% {
+        width: 1.875vmax;
+      }
+
+      5%,
+      15%,
+      22%,
+      24% {
+        width: 1.8vmax;
+      }
+
+      34%,
+      98% {
+        width: 1.275vmax;
+      }
+    }
+
+    @keyframes shadow {
+
+      0%,
+      10%,
+      20%,
+      26%,
+      28%,
+      30%,
+      84%,
+      100% {
+        width: 99%;
+      }
+
+      5%,
+      15%,
+      22%,
+      24% {
+        width: 101%;
+      }
+
+      34%,
+      81% {
+        width: 96%;
+      }
+    }
+
+    @keyframes eye {
+
+      0%,
+      30% {
+        width: 0.675vmax;
+        height: 0.3vmax;
+      }
+
+      32%,
+      59%,
+      90%,
+      100% {
+        width: 0.525vmax;
+        height: 0.525vmax;
+        transform: translateY(0);
+      }
+
+      60%,
+      75% {
+        transform: translateY(-0.3vmax);
+      }
+
+      80%,
+      85% {
+        transform: translateY(0.15vmax);
+      }
+    }
+  </style>
 </head>
 
 <body class="">
-<div id="site-border-left"></div>
-<div id="site-border-right"></div>
-<div id="site-border-top"></div>
-<div id="site-border-bottom"></div>
+  <div id="site-border-left"></div>
+  <div id="site-border-right"></div>
+  <div id="site-border-top"></div>
+  <div id="site-border-bottom"></div>
 
-<header>
-  <nav class="navbar  navbar-fixed-top navbar-default">
-    <div class="container">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+  <header>
+    <nav class="navbar  navbar-fixed-top navbar-default">
+      <div class="container">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
+          aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
 
-      <div class="collapse navbar-collapse" id="navbar-collapse">
-        <ul class="nav navbar-nav ">
-          <li><a href="./index.html" title="">
-            <span class="fa-icon">
-              <i class="fa fa-hand-peace-o" aria-hidden="true" style="font-size:16px;color:#000;"></i>
-            </span>
-            Back to My Hello Page</a></li>
-          <li><a href="./works.html" title="">
-            <span class="fa-icon">
-              <i class="fa fa-bar-chart" aria-hidden="true" style="font-size:16px;color:#000;"></i>
-            </span>
-            Back to My Works</a></li>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav ">
+            <li><a href="./index.html" title="">
+                <span class="fa-icon">
+                  <i class="fa fa-hand-peace-o" aria-hidden="true" style="font-size:16px;color:#000;"></i>
+                </span>
+                Back to My Hello Page</a></li>
+            <li><a href="./works.html" title="">
+                <span class="fa-icon">
+                  <i class="fa fa-bar-chart" aria-hidden="true" style="font-size:16px;color:#000;"></i>
+                </span>
+                Back to My Works</a></li>
+          </ul>
 
-        <ul class="nav navbar-nav navbar-right navbar-small visible-md visible-lg">
-          <li><a href="./work_nyc_311_analysis.html" style="color: #000;">001</a></li>
-          <li><a href="./work_customer_testimonial.html" style="color: #000;">002</a></li>
-          <li><a href="./work_scientific_abstract_classification.html" style="color: #000;">003</a></li>
-          <li><a href="./work_dog_breed.html" class="active" style="color: #000;">004</a></li>
-          <li><a href="./work_landmark.html" style="color: #000;">005</a></li>
-        </ul>
+          <ul class="nav navbar-nav navbar-right navbar-small visible-md visible-lg">
+            <li><a href="./work_nyc_311_analysis.html" style="color: #000;">001</a></li>
+            <li><a href="./work_customer_testimonial.html" style="color: #000;">002</a></li>
+            <li><a href="./work_scientific_abstract_classification.html" style="color: #000;">003</a></li>
+            <li><a href="./work_dog_breed.html" class="active" style="color: #000;">004</a></li>
+            <li><a href="./work_landmark.html" style="color: #000;">005</a></li>
+          </ul>
 
-
-      </div> 
-    </div>
-  </nav>
-</header>
-<div class="section-container">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        <img src="./assets/images/dog_breed/funny-boston.png" class="img-responsive" alt="">
-        <div class="card-container">
-          <div class="text-center">
-            <h1 class="h2">004 : Dog Breed Prediction</h1>
-          </div>
-          <p class="text-center">
-          The purpose of this project is to predict dog breeds accurately using various deep learning models and techniques, achieving high accuracy <mark>(93%)</mark>
-          through a combination of multiple architectures and cross-validation strategies.
-          </p>
-          <p>
-          <ul>
-          <li><strong>Programming Language</strong> Python</li>
-            <li><strong>Deployment:</strong> The model is intended to be deployed on Streamlit</li>
-            <li><strong>Model Training:</strong> The code trains multiple deep learning models (InceptionV3, InceptionResNetV2, Xception) and concatenates their extracted features into a single feature vector for classification.</li>
-            <li><strong>Cross-validation:</strong> Stratified K-Fold cross-validation with n=3 folds is used to evaluate the model's performance</li>
-            <li><strong>Loss Function and Optimizer:</strong> The loss function used is categorical cross-entropy, and the model is optimized using the Adam optimizer</li>
-            </ul>
-          </p>
-
-          <!--blockquote>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante."</p>
-            <small class="pull-right">Irina Martin</small>
-          </blockquote-->
         </div>
       </div>
-
-      
-      
-      <div class="col-md-8 col-md-offset-2 section-container-spacer">
+    </nav>
+  </header>
+  <div class="section-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <img src="./assets/images/dog_breed/funny-boston.png" class="img-responsive" alt="">
+          <div class="card-container">
+            <div class="text-center">
+              <h1 class="h2">004 : Dog Breed Prediction</h1>
+            </div>
+          </div>
+        </div>
+      </div>
         <div class="row">
-          <div class="col-xs-12 col-md-6">
-            <img src="./assets/images/dog_breed/pic1.png" class="img-responsive" alt="">
-            <p>Training Dataset <i>(Source: Kaggle)</i></p>
+          <div class="col-xs-12">
+            <p align="center">
+              This technical report outlines the process of training a deep learning model for dog breed classification
+              using a dataset of dog images.<br>
+              The goal is to create a model that can classify dog images into one of 120 different breeds, which in
+              actual, achieving high accuracy <mark>(93%)</mark>.<br>
+              The code provided utilizes several pre-trained convolutional neural networks (CNNs) as feature extractors
+              and a simple deep neural network (DNN) for classification.
+            </p>
+            <br>
+            <br>
+            <br>
+            <div class="main">
+              <div class="dog">
+                <div class="dog__paws">
+                  <div class="dog__bl-leg leg">
+                    <div class="dog__bl-paw paw"></div>
+                    <div class="dog__bl-top top"></div>
+                  </div>
+                  <div class="dog__fl-leg leg">
+                    <div class="dog__fl-paw paw"></div>
+                    <div class="dog__fl-top top"></div>
+                  </div>
+                  <div class="dog__fr-leg leg">
+                    <div class="dog__fr-paw paw"></div>
+                    <div class="dog__fr-top top"></div>
+                  </div>
+                </div>
+                <div class="dog__body">
+                  <div class="dog__tail"></div>
+                </div>
+                <div class="dog__head">
+                  <div class="dog__snout">
+                    <div class="dog__nose"></div>
+                    <div class="dog__eyes">
+                      <div class="dog__eye-l"></div>
+                      <div class="dog__eye-r"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dog__head-c">
+                  <div class="dog__ear-l"></div>
+                  <div class="dog__ear-r"></div>
+                </div>
+              </div>
+            </div>
+            <hr class="dashLine">
+            <h3 align="center" style="color: #6f1d1b;">Dataset</h3>
+            <p align="justify">
+              The dataset used for this task consists of dog images categorized into 120 different breeds. The dataset
+              contains a list of image filenames and their corresponding breed labels. Key components of the dataset
+              processing include:
+            </p>
+            <ul>
+              <li><strong>Data Loading:</strong> The code loads a list of image filenames and their associated labels.
+                The images are read, resized to a specified dimension (331x331), and stored in the `X` array, while
+                their corresponding breed labels are stored in the `Y` array.</li>
+              <li><strong>Label Encoding (One-Hot):</strong> The integer class indices in the `Y` array are further
+                converted into one-hot encoded vectors using the <code>to_categorical</code> function from Keras.</li>
+            </ul>
+
           </div>
-          <div class="col-xs-12 col-md-6">
-            <img src="./assets/images/dog_breed/pic2.png" class="img-responsive" alt="">
-            <p>Streamlit Deployment UI</p>
+          <div class="col-md-8 col-md-offset-2">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <img src="./assets/images/dog_breed/pic1.png" class="img-responsive" alt="">
+                <p>Training Dataset <i>(Source: Kaggle)</i></p>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <img src="./assets/images/dog_breed/pic2.png" class="img-responsive" alt="">
+                <p>Streamlit Deployment UI</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12">
+            <div class="container">
+              <hr class="dashLine">
+              <h3 align="center" style="color: #6f1d1b;">Feature Extraction</h3>
+              <p align="justify">
+                Feature extraction is a crucial step in deep learning when working with pre-trained models.
+                The code uses the following pre-trained CNN architectures as feature extractors:<br>
+                <ul>
+                  <li>InceptionV3</li>
+                  <li>InceptionResNetV2</li>
+                  <li>Xception</li>
+                </ul>
+                Each of these models is applied to the input data after appropriate preprocessing using their respective preprocessors.
+                Data preprocessing typically includes mean-centering and scaling of pixel values. The extracted features are then concatenated to create a final feature vector for each image.
+              </p>
+              <div class="container">
+                <hr class="dashLine">
+                <h3 align="center" style="color: #6f1d1b;">Model Architecture</h3>
+                <p align="justify">
+                  A simple DNN is used for classification on top of the extracted features.
+                  The DNN architecture includes the following layers:<br>
+                  <ul>
+                    <li>The model is compiled using the <code>Adam optimizer</code> and <code>categorical cross-entropy loss</code>, which is suitable for multi-class classification tasks.</li>
+                    <li><strong>Input Layer:</strong> The input shape matches the size of the concatenated feature vectors from the CNNs.</li>
+                    <li><strong>Dropout Layer:</strong> A dropout layer with a dropout rate of 0.7 is added for regularization.</li>
+                    <li><strong>Dense Layer:</strong> A dense layer with 120 units (equal to the number of dog breeds) and a <code>softmax activation</code> function for multi-class classification.</li>
+                  </ul>
+                </p>
+              </div>
+              <div class="container">
+                <hr class="dashLine">
+                <h3 align="center" style="color: #6f1d1b;">Model Training & Validation</h3>
+                <p align="justify">
+                  The training process involves splitting the dataset into multiple folds using <code>stratified k-fold cross-validation</code> (in this case, 3 folds). Each fold is used as both the training and validation set in different iterations.
+                  Training includes the following steps:
+                  <ul>
+                  <li><strong>Model Initialization:</strong>
+                    For each fold, a new instance of the DNN model is created.</li>
+                  <li><strong>Model Compilation: </strong>
+                    The DNN is compiled with the Adam optimizer, categorical cross-entropy loss, and accuracy as the evaluation metric. </li>
+                  <li><strong>Training:</strong>
+                    The model is trained on the extracted features from the training fold for a specified number of epochs. An <code>early stopping callback</code> is used to prevent overfitting and to save the best model.</li>
+                  <li><strong>Validation:</strong> The model's performance is evaluated on the validation fold, and accuracy and loss metrics are recorded.</li>
+                  </ul>
+                  <img src="./assets/images/dog_breed/pic3.png" class="img-responsive" alt="">
+                </p>
+              </div>
+              <div class="container">
+                <hr class="dashLine">
+                <h3 align="center" style="color: #6f1d1b;">Model Results & Conclusion</h3>
+                <p align="justify">
+                  The training process is repeated for each fold, resulting in three separate trained models.
+                  The results are evaluated using the following metrics:<br>
+                  <ul>
+                    <li><strong>Accuracy:</strong> The average accuracy across the folds is computed to assess the model's overall performance.</li>
+                    <li><strong>Loss:</strong> The average loss across the folds is calculated as a measure of model performance.</li>
+                    <li>The trained models are saved for future use, allowing for dog breed classification on new images.</li>
+                    
+                    <img src="./assets/images/dog_breed/accuracy.png" class="img-responsive" alt="">
+                  </ul>
+                  <br>
+                  <strong>Conclusion:</strong><br>
+                  In this experiment, I presented a comprehensive overview of the process of training a deep learning model for dog breed classification. The combination of pre-trained CNNs for feature extraction and a DNN for classification yielded a competitive performance in classifying dog breeds. The model's ability to generalize to new data can make it a valuable tool for dog breed recognition tasks. Further improvements could be made by fine-tuning the pre-trained models or experimenting with different architectures.
+                </p>
+              </div>
+              <!-- Demo-->
+              <div class="container">
+                <hr class="dashLine">
+                <h3 align="center" style="color: #6f1d1b;">Model Demo</h3>
+                <p align = "center">The model is deployed on Streamlit.</p>
+                <img src="./assets/images/dog_breed/dog_breed_demo.gif" class="img-responsive" alt="">
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="col-xs-12">
-        <img src="./assets/images/dog_breed/pic3.png" class="img-responsive" alt="">
-      </div>
-
-    </div>
   </div>
-</div>
 
 
-<script>
-  document.addEventListener("DOMContentLoaded", function (event) {
-     navActivePage();
-  });
-</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+      navActivePage();
+    });
+  </script>
 
-<!-- Google Analytics: change UA-XXXXX-X to be your site's ID 
 
-<script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-      (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date(); a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-  ga('create', 'UA-XXXXX-X', 'auto');
-  ga('send', 'pageview');
-</script>
-
---> <script type="text/javascript" src="./main.70a66962.js"></script></body>
+  <script type="text/javascript" src="./main.70a66962.js"></script>
+</body>
 
 </html>
