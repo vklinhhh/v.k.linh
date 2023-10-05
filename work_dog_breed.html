@@ -615,158 +615,178 @@
           </div>
         </div>
       </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <p align="center">
-              This technical report outlines the process of training a deep learning model for dog breed classification
-              using a dataset of dog images.<br>
-              The goal is to create a model that can classify dog images into one of 120 different breeds, which in
-              actual, achieving high accuracy <mark>(93%)</mark>.<br>
-              The code provided utilizes several pre-trained convolutional neural networks (CNNs) as feature extractors
-              and a simple deep neural network (DNN) for classification.
-            </p>
-            <br>
-            <br>
-            <br>
-            <div class="main">
-              <div class="dog">
-                <div class="dog__paws">
-                  <div class="dog__bl-leg leg">
-                    <div class="dog__bl-paw paw"></div>
-                    <div class="dog__bl-top top"></div>
-                  </div>
-                  <div class="dog__fl-leg leg">
-                    <div class="dog__fl-paw paw"></div>
-                    <div class="dog__fl-top top"></div>
-                  </div>
-                  <div class="dog__fr-leg leg">
-                    <div class="dog__fr-paw paw"></div>
-                    <div class="dog__fr-top top"></div>
-                  </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <p align="center">
+            This technical report outlines the process of training a deep learning model for dog breed classification
+            using a dataset of dog images.<br>
+            The goal is to create a model that can classify dog images into one of 120 different breeds, which in
+            actual, achieving high accuracy <mark>(93%)</mark>.<br>
+            The code provided utilizes several pre-trained convolutional neural networks (CNNs) as feature extractors
+            and a simple deep neural network (DNN) for classification.
+          </p>
+          <br>
+          <br>
+          <br>
+          <div class="main">
+            <div class="dog">
+              <div class="dog__paws">
+                <div class="dog__bl-leg leg">
+                  <div class="dog__bl-paw paw"></div>
+                  <div class="dog__bl-top top"></div>
                 </div>
-                <div class="dog__body">
-                  <div class="dog__tail"></div>
+                <div class="dog__fl-leg leg">
+                  <div class="dog__fl-paw paw"></div>
+                  <div class="dog__fl-top top"></div>
                 </div>
-                <div class="dog__head">
-                  <div class="dog__snout">
-                    <div class="dog__nose"></div>
-                    <div class="dog__eyes">
-                      <div class="dog__eye-l"></div>
-                      <div class="dog__eye-r"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="dog__head-c">
-                  <div class="dog__ear-l"></div>
-                  <div class="dog__ear-r"></div>
+                <div class="dog__fr-leg leg">
+                  <div class="dog__fr-paw paw"></div>
+                  <div class="dog__fr-top top"></div>
                 </div>
               </div>
+              <div class="dog__body">
+                <div class="dog__tail"></div>
+              </div>
+              <div class="dog__head">
+                <div class="dog__snout">
+                  <div class="dog__nose"></div>
+                  <div class="dog__eyes">
+                    <div class="dog__eye-l"></div>
+                    <div class="dog__eye-r"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="dog__head-c">
+                <div class="dog__ear-l"></div>
+                <div class="dog__ear-r"></div>
+              </div>
             </div>
+          </div>
+          <hr class="dashLine">
+          <h3 align="center" style="color: #6f1d1b;">Dataset</h3>
+          <p align="justify">
+            The dataset used for this task consists of dog images categorized into 120 different breeds. The dataset
+            contains a list of image filenames and their corresponding breed labels. Key components of the dataset
+            processing include:
+          </p>
+          <ul>
+            <li><strong>Data Loading:</strong> The code loads a list of image filenames and their associated labels.
+              The images are read, resized to a specified dimension (331x331), and stored in the `X` array, while
+              their corresponding breed labels are stored in the `Y` array.</li>
+            <li><strong>Label Encoding (One-Hot):</strong> The integer class indices in the `Y` array are further
+              converted into one-hot encoded vectors using the <code>to_categorical</code> function from Keras.</li>
+          </ul>
+
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <img src="./assets/images/dog_breed/pic1.png" class="img-responsive" alt="">
+              <p>Training Dataset <i>(Source: Kaggle)</i></p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <img src="./assets/images/dog_breed/pic2.png" class="img-responsive" alt="">
+              <p>Streamlit Deployment UI</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12">
+          <div class="container">
             <hr class="dashLine">
-            <h3 align="center" style="color: #6f1d1b;">Dataset</h3>
+            <h3 align="center" style="color: #6f1d1b;">Feature Extraction</h3>
             <p align="justify">
-              The dataset used for this task consists of dog images categorized into 120 different breeds. The dataset
-              contains a list of image filenames and their corresponding breed labels. Key components of the dataset
-              processing include:
-            </p>
+              Feature extraction is a crucial step in deep learning when working with pre-trained models.
+              The code uses the following pre-trained CNN architectures as feature extractors:<br>
             <ul>
-              <li><strong>Data Loading:</strong> The code loads a list of image filenames and their associated labels.
-                The images are read, resized to a specified dimension (331x331), and stored in the `X` array, while
-                their corresponding breed labels are stored in the `Y` array.</li>
-              <li><strong>Label Encoding (One-Hot):</strong> The integer class indices in the `Y` array are further
-                converted into one-hot encoded vectors using the <code>to_categorical</code> function from Keras.</li>
+              <li>InceptionV3</li>
+              <li>InceptionResNetV2</li>
+              <li>Xception</li>
             </ul>
-
-          </div>
-          <div class="col-md-8 col-md-offset-2">
-            <div class="row">
-              <div class="col-xs-12 col-md-6">
-                <img src="./assets/images/dog_breed/pic1.png" class="img-responsive" alt="">
-                <p>Training Dataset <i>(Source: Kaggle)</i></p>
-              </div>
-              <div class="col-xs-12 col-md-6">
-                <img src="./assets/images/dog_breed/pic2.png" class="img-responsive" alt="">
-                <p>Streamlit Deployment UI</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-xs-12">
+            Each of these models is applied to the input data after appropriate preprocessing using their respective
+            preprocessors.
+            Data preprocessing typically includes mean-centering and scaling of pixel values. The extracted features are
+            then concatenated to create a final feature vector for each image.
+            </p>
             <div class="container">
               <hr class="dashLine">
-              <h3 align="center" style="color: #6f1d1b;">Feature Extraction</h3>
+              <h3 align="center" style="color: #6f1d1b;">Model Architecture</h3>
               <p align="justify">
-                Feature extraction is a crucial step in deep learning when working with pre-trained models.
-                The code uses the following pre-trained CNN architectures as feature extractors:<br>
-                <ul>
-                  <li>InceptionV3</li>
-                  <li>InceptionResNetV2</li>
-                  <li>Xception</li>
-                </ul>
-                Each of these models is applied to the input data after appropriate preprocessing using their respective preprocessors.
-                Data preprocessing typically includes mean-centering and scaling of pixel values. The extracted features are then concatenated to create a final feature vector for each image.
+                A simple DNN is used for classification on top of the extracted features.
+                The DNN architecture includes the following layers:<br>
+              <ul>
+                <li>The model is compiled using the <code>Adam optimizer</code> and
+                  <code>categorical cross-entropy loss</code>, which is suitable for multi-class classification tasks.
+                </li>
+                <li><strong>Input Layer:</strong> The input shape matches the size of the concatenated feature vectors
+                  from the CNNs.</li>
+                <li><strong>Dropout Layer:</strong> A dropout layer with a dropout rate of 0.7 is added for
+                  regularization.</li>
+                <li><strong>Dense Layer:</strong> A dense layer with 120 units (equal to the number of dog breeds) and a
+                  <code>softmax activation</code> function for multi-class classification.</li>
+              </ul>
               </p>
-              <div class="container">
-                <hr class="dashLine">
-                <h3 align="center" style="color: #6f1d1b;">Model Architecture</h3>
-                <p align="justify">
-                  A simple DNN is used for classification on top of the extracted features.
-                  The DNN architecture includes the following layers:<br>
-                  <ul>
-                    <li>The model is compiled using the <code>Adam optimizer</code> and <code>categorical cross-entropy loss</code>, which is suitable for multi-class classification tasks.</li>
-                    <li><strong>Input Layer:</strong> The input shape matches the size of the concatenated feature vectors from the CNNs.</li>
-                    <li><strong>Dropout Layer:</strong> A dropout layer with a dropout rate of 0.7 is added for regularization.</li>
-                    <li><strong>Dense Layer:</strong> A dense layer with 120 units (equal to the number of dog breeds) and a <code>softmax activation</code> function for multi-class classification.</li>
-                  </ul>
-                </p>
-              </div>
-              <div class="container">
-                <hr class="dashLine">
-                <h3 align="center" style="color: #6f1d1b;">Model Training & Validation</h3>
-                <p align="justify">
-                  The training process involves splitting the dataset into multiple folds using <code>stratified k-fold cross-validation</code> (in this case, 3 folds). Each fold is used as both the training and validation set in different iterations.
-                  Training includes the following steps:
-                  <ul>
-                  <li><strong>Model Initialization:</strong>
-                    For each fold, a new instance of the DNN model is created.</li>
-                  <li><strong>Model Compilation: </strong>
-                    The DNN is compiled with the Adam optimizer, categorical cross-entropy loss, and accuracy as the evaluation metric. </li>
-                  <li><strong>Training:</strong>
-                    The model is trained on the extracted features from the training fold for a specified number of epochs. An <code>early stopping callback</code> is used to prevent overfitting and to save the best model.</li>
-                  <li><strong>Validation:</strong> The model's performance is evaluated on the validation fold, and accuracy and loss metrics are recorded.</li>
-                  </ul>
-                  <img src="./assets/images/dog_breed/pic3.png" class="img-responsive" alt="">
-                </p>
-              </div>
-              <div class="container">
-                <hr class="dashLine">
-                <h3 align="center" style="color: #6f1d1b;">Model Results & Conclusion</h3>
-                <p align="justify">
-                  The training process is repeated for each fold, resulting in three separate trained models.
-                  The results are evaluated using the following metrics:<br>
-                  <ul>
-                    <li><strong>Accuracy:</strong> The average accuracy across the folds is computed to assess the model's overall performance.</li>
-                    <li><strong>Loss:</strong> The average loss across the folds is calculated as a measure of model performance.</li>
-                    <li>The trained models are saved for future use, allowing for dog breed classification on new images.</li>
-                    
-                    <img src="./assets/images/dog_breed/accuracy.png" class="img-responsive" alt="">
-                  </ul>
-                  <br>
-                  <strong>Conclusion:</strong><br>
-                  In this experiment, I presented a comprehensive overview of the process of training a deep learning model for dog breed classification. The combination of pre-trained CNNs for feature extraction and a DNN for classification yielded a competitive performance in classifying dog breeds. The model's ability to generalize to new data can make it a valuable tool for dog breed recognition tasks. Further improvements could be made by fine-tuning the pre-trained models or experimenting with different architectures.
-                </p>
-              </div>
-              <!-- Demo-->
-              <div class="container">
-                <hr class="dashLine">
-                <h3 align="center" style="color: #6f1d1b;">Model Demo</h3>
-                <p align = "center">The model is deployed on Streamlit.</p>
-                <img src="./assets/images/dog_breed/dog_breed_demo.gif" class="img-responsive" alt="">
-              </div>
+            </div>
+            <div class="container">
+              <hr class="dashLine">
+              <h3 align="center" style="color: #6f1d1b;">Model Training & Validation</h3>
+              <p align="justify">
+                The training process involves splitting the dataset into multiple folds using
+                <code>stratified k-fold cross-validation</code> (in this case, 3 folds). Each fold is used as both the
+                training and validation set in different iterations.
+                Training includes the following steps:
+              <ul>
+                <li><strong>Model Initialization:</strong>
+                  For each fold, a new instance of the DNN model is created.</li>
+                <li><strong>Model Compilation: </strong>
+                  The DNN is compiled with the Adam optimizer, categorical cross-entropy loss, and accuracy as the
+                  evaluation metric. </li>
+                <li><strong>Training:</strong>
+                  The model is trained on the extracted features from the training fold for a specified number of
+                  epochs. An <code>early stopping callback</code> is used to prevent overfitting and to save the best
+                  model.</li>
+                <li><strong>Validation:</strong> The model's performance is evaluated on the validation fold, and
+                  accuracy and loss metrics are recorded.</li>
+              </ul>
+              <img src="./assets/images/dog_breed/pic3.png" class="img-responsive" alt="">
+              </p>
+            </div>
+            <div class="container">
+              <hr class="dashLine">
+              <h3 align="center" style="color: #6f1d1b;">Model Results & Conclusion</h3>
+              <p align="justify">
+                The training process is repeated for each fold, resulting in three separate trained models.
+                The results are evaluated using the following metrics:<br>
+              <ul>
+                <li><strong>Accuracy:</strong> The average accuracy across the folds is computed to assess the model's
+                  overall performance.</li>
+                <li><strong>Loss:</strong> The average loss across the folds is calculated as a measure of model
+                  performance.</li>
+                <li>The trained models are saved for future use, allowing for dog breed classification on new images.
+                </li>
+
+                <img src="./assets/images/dog_breed/accuracy.png" class="img-responsive" alt="">
+              </ul>
+              <br>
+              <strong>Conclusion:</strong><br>
+              In this experiment, I presented a comprehensive overview of the process of training a deep learning model
+              for dog breed classification. The combination of pre-trained CNNs for feature extraction and a DNN for
+              classification yielded a competitive performance in classifying dog breeds. The model's ability to
+              generalize to new data can make it a valuable tool for dog breed recognition tasks. Further improvements
+              could be made by fine-tuning the pre-trained models or experimenting with different architectures.
+              </p>
+            </div>
+            <!-- Demo-->
+            <div class="container">
+              <hr class="dashLine">
+              <h3 align="center" style="color: #6f1d1b;">Model Demo</h3>
+              <p align="center">The model is deployed on Streamlit.</p>
+              <img src="./assets/images/dog_breed/dog_breed_demo.gif" class="img-responsive" alt="">
             </div>
           </div>
         </div>
       </div>
+    </div>
   </div>
 
 
