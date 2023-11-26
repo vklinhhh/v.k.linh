@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <meta content="description" name="description">
+  <meta name="google" content="notranslate" />
+
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+  <link href="./assets/favicon.ico" rel="icon">
+  <link href="./main.3f6952e4.css" rel="stylesheet">
+  <title>Vietnamese Speaker Regconition</title>  
+
+  
+<style>
+  body {
+    background-color: black;
+    color: white;
+  }
+
+  .custom-header {
+    background-color: black;
+    color: white;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #432818;
+  }
+
+  
+
+
+</style>
+</head>
+
+<body class="">
+<div id="site-border-left"></div>
+<div id="site-border-right"></div>
+<div id="site-border-top"></div>
+<div id="site-border-bottom"></div>
+
+<header>
+  <nav class="navbar  navbar-fixed-top navbar-defaul custom-header">
+    <div class="container">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="./index.html" title="" style="color: #fff;">
+              <span class="fa-icon">
+                <i class="fa fa-hand-peace-o" aria-hidden="true" style="font-size:16px;color:#fff;"></i>
+              </span>
+              Back to My Hello Page</a></li>
+          <li><a href="./works.html" title="" style="color: #fff;">
+              <span class="fa-icon">
+                <i class="fa fa-bar-chart" aria-hidden="true" style="font-size:16px;color:#fff;"></i>
+              </span>
+              Back to My Works</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right navbar-small visible-md visible-lg">
+          <li><a href="./work_nyc_311_analysis.html" style="color: #fff;">001</a></li>
+          <li><a href="./work_customer_testimonial.html" style="color: #fff;">002</a></li>
+          <li><a href="./work_scientific_abstract_classification.html" class="active" style="color: #fff;">003</a></li>
+          <li><a href="./work_dog_breed.html" style="color: #fff;">004</a></li>
+          <li><a href="./work_landmark.html" style="color: #fff;">005</a></li>
+        </ul>
+
+      </div> 
+    </div>
+  </nav>
+</header>
+
+<div class="section-container custom-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <img src="./assets/images/vn_speaker_recognition/background.jpg" class="img-responsive" alt="">
+        <div class="card-container custom-header" style="background-color: #432818 ;opacity: 0.85; ">
+          <div class="text-center">
+            <h1 class="h2 custom-header" style="background-color: transparent;">002 : Vietnamese Speaker Recognition</h1>
+          </div>
+          <p class="text-center">
+            Welcome to the groundbreaking project in AI, dedicated to Vietnamese Speaker Recognition, aiming to revolutionize voice identification technology within the Vietnamese language landscape.
+          </p>
+        </div>
+      </div>     
+      <div class="col-xs-12">
+        <div class="row">
+          <class="col-xs-12">
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <h3 class="h3 custom-header text-center">
+              <font color="#ffb20f">Project Color Palette</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <img src="./assets/images/vn_speaker_recognition/color_palette.png" class="img-responsive" style="display: block; margin: 0 auto;">
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <h3 class="h3 custom-header text-center">
+              <font color="#ffb20f">Model Framework</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <img src="./assets/images/vn_speaker_recognition/model.png" class="img-responsive" alt="">
+            <p align="justify">
+              <br>
+              The model utilizes a Convolutional Neural Network (CNN) with Residual Blocks to capture intricate patterns within the speech data.
+              <br>
+              <strong><u>Residual Block:</u></strong> <br>
+              The residual block is the core building block of the model, designed to gather and leverage residual information, aiding in the more effective training of deep networks.
+              The structure of each residual block is as follows:
+              <ul>
+                <li>Shortcut Connection: A 1D convolutional layer with a kernel size of 1 is applied as a shortcut connection to preserve crucial information. </li>
+                <li>Convolutional Layers: Multiple 1D convolutional layers with a kernel size of 3 are used to gather complex features. </li>
+                <li>Activation Function: The ReLU activation function is applied after each convolutional layer to introduce non-linearity. </li>
+                <li>Residual Connection: The output of the convolutional layers is combined with the shortcut connection through element-wise addition.</li>
+                <li>Pooling: A max-pooling layer with a pool size of 2 and strides of 2 is applied to reduce spatial dimensions.</li>
+              </ul>
+              The overall architecture of the model is constructed by stacking multiple residual blocks with increasing filter sizes.
+              The model architecture can be summarized as follows:<br>
+              <ul>
+                <li>Input Layer: Accepts input data with a shape of (SAMPLING_RATE // 2, 1). </li>
+                <li>Residual Blocks: Five stacked residual blocks gradually increasing the number of filters (16, 32, 64, 128, 128) to capture hierarchical features.</li>
+                <li>Average Pooling: An average pooling layer with a pool size of 3 and strides of 3 is applied to reduce spatial dimensions.</li>
+                <li>Flatten: Flattens the output to prepare for fully connected layers.</li>
+                <li>Dense Layers: Two fully connected dense layers (256 units, ReLU activation, 128 units, ReLU activation) are added to gather additional features.</li>
+                <li>Output Layer: The output layer consists of a Dense layer with softmax activation for multi-class classification into 46 classes</li>
+              </ul>
+            </p>
+
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <h3 class="h3 custom-header text-center">
+              <font color="#ffb20f">Dataset for Experiment</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <p align="justify">
+              The VIVOS dataset is a valuable resource for research in Automatic Vietnamese Speech Recognition.
+              Compiled by AILAB, a computer science laboratory at the University of Science - Vietnam National University Ho Chi Minh City (VNUHCM),
+              this dataset is spearheaded by Professor Vu Hai Quan.<br>
+              This dataset serves as a foundation for studying and developing applications related to Vietnamese speech.
+              It has been made publicly available free of charge, aiming to attract more scientists to address issues in Vietnamese speech recognition.
+              <br>
+              <p>@inproceedings{luong-vu-2016-non,
+                title = "A non-expert {K}aldi recipe for {V}ietnamese Speech Recognition System",
+                author = "Luong, Hieu-Thi  and
+                  Vu, Hai-Quan",
+                booktitle = "Proceedings of the Third International Workshop on Worldwide Language Service Infrastructure and Second Workshop on Open Infrastructures and Analysis Frameworks for Human Language Technologies ({WLSI}/{OIAF}4{HLT}2016)",
+                month = dec,
+                year = "2016",
+                address = "Osaka, Japan",
+                publisher = "The COLING 2016 Organizing Committee",
+                url = "https://aclanthology.org/W16-5207",
+                pages = "51--55",
+            }</p>
+              <img src="./assets/images/vn_speaker_recognition/data_plot.png" class="img-responsive" alt="">
+              The VIVOS dataset contains Vietnamese speech data along with the following crucial information:
+              <ul>
+                <li>speaker_id: This is an ID representing the speaker (the person speaking). Each speaker is identified by a speaker_id. Identification codes range from VIVOSSPK01 to VIVOSSPK46. Each speaker is contained within a separate directory named according to their identification code.</li>
+                <li>audio: Sound files are provided in the WAV format at a rate of 16kHz, the standard rate for Vietnamese speech recognition.</li>
+                <li>prompt: Consists of text transcripts corresponding to the content of the audio, essentially the sentence that the speaker is prompted to articulate.</li>
+              </ul>
+              <br>
+              Figure above illustrates the number of audio samples in each speaker directory used for training and testing the speaker recognition task in the Vietnamese environment.<br>
+              Accordingly, there are a total of 46 speaker directories, each containing from 100 to 300 audio samples, averaging around 250 audio samples per speaker.<br>
+              In addition to the recording samples for each speaker, noise data is also utilized to augment the diversity of the dataset.
+              A total of 6 noise files are used, divided into 354 samples, each lasting 1 second, and with a sampling rate equivalent to the speaker audio samples at 16kHz.
+            </p>
+            
+            <br>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            
+            <h3 class="h3 custom-header text-center">
+              <font color="#ffb20f">Preprocessing Data</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <img src="./assets/images/vn_speaker_recognition/data_processing.png" class="img-responsive" style="display: block; margin: 0 auto;">  
+            <p>
+              <li><strong>Amplitutde Envelope:</strong></li>
+              <br>
+              Amplitude Envelope is a concept in audio signal processing.
+              It represents the amplitude of an audio signal over time, creating a graph that illustrates the variation of the sound's intensity (amplitude) across time.
+              <img src="./assets/images/vn_speaker_recognition/ae.png" class="img-responsive" style="display: block; margin: 0 auto;">  
+            </p>
+            
+            <p>
+              <li><strong>Root Mean Square (RMS):</strong></li>
+              <br>
+              RMS is an important concept in audio signal processing,
+              often used to measure the average magnitude of an audio signal over a specific period of time.
+              It's commonly employed to assess sound intensity and finds various applications in music, speech processing, and other audio-related fields.
+              <img src="./assets/images/vn_speaker_recognition/rms.png" class="img-responsive" style="display: block; margin: 0 auto;">  
+            </p>
+            
+            <p>
+              <li><strong>Zero Crossing Rate:</strong></li>
+              <br>
+              Zero Crossing Rate is the number of times a signal crosses the zero value along the time axis. 
+              It measures how often the signal changes its polarity over time and is commonly used to describe the smoothness and fluctuation characteristics of sound.<br>
+              In the context of audio, Zero Crossing Rate is calculated by counting the instances when the amplitude of an audio signal changes from positive to negative or vice versa.
+              <img src="./assets/images/vn_speaker_recognition/zcr.png" class="img-responsive" style="display: block; margin: 0 auto;">  
+            </p>
+
+            <p>
+              <li><strong>Fourier Transform:</strong></li>
+              <br>
+              The Fourier Transform is an important mathematical method used to analyze and understand the frequency components of a signal.
+              It converts a signal from the time domain to the frequency domain,
+              aiding in the identification of frequency components and their respective amplitudes within the signal.
+              <img src="./assets/images/vn_speaker_recognition/ft.png" class="img-responsive" style="display: block; margin: 0 auto;">  
+            </p>
+
+            <p>
+              <li><strong>Spectrogram:</strong></li>
+              <br>
+              The spectrogram is a graph that displays the frequency transformation of an audio signal over time. 
+              It's commonly used to visualize how the frequency components of a signal change over time, 
+              providing essential information about both the frequency and time characteristics of the sound.
+              <img src="./assets/images/vn_speaker_recognition/spectrogram.png" class="img-responsive" style="display: block; margin: 0 auto;">  
+            </p>
+            <br>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <h3 class="h3 custom-header text-center">
+              <font color="#ffb20f">Experimental Evaluation</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <p align="justify">
+              The experiment was conducted with 4 architectures, varying hyperparameter adjustments and different compilers, yet maintaining a common underlying architecture—utilizing residual blocks in both ResNet and CNN networks.
+              <table border="1">
+                <tr>
+                  <th>Model</th>
+                  <th>Dropout</th>
+                  <th>Batch Normalization</th>
+                  <th>Optimizer</th>
+                </tr>
+                <tr>
+                  <td>cnn_model_v1.h5</td>
+                  <td>❌</td>
+                  <td>❌</td>
+                  <td>Adam</td>
+                </tr>
+                <tr>
+                  <td>cnn_model_v2.h5</td>
+                  <td>✅(20%)</td>
+                  <td>❌</td>
+                  <td>Adam</td>
+                </tr>
+                <tr>
+                  <td>cnn_model_v3.h5</td>
+                  <td>✅(20%)</td>
+                  <td>✅</td>
+                  <td>Adam</td>
+                </tr>
+                <tr>
+                  <td>cnn_model_v4.h5</td>
+                  <td>✅(20%)</td>
+                  <td>❌</td>
+                  <td>SGD</td>
+                </tr>
+              </table>
+              Each model was trained with default settings: EPOCH = 100, system: V100 GPU Colab.
+              <br>
+              The training process of the models:
+              <br>
+              <img src="./assets/images/vn_speaker_recognition/model_training.png" class="img-responsive" style="display: block; margin: 0 auto;">  
+              <br>
+              Evaluate the experimental models: <br>
+              <table border="1">
+                <tr>
+                  <th>Model</th>
+                  <th>Loss</th>
+                  <th>Accuracy</th>
+                  <th>F1-Score</th>
+                </tr>
+                <tr>
+                  <td>cnn_model_v1.h5</td>
+                  <td>1.137325</td>
+                  <td>74.7%</td>
+                  <td>0.022222</td>
+                </tr>
+                <tr>
+                  <td>cnn_model_v2.h5</td>
+                  <td>0.859850</td>
+                  <td>74.3%</td>
+                  <td>0.024786</td>
+                </tr>
+                <tr>
+                  <td>cnn_model_v3.h5</td>
+                  <td>0.972959</td>
+                  <td>71.4%</td>
+                  <td>0.015385</td>
+                </tr>
+                <tr>
+                  <td>cnn_model_v4.h5</td>
+                  <td>0.914903</td>
+                  <td>43.8%</td>
+                  <td>0.022222</td>
+                </tr>
+              </table>
+              
+            <br>
+            <img src="./assets/images/vn_speaker_recognition/roc.png" class="img-responsive" style="display: block; margin: 0 auto;">  
+            <br>
+            The <strong>`cnn_model_v2.h5`</strong> model is the best among the 4 models, as it has the highest accuracy, sensitivity, and F1-Score, as well as the highest AUC. However, this model can still be improved by increasing its precision. One way to do this is by augmenting the training data. Another approach is to use more advanced training techniques, such as data augmentation.
+            Therefore, the <strong>`cnn_model_v2.h5`</strong> model will be used for deployment in the application.
+            </p>
+
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <h3 class="h3 custom-header text-center">
+              <font color="#ffb20f">Deployment Demo</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <img src="./assets/images/vn_speaker_recognition/demo.gif" class="img-responsive">           
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function (event) {
+     navActivePage();
+  });
+</script>
+<script type="text/javascript" src="./main.70a66962.js"></script>
+
+</body>
+
+</html>
