@@ -127,7 +127,7 @@
       </div>     
       <div class="col-xs-12">
         <div class="row">
-          <class="col-xs-12">
+          <u="col-xs-12">
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <h3 class="h3 custom-header text-center">
               <font color="#7cb990">Project Color Palette</font>
@@ -195,7 +195,7 @@
             
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <p align="justify">
-              <strong>A. Approach to the Problem:</strong> <br>
+              <font size="3" color="#77a8bf"><strong>A. Approach to the Problem:</strong></font> <br>
               
               The first step involves data preprocessing to explore correlations between attributes and the predictive target using a correlation matrix, as well as addressing outliers. <br>
               Following this approach, the dataset is split into training and testing sets.<br>
@@ -204,7 +204,7 @@
               Finally, the model is used to predict house prices on the test set, and the model's effectiveness is evaluated by computing the RMSE and R-squared metrics.<br>
             </p>
             <p align="justify">
-              <strong>B. Least Squares Method:</strong><br>
+              <font size="3" color="#77a8bf"><strong>B. Least Squares Method:</strong></font> <br>
               The Least Squares Method has two variants: Univariable least square (used when only one independent variable predicts the dependent variable) and Multivariable least square (employed when multiple independent variables predict the dependent variable).<br>
               In this project, we'll be utilizing Multivariable least squares.<br>
               With Multivariable least squares, our goal is to find the best-fitting linear line to model the relationship between the dependent variable and multiple independent variables in multidimensional datasets. <br>
@@ -238,7 +238,7 @@
                   <li>Correlation among residuals.</li>
                   <li>Collinearity among independent variables.</li>
                 </ul>
-            <strong>C. Why using the Method of Least Squares:</strong> <br>
+                <font size="3" color="#77a8bf"><strong>C. Why using the Method of Least Squares:</strong></font> <br>
             In this project, we utilize the method of least squares to compute the parameters for the linear regression model.<br>
             This method is employed to determine a line that represents the linear relationship between the input and output variables.<br>
             The least squares method aims to find a line where the sum of squared errors on the training set is minimized.<br>
@@ -256,18 +256,412 @@
               <font color="#7cb990">Model Initialization</font>
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
-            <p>
-              
+            <p align = "justify">  
+            <font size="3" color="#77a8bf"><strong>A. Calculate the correlation matrix among the attributes:</font></strong><br>
+              <strong>The concept of the correlation matrix:</strong> <br>
+                <ul>
+                  <li>The correlation matrix is a concept in statistics and linear algebra, commonly used to measure the linear relationship between attributes in a dataset.</li>
+                  <li>It's constructed by computing the correlation coefficients between each pair of attributes and organizing them into a square matrix.</li>
+                  <li>The values within the correlation matrix indicate the degree of correlation between attribute pairs.</li>
+                  <li>A value close to 1 signifies a strong linear relationship between two attributes; a value close to 0 implies no linear relationship between the attributes.</li>
+                </ul>
+                <div class="code-container">
+                  <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+                  <div class="code-content">
+                    <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+    sns.heatmap(corr_matrix, annot=True, fmt=".1f", cmap ="crest")
+                    </pre>
+                  </div>
+                </div>
+                <img src="./assets/images/regression_boston/corr.png" class="img-responsive" style="display: block; margin: 0 auto;">
+              <br>
+              The heatmap reveals that the correlation coefficients of attributes RM (0.7 - positive correlation) and LSTAT (-0.7 - negative correlation) are the highest concerning the MEDV value we are computing.<br>
+              To gain a clearer understanding of the distribution of these two attributes with the MEDV house prices, we'll employ a pairplot.<br>
+              <br>
+              <strong>Concept of Pairplot:</strong> <br>
+              <ul>
+                <li>Pairplot is a visualization concept used to represent all pairwise relationships between attributes within a dataset.</li>
+                <li>It's commonly depicted as a matrix of scatterplots, where each scatterplot signifies the linear relationship between two attributes.</li>
+              </ul>
+              <div class="code-container">
+                <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+                <div class="code-content">
+                  <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  ssns.pairplot(df[['rm', 'lstat', 'medv']])
+                  </pre>
+                </div>
+              </div> 
+              <img src="./assets/images/regression_boston/pairplot.png" class="img-responsive" style="display: block; margin: 0 auto;">
+              <br>
+              In the pairplot of the Boston housing dataset, we observe a linear relationship between house prices (MEDV) and the number of rooms (independent variable RM), as well as an inverse relationship with the lower status population ratio (independent variable LSTAT).<br>
+              Specifically, when RM increases, MEDV (house prices) also tends to increase, while an increase in LSTAT leads to a decrease in MEDV. <br>
+              Furthermore, the plot indicates a strong correlation (-0.6) between the two independent variables RM and LSTAT.<br>
+              This might indicate multicollinearity between them.<br>
+              <br>
+              <strong>Concept of Multicollinearity in Linear Regression:</strong> <br>
+              <ul align="justify">
+                <li>In linear regression, multicollinearity occurs when two or more independent variables in the model exhibit a strong correlation with each other.</li>
+                <li>This could lead to inaccurate estimation of regression coefficients, reducing the model's accuracy and affecting its predictive capabilities.</li>
+                <li>Multicollinearity is a crucial issue in data analysis and scientific research, requiring specific methods to identify and mitigate its impact.</li>
+                <li>Techniques like using the Variance Inflation Factor (VIF) or performing a generalized eigenvalue decomposition can help identify the extent of multicollinearity and provide solutions to mitigate its effect on linear regression models.</li>
+              </ul>
+              <br>
+              <strong>Concept of Variance Inflation Factor (VIF):</strong> <br>
+              <ul>
+                <li>The Variance Inflation Factor (VIF) is used to assess the level of multicollinearity among independent variables in a linear regression model.<br>
+                  VIF indicates the magnitude of the variance of each independent variable after removing the effects of other independent variables on that variable.
+                  Therefore, if the VIF value for a particular independent variable is high,
+                  it suggests a greater likelihood of multicollinearity.</li>
+                <li>
+                  VIF is calculated by determining the ratio of the variance of a multiple regression model with that variable to the variance of a simple linear regression model of that variable. <br>
+                  If the VIF value is greater than 1, the variable is considered to have multicollinearity effects. <br>
+                  Typically, if the VIF value exceeds 5 or 10,
+                  the variable is considered to be significantly multicollinear and needs to be addressed to mitigate the impact of multicollinearity on the regression model.
+                </li>
+              </ul>
+              <div class="code-container">
+                <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+                <div class="code-content">
+                  <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  # Chọn các biến độc lập và biến phụ thuộc
+  Independent_vars = df[['rm', 'lstat']].values
+  # Thêm một cột chứa giá trị 1 vào ma trận X để tính toán hệ số chặn
+  Independent_vars = np.insert(Independent_vars, 0, 1, axis=1)
+  # Tính toán VIF cho các biến độc lập
+  vif = pd.DataFrame()
+  vif["VIF Factor"] = [variance_inflation_factor(Independent_vars, i) for i in range(1, Independent_vars.shape[1])]
+  vif["features"] = ['rm', 'lstat']
+  # In kết quả
+  print(vif)
+                  </pre>
+                </div>
+              </div>
+              <table border="1" cellpadding="5" style="margin: 0 auto;">
+                <tr>
+                  <th>VIF Factor</th>
+                  <th>Features</th>
+                </tr>
+                <tr>
+                  <td>1.60452</td>
+                  <td>rm</td>
+                </tr>
+                <tr>
+                  <td>1.60452</td>
+                  <td>lstat</td>
+                </tr>
+              </table>
+              <br>
+              Based on the VIF results, we observe that both independent variables, RM and LSTAT, have VIF values less than 5.<br>
+              Consequently, we can conclude that there is no multicollinearity between them.<br>
+              Therefore, it is safe to use both independent variables in the linear regression model.<br>
+              <br>
+              <font size="3" color="#77a8bf"><strong>B. Handle the outliers:</font></strong><br>
+              Outliers can significantly influence the parameters of a linear model,
+              especially the slope coefficient, as they can alter the slope of the linear line.<br>
+              Their presence in the data can restrict the linear model from performing optimally as they can cause significant changes in the model's parameters.<br>
+              This, in turn, may lead to inaccurate predictions and erroneous decisions. <br>
+              Therefore, identifying and addressing outliers is crucial to achieve the best results from a linear model.<br>
+              <br>
+              To identify outliers in the RM and LSTAT attributes, we employ the Interquartile Range (IQR) method to detect and subsequently remove them.<br>
+              From the earlier pairplot, it's evident that RM follows a relatively normal distribution, while LSTAT exhibits a slightly left-skewed distribution. <br>
+              <div class="code-container">
+                <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+                <div class="code-content">
+                  <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  #Tính độ lệch của phân phối RM và LSTAT
+  skew_rm = skew(df['rm'])
+  skew_lstat = skew(df['lstat'])
+  print(f"Độ lệch của rm: {skew_rm:.2f}")
+  print(f"Độ lệch của lstat: {skew_lstat:.2f}")
+                  </pre>
+                </div>
+              </div>
+              <table border="1" cellpadding="5" style="margin: 0 auto;">
+                <tr>
+                  <th>Features</th>
+                  <th>Skewness</th>
+                </tr>
+                <tr>
+                  <td>rm</td>
+                  <td>0.40</td>
+                </tr>
+                <tr>
+                  <td>lstat</td>
+                  <td>0.90</td>
+                </tr>
+              </table>
+              <br>
+              According to the computed results, the skewness of RM is 0.40, 
+              indicating that its distribution is closer to a normal distribution.<br>
+              On the other hand, the skewness of LSTAT is 0.90, signifying a left-skewed distribution with many values concentrated in the left tail.<br>
+              <br>
+              This observation aligns with the boxplot, where LSTAT exhibits numerous outliers on the right-hand side, highlighting its skewed distribution towards the lower values.<br>
+              <div class="code-container">
+                <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+                <div class="code-content">
+                  <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  # Vẽ boxplot cho biến lstat
+  plt.boxplot(df['lstat'], vert= False)
+  plt.title('Boxplot cho biến LSTAT')
+  plt.show()
+                  </pre>
+                </div>
+              </div>
+              <img src="./assets/images/regression_boston/boxplot_1.png" class="img-responsive" style="display: block; margin: 0 auto;">
+              <br>
+              For RM, there might not be a necessity to handle outliers as the skewness is relatively low and its distribution is close to normal. <br>
+              However, for LSTAT, it might be appropriate to employ outlier removal using the lower_bound and upper_bound values derived from the Interquartile Range (IQR) method, as mentioned earlier. <br>
+              <div class="code-container">
+                <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+                <div class="code-content">
+                  <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  #Tính IQR
+  q1 = np.percentile(df['lstat'], 25)
+  q3 = np.percentile(df['lstat'], 75)
+  iqr = q3 - q1
+  #Tính giá trị lower_bound và upper_bound
+  lower_bound = q1 - 1.5 * iqr
+  upper_bound = q3 + 1.5 * iqr
+  
+  #Loại bỏ các giá trị ngoại lai của LSTAT
+  df = df[(df['lstat'] > lower_bound) & (df['lstat'] < upper_bound)]
+  
+  # Vẽ boxplot cho biến LSTAT sau khi loại bỏ Outlier
+  plt.boxplot(df['lstat'], vert= False)
+  plt.title('Boxplot cho biến LSTAT sau khi loại bỏ Outlier')
+  plt.show()
+                  </pre>
+                </div>
+              </div>
+              <img src="./assets/images/regression_boston/boxplot_2.png" class="img-responsive" style="display: block; margin: 0 auto;">
+              <br>
+              <font size="3" color="#77a8bf"><strong>C. Split the data to train and test:</font></strong><br>
+              <div class="code-container">
+                <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+                <div class="code-content">
+                  <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  # Chọn các thuộc tính RM và LSTAT làm biến độc lập, MEDV làm biến phụ thuộc
+  X = df[['rm', 'lstat']].values
+  y = df['medv'].values
+  
+  # Thêm một cột chứa giá trị 1 vào ma trận X để tính toán hệ số chặn
+  X = np.insert(X, 0, 1, axis=1)
+  Chia dữ liệu thành tập train và tập test tỉ lệ 70:30
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+                  </pre>
+                </div>
+              </div>
+              This code segment selects the 'RM' and 'LSTAT' attributes as independent variables (X) and 'MEDV' as the dependent variable (y).<br>
+              It inserts a column with a value of 1 into the X matrix to calculate the intercept coefficient.<br>
+              Finally, it divides the data into training and testing sets with a 70:30 ratio.<br>
+              <br>
+              <font size="3" color="#77a8bf"><strong>D. Apply linear regression to predict house prices by optimizing the loss function using the method of least squares:</font></strong><br>
             </p>
+            <br>
+            <div class="code-container">
+              <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+              <div class="code-content">
+                <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  #Kiểm tra ma trận X^T X có thể đảo ngược hay không
+  XTX = X_train.T.dot(X_train)
+  det = np.linalg.det(XTX)
+  if det == 0:
+      print("Ma trận X^T X không thể đảo ngược.")
+  else:
+      print("Ma trận X^T X có thể đảo ngược.")
+                </pre>
+              </div>
+            </div>
+            The output "The matrix (<b>X<sup>T</sup>X</b>) is invertible" indicates that the matrix (<b>X<sup>T</sup>X</b>) can be inverted.
+            <div class="code-container">
+              <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+              <div class="code-content">
+                <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  # Tính toán bộ tham số theta bằng phương pháp bình phương tối tiểu
+  XT = np.transpose(X_train)
+  XTX1 = np.linalg.inv(XT.dot(X_train))
+  XTY = XT.dot(y_train)
+  theta = XTX1.dot(XTY)
+  print(theta)
+  print(f"MEDV = {theta[0]} + {theta[1]} * RM + {theta[2]}* LSTAT")
+                </pre>
+              </div>
+            </div>
+            The linear regression model is used to predict the value of MEDV based on 2 features: RM and LSTAT.<br>
+            The formula generated by the linear regression model is:<br>
+            <blockquote class="custom-blockquote">
+            MEDV = 2.95 + 4.64 * RM - 0.75 * LSTAT
+            </blockquote>
+            The slope coefficient for RM is 4.64, indicating a positive correlation between RM and MEDV. <br>
+            his means that as the value of RM increases, the value of MEDV also increases.<br>
+            The slope coefficient for LSTAT is -0.75, indicating a negative correlation between LSTAT and MEDV.<br>
+            This means that as the value of LSTAT increases, the value of MEDV decreases.<br>
+            The intercept coefficient of the model is 2.95, indicating the value of MEDV when RM = 0 and LSTAT = 0 is 2.95.<br>
+            These coefficients can be used to predict the value of MEDV based on RM and LSTAT for new datasets.<br>
+            However, it's important to note that the model can only predict the accuracy of MEDV to the extent explained by RM and LSTAT, and there might be other factors influencing MEDV that this model does not include.<br>
+            <br>
+            After obtaining the parameter set theta for the multivariate linear regression equation,
+            we will represent it in the form of a plane in three-dimensional space corresponding to 2 independent variables (RM, LSTAT) and 1 dependent variable (MEDV): <br>
+            <div class="code-container">
+              <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+              <div class="code-content">
+                <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  x_min = np.min(X[:, 1])
+  x_max = np.max(X[:, 1])
+  y_min = np.min(X[:, 2])
+  y_max = np.max(X[:, 2])
+  xx, yy = np.meshgrid(np.linspace(x_min, x_max), np.linspace(y_min, y_max))
+  Z = theta[0] + theta[1] * xx + theta[2] * yy
+  fig = plt.figure()
+  ax = fig.add_subplot(111, projection='3d')
+  ax.scatter(X[:, 1], X[:, 2], y)
+  ax.plot_surface(xx, yy, Z, alpha=0.5)
+  ax.set_xlabel('RM')
+  ax.set_ylabel('LSTAT')
+  ax.set_zlabel('MEDV')
+  plt.show()
+                </pre>
+              </div>
+            </div>
+            <img src="./assets/images/regression_boston/surface.png" class="img-responsive" style="display: block; margin: 0 auto;">
             <br>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <h3 class="h3 custom-header text-center">
               <font color="#7cb990">Experimental Evaluation</font>
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
-            <p align="justify">
+            <align="justify">
+              <font size="3" color="#77a8bf"><strong>A. Predicting house prices based on the optimized parameters just found</strong></font>
+              <div class="code-container">
+                <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+                <div class="code-content">
+                  <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  # Dự đoán giá trị nhà cho tập kiểm tra
+  y_pred = np.dot(X_test, theta)
+  residuals = y_test - y_pred
+  fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
+  
+  # Vẽ biểu đồ so sánh giá trị thực tế và giá trị dự đoán
+  ax1.scatter(y_test, y_pred, alpha=0.5)
+  ax1.plot([0, max(y_test)], [0, max(y_test)], '--', color='red')
+  ax1.set_xlabel('Giá trị thực tế')
+  ax1.set_ylabel('Giá trị dự đoán')
+  ax1.set_title('Biểu đồ so sánh giá trị thực tế và giá trị dự đoán')
 
-            </p>
+  # Vẽ đồ thị Residual Plot
+  ax2.scatter(y_pred, residuals)
+  ax2.axhline(y=0, color='r', linestyle='-')
+  ax2.set_xlabel('Giá trị dự đoán')
+  ax2.set_ylabel('Sai số (Residual)')
+  ax2.set_title('Biểu đồ phân tán của sai số')
+
+  plt.tight_layout()
+  plt.show()
+                  </pre>
+                </div>
+              </div>
+              <img src="./assets/images/regression_boston/output.png" class="img-responsive" style="display: block; margin: 0 auto;">
+            <ul>
+              <li>In the first plot (on the left), we compare the actual values with the predicted values.
+                The points are represented by blue dots.
+                The red line represents the diagonal line (y = x), indicating the similarity between the actual and predicted values. If the data points lie close to the diagonal line (the red line), the model predicts well. Conversely, if the data points are far from the diagonal line, the model's predictions are not accurate.</li>
+              <li>In this first plot, considering the overall values, it can be observed that the model tends to predict lower than the actual values when the actual values are greater than around 30. However, for lower actual values, the model predictions are relatively accurate.</li>
+              <li>In the second plot (on the right), we represent the residuals using blue dots. The red line is the y = 0 line, representing the case where there are no residuals.
+                If the points are evenly distributed around this line, we can conclude that the linear regression model is good.</li>
+              <li>The residual plot in the housing price prediction example shows that the residuals are randomly distributed around the mean value of 0. This indicates that the linear regression model has met the requirements of randomness and independence among the data points.
+                This ensures the reliability of predictions and the applicability of the model to new cases.</li>
+              <li>However, there are still some data points far from the mean line, suggesting that the model hasn't fully captured the variations in the data. This could be due to the model's dependence on assumptions about distribution and correlation among the input variables or the presence of outliers or abnormal data.
+                These data points need further investigation to determine the cause and improve the model if necessary.</li>
+            </ul>
+            <br>
+            <font size="3" color="#77a8bf"><strong>B. Evaluate the effectiveness of the obtained equation based on RMSE and R-squared</strong></font><br>
+            <strong>The concept of RMSE:</strong><br>
+            RMSE is calculated using the mathematical formula as follows:<br>
+            <blockquote class="custom-blockquote">
+              RMSE = &radic;<span style="text-decoration:overline;"></span>(&nbsp;<sub>1</sub>&frasl;&nbsp;n&nbsp;&nbsp;&Sigma;<span style="vertical-align:sub;">&nbsp;i=1</span><span style="vertical-align:super;">&nbsp;n</span>&nbsp;(&nbsp;y<sub>test_i</sub>&nbsp;-&nbsp;y<sub>pred_i</sub>&nbsp;)<sup>2</sup>&nbsp;)
+            </blockquote>
+            In which:
+            <ul>
+              <li>RMSE is Root Mean Square Error</li>
+              <li>n is the number of data points</li>
+              <li>y_test_i is the actual value of the i-th data point</li>
+              <li>y_pred_i is the predicted value of the i-th data point</li>
+            </ul>
+            This formula is used to assess the accuracy of prediction models. A smaller RMSE indicates a more accurate prediction model. RMSE is commonly used in prediction problems, such as in the housing price prediction problem here. <br>
+            <div class="code-container">
+              <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+              <div class="code-content">
+                <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  # Tính toán sai số RMSE
+  rmse = np.sqrt(np.mean((y_test - y_pred) ** 2))
+  # Tính giá trị trung bình của biến mục tiêu
+  y_mean = np.mean(y_test)
+  print('Giá trị trung bình của biến mục tiêu:', y_mean)
+  print('RMSE:', rmse)
+
+  # Nhận xét kết quả
+  if rmse < y_mean:
+      print('RMSE nhỏ hơn giá trị trung bình của biến mục tiêu, mô hình có độ chính xác tương đối tốt.')
+  else:
+      print('RMSE lớn hơn giá trị trung bình của biến mục tiêu, mô hình có độ chính xác tương đối thấp.')
+                </pre>
+              </div>
+            </div>
+            The average value of the target variable is 22.12.<br>
+            RMSE: 4.73.<br>
+            As the RMSE is smaller than the average value of the target variable, the model shows relatively good accuracy.<br>
+            <br>
+            <strong>Concept of R-squared:</strong><br>
+            <ul>
+              <li>R-squared (R<sup>2</sup>) is a statistical metric used to assess the accuracy of a regression model.</li>
+              <li>R<sup>2</sup> indicates the percentage of variance in the target variable (explained by the model) that is explained by the independent variables in the model.</li>
+              <li>R<sup>2</sup> ranges from 0 to 1, and the closer its value is to 1, the better the model fits the data.</li>                  
+            </ul>
+            The mathematical formula to calculate R-squared is: <br>
+            <blockquote class="custom-blockquote">
+            R<sup>2</sup> = 1 - SS<sub>res</sub>&frasl;SS<sub>tot</sub> <br>
+            SS<sub>res</sub> = ∑<sub>i=1</sub>(y<sub>test_i</sub> - y<sub>pred_i</sub>)<sup>2</sup> <br>
+            SS<sub>tot</sub> = ∑<sub>i=1</sub>(y<sub>test_i</sub> - ȳ)<sup>2</sup>
+            </blockquote>
+            In which:
+            <ul>
+              <li>y<sub>test_i</sub> is the actual value of the i-th data sample</li>
+              <li>y<sub>pred_i</sub> is the predicted value of the i-th data sample</li>
+              <li>ȳ is the mean value of the target variable (in this case, house prices), and n is the number of data samples.</li>
+            </ul>
+            SS<sub>res</sub> represents the sum of squared residuals of the model, and SS<sub>tot</sub> is the total sum of squares of the target variable's mean.<br>
+            Both SS<sub>res</sub> and SS<sub>tot</sub> are calculated by summing the squared differences between the predicted value and the actual value.<br>
+            R<sup>2</sup> has significant importance in evaluating regression models. A higher R<sup>2</sup> value indicates that the model explains a large portion of the variability of the target variable and hence is a better model.<br>
+            <div class="code-container">
+              <div class="code-toggle" onclick="toggleCode(this)">Code</div>
+              <div class="code-content">
+                <pre style="background-color: rgba(37,74,127,0.5); color: #fff; border-radius: 5px;">
+  #Tính R-squared
+  SS_res = sum((y_test - y_pred)**2)
+  SS_tot = sum((y_test - y_mean)**2)
+  R_squared = (1 - SS_res/SS_tot)
+
+  print(R_squared)
+                </pre>
+              </div>
+            </div>
+            
+            Based on the R-square value and RMSE, the model can be considered quite good.<br>
+            The R-square value of 0.68 indicates that the model explains approximately 68% of the variability of the dependent variable using the independent variables in the model. <br>
+            <br>
+            <font size="3" color="#77a8bf"><strong>C. Further development direction</strong></font> <br>
+            The result of the housing price prediction model in Boston based on two independent variables, RM and LSTAT, shows that the model has a relatively good predictive capability.<br>
+            The R-square result of the model is 0.68, indicating that 68% of the variance in house prices is explained by the two independent variables RM and LSTAT. Additionally, the residual plot displays a concentration of data points around the mean line. However, there are still some outliers and uneven error amplitudes, which may need further investigation to optimize the model.<br>
+
+            Some suggestions to improve the model's performance include:<br>
+            <ul>
+              <li>Using additional independent variables like TAX, AGE, NOX, DIS to analyze their impact on house prices.</li>
+              <li>Applying data preprocessing methods such as normalization, transformation, handling missing data to minimize the influence of noise and outliers on the results.</li>
+              <li>Experimenting and comparing the effectiveness of other models like Random Forest, Decision Tree, SVM to find the most suitable model for the data and better explain the independent variables.</li>
+            </ul>
+            In summary, expanding these factors could enhance the accuracy of the Boston housing price prediction model, aiding in analyzing the impact of independent variables and predicting house values more accurately.<br>
+
+          </p>
           </div>
         </div>
       </div>
