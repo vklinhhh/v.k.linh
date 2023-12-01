@@ -39,7 +39,7 @@
   }
 
   th {
-    background-color: #432818;
+    background-color: #22232b;
   }
 
   
@@ -98,13 +98,14 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <img src="./assets/images/vn_speaker_recognition/background.jpg" class="img-responsive" alt="">
-        <div class="card-container custom-header" style="background-color: #432818 ;opacity: 0.85; ">
+        <img src="./assets/images/video_retrieval/background.jpg" class="img-responsive" alt="">
+        <div class="card-container custom-header" style="background-color: #22232b ;opacity: 1; ">
           <div class="text-center">
             <h1 class="h2 custom-header" style="background-color: transparent;">001 : Video Event Retrieval for Vietnamese News</h1>
           </div>
           <p class="text-center">
-            Welcome to the groundbreaking project in AI, dedicated to Vietnamese Speaker Recognition, aiming to revolutionize voice identification technology within the Vietnamese language landscape.
+            I developed this project while participating in the AI-Challenge competition,
+            where I utilized cutting-edge AI technologies, including CLIP models and cosine similarity calculations, to retrieve event-specific videos from visual data based on Textual KIS queries.
           </p>
         </div>
       </div>     
@@ -113,223 +114,301 @@
           <class="col-xs-12">
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <h3 class="h3 custom-header text-center">
-              <font color="#ffb20f">Project Color Palette</font>
+              <font color="#59aeba">Project Color Palette</font>
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
-            <img src="./assets/images/vn_speaker_recognition/color_palette.png" class="img-responsive" style="display: block; margin: 0 auto;">
+            <img src="./assets/images/video_retrieval/custom_palette.png" class="img-responsive" style="display: block; margin: 0 auto;">
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <h3 class="h3 custom-header text-center">
-              <font color="#ffb20f">Model Framework</font>
+              <font color="#59aeba">Model Framework</font>
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
-            <img src="./assets/images/vn_speaker_recognition/model.png" class="img-responsive" alt="">
+            <img src="./assets/images/video_retrieval/model.png" class="img-responsive" style="display: block; margin: 0 auto;">
+            <p align=center><i>Summary of the CLIP Model in the paper <a href="https://arxiv.org/abs/2103.00020" style="color: #f38f66;"><strong>Learning Transferable Visual Models From Natural Language Supervision</strong></a>
+            </strong></i></p>
             <p align="justify">
-              <br>
-              The model utilizes a Convolutional Neural Network (CNN) with Residual Blocks to capture intricate patterns within the speech data.
-              <br>
-              <strong><u>Residual Block:</u></strong> <br>
-              The residual block is the core building block of the model, designed to gather and leverage residual information, aiding in the more effective training of deep networks.
-              The structure of each residual block is as follows:
-              <ul>
-                <li>Shortcut Connection: A 1D convolutional layer with a kernel size of 1 is applied as a shortcut connection to preserve crucial information. </li>
-                <li>Convolutional Layers: Multiple 1D convolutional layers with a kernel size of 3 are used to gather complex features. </li>
-                <li>Activation Function: The ReLU activation function is applied after each convolutional layer to introduce non-linearity. </li>
-                <li>Residual Connection: The output of the convolutional layers is combined with the shortcut connection through element-wise addition.</li>
-                <li>Pooling: A max-pooling layer with a pool size of 2 and strides of 2 is applied to reduce spatial dimensions.</li>
-              </ul>
-              The overall architecture of the model is constructed by stacking multiple residual blocks with increasing filter sizes.
-              The model architecture can be summarized as follows:<br>
-              <ul>
-                <li>Input Layer: Accepts input data with a shape of (SAMPLING_RATE // 2, 1). </li>
-                <li>Residual Blocks: Five stacked residual blocks gradually increasing the number of filters (16, 32, 64, 128, 128) to capture hierarchical features.</li>
-                <li>Average Pooling: An average pooling layer with a pool size of 3 and strides of 3 is applied to reduce spatial dimensions.</li>
-                <li>Flatten: Flattens the output to prepare for fully connected layers.</li>
-                <li>Dense Layers: Two fully connected dense layers (256 units, ReLU activation, 128 units, ReLU activation) are added to gather additional features.</li>
-                <li>Output Layer: The output layer consists of a Dense layer with softmax activation for multi-class classification into 46 classes</li>
-              </ul>
+                <br>
+                <font size="3" color="#f38f66"><strong>Model Framework for Zero-Shot Video Event Retrieval:</strong></font><br>
+                <ul style="list-style-type:number" align="justify">
+                  <li><strong>Data Retrieval and Preprocessing:</strong>
+                    <ul>
+                      <li>Obtain video keyframes organized into subdirectories, representing different videos.</li>
+                      <li>Prepare the textual query for the video event retrieval task.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Feature Extraction using CLIP:</strong>
+                    <ul>
+                      <li>Utilize the pre-trained CLIP model (<code><strong>`openai/clip-vit-base-patch32`</strong></code>) for extracting features from both textual queries and video keyframes.</li>
+                      <li>For each keyframe:<br>
+                        - Load the image.<br>
+                        - Extract image features using CLIP and convert them into numerical representations.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Cosine Similarity Calculation:</strong>
+                    <ul>
+                      <li>Compute cosine similarity between the extracted features of the textual query and the features of each keyframe.</li>
+                      <li>Determine the most similar keyframes based on their similarity scores.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Zero-Shot Inference Process:</strong>
+                    <ul>
+                      <li>Perform zero-shot inference by inferring associations between textual queries and video keyframes without specific training on these pairs.</li>
+                      <li>Leverage the pre-trained CLIP model's generalization capabilities learned from a diverse dataset of images and text.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Result Retrieval and Video Clipping:</strong>
+                    <ul>
+                      <li>Retrieve the best matching keyframe based on highest similarity score.</li>
+                      <li>Extract a segment of the video around the identified keyframe to create a video clip that represents the sought-after event.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Further Analysis or Processing:</strong>
+                    <ul>
+                      <li>Optional: Conduct additional analysis or processing on the retrieved video clip or related metadata.</li>
+                    </ul>
+                  </li>
+                </ul>
+                <br>
+                <font size="3" color="#f38f66"><strong>Key Points:</strong></font><br>
+                <ul align="justify">
+                  <li><strong>Zero-Shot Inference:</strong> The model performs video event retrieval without direct training on the specific textual queries or video keyframes, relying on the pre-trained CLIP model's ability to understand and generalize from diverse image-text pairs.</li>
+                  <li><strong>Semantic Understanding:</strong> The model leverages semantic relationships learned during pre-training to associate textual descriptions with visual content without explicit training on these specific associations.</li>
+                  <li><strong>Generalization:</strong> By utilizing the CLIP model's pre-existing knowledge learned from a diverse dataset, the model extends its understanding to perform tasks on previously unseen data.</li>
+                </ul>
+                This framework highlights the application of zero-shot inference in video event retrieval using the CLIP model, demonstrating its ability to generalize and associate text with visual content without explicit training on the specific query-video pairs.
             </p>
 
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <h3 class="h3 custom-header text-center">
-              <font color="#ffb20f">Dataset for Experiment</font>
+              <font color="#59aeba">Dataset</font>
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <p align="justify">
-              The VIVOS dataset is a valuable resource for research in Automatic Vietnamese Speech Recognition.
-              Compiled by AILAB, a computer science laboratory at the University of Science - Vietnam National University Ho Chi Minh City (VNUHCM),
-              this dataset is spearheaded by Professor Vu Hai Quan.<br>
-              This dataset serves as a foundation for studying and developing applications related to Vietnamese speech.
-              It has been made publicly available free of charge, aiming to attract more scientists to address issues in Vietnamese speech recognition.
-              <br>
-              <p>@inproceedings{luong-vu-2016-non,
-                title = "A non-expert {K}aldi recipe for {V}ietnamese Speech Recognition System",
-                author = "Luong, Hieu-Thi  and
-                  Vu, Hai-Quan",
-                booktitle = "Proceedings of the Third International Workshop on Worldwide Language Service Infrastructure and Second Workshop on Open Infrastructures and Analysis Frameworks for Human Language Technologies ({WLSI}/{OIAF}4{HLT}2016)",
-                month = dec,
-                year = "2016",
-                address = "Osaka, Japan",
-                publisher = "The COLING 2016 Organizing Committee",
-                url = "https://aclanthology.org/W16-5207",
-                pages = "51--55",
-            }</p>
-              <img src="./assets/images/vn_speaker_recognition/data_plot.png" class="img-responsive" alt="">
-              The VIVOS dataset contains Vietnamese speech data along with the following crucial information:
+              The dataset used in the Video Event Retrieval application is provided by the <a href="https://aichallenge.hochiminhcity.gov.vn" style="color: #f38f66;">competition organizers</a>, comprising videos related to news bulletins produced by various Vietnamese broadcasters and extracted from YouTube.<br>
+              The dataset consists of 20 subdirectories, corresponding to news sources, including 'VTV 60 Seconds' program and several others. <br>
+              The varying number of videos in each subdirectory showcases the diversity of the data sources, with the duration of each video ranging from 15 to 30 minutes.<br>
+              Each subdirectory is accompanied by a number of keyframes, representing iconic images extracted from the respective videos.<br>
               <ul>
-                <li>speaker_id: This is an ID representing the speaker (the person speaking). Each speaker is identified by a speaker_id. Identification codes range from VIVOSSPK01 to VIVOSSPK46. Each speaker is contained within a separate directory named according to their identification code.</li>
-                <li>audio: Sound files are provided in the WAV format at a rate of 16kHz, the standard rate for Vietnamese speech recognition.</li>
-                <li>prompt: Consists of text transcripts corresponding to the content of the audio, essentially the sentence that the speaker is prompted to articulate.</li>
+                <li>Number of videos: 738 videos (in MP4 format)</li>
+                <li>Number of keyframes: 201,745 frames (in JPG format)</li>
               </ul>
               <br>
-              Figure above illustrates the number of audio samples in each speaker directory used for training and testing the speaker recognition task in the Vietnamese environment.<br>
-              Accordingly, there are a total of 46 speaker directories, each containing from 100 to 300 audio samples, averaging around 250 audio samples per speaker.<br>
-              In addition to the recording samples for each speaker, noise data is also utilized to augment the diversity of the dataset.
-              A total of 6 noise files are used, divided into 354 samples, each lasting 1 second, and with a sampling rate equivalent to the speaker audio samples at 16kHz.
-            </p>
-            
-            <br>
-            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
-            
-            <h3 class="h3 custom-header text-center">
-              <font color="#ffb20f">Preprocessing Data</font>
-            </h3>
-            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
-            <img src="./assets/images/vn_speaker_recognition/data_processing.png" class="img-responsive" style="display: block; margin: 0 auto;">  
-            <p>
-              <li><strong>Amplitutde Envelope:</strong></li>
-              <br>
-              Amplitude Envelope is a concept in audio signal processing.
-              It represents the amplitude of an audio signal over time, creating a graph that illustrates the variation of the sound's intensity (amplitude) across time.
-              <img src="./assets/images/vn_speaker_recognition/ae.png" class="img-responsive" style="display: block; margin: 0 auto;">  
-            </p>
-            
-            <p>
-              <li><strong>Root Mean Square (RMS):</strong></li>
-              <br>
-              RMS is an important concept in audio signal processing,
-              often used to measure the average magnitude of an audio signal over a specific period of time.
-              It's commonly employed to assess sound intensity and finds various applications in music, speech processing, and other audio-related fields.
-              <img src="./assets/images/vn_speaker_recognition/rms.png" class="img-responsive" style="display: block; margin: 0 auto;">  
-            </p>
-            
-            <p>
-              <li><strong>Zero Crossing Rate:</strong></li>
-              <br>
-              Zero Crossing Rate is the number of times a signal crosses the zero value along the time axis. 
-              It measures how often the signal changes its polarity over time and is commonly used to describe the smoothness and fluctuation characteristics of sound.<br>
-              In the context of audio, Zero Crossing Rate is calculated by counting the instances when the amplitude of an audio signal changes from positive to negative or vice versa.
-              <img src="./assets/images/vn_speaker_recognition/zcr.png" class="img-responsive" style="display: block; margin: 0 auto;">  
-            </p>
-
-            <p>
-              <li><strong>Fourier Transform:</strong></li>
-              <br>
-              The Fourier Transform is an important mathematical method used to analyze and understand the frequency components of a signal.
-              It converts a signal from the time domain to the frequency domain,
-              aiding in the identification of frequency components and their respective amplitudes within the signal.
-              <img src="./assets/images/vn_speaker_recognition/ft.png" class="img-responsive" style="display: block; margin: 0 auto;">  
-            </p>
-
-            <p>
-              <li><strong>Spectrogram:</strong></li>
-              <br>
-              The spectrogram is a graph that displays the frequency transformation of an audio signal over time. 
-              It's commonly used to visualize how the frequency components of a signal change over time, 
-              providing essential information about both the frequency and time characteristics of the sound.
-              <img src="./assets/images/vn_speaker_recognition/spectrogram.png" class="img-responsive" style="display: block; margin: 0 auto;">  
-            </p>
-            <br>
-            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
-            <h3 class="h3 custom-header text-center">
-              <font color="#ffb20f">Experimental Evaluation</font>
-            </h3>
-            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
-            <p align="justify">
-              The experiment was conducted with 4 architectures, varying hyperparameter adjustments and different compilers, yet maintaining a common underlying architecture—utilizing residual blocks in both ResNet and CNN networks.
+              Data statistics required for use:
               <table border="1">
                 <tr>
-                  <th>Model</th>
-                  <th>Dropout</th>
-                  <th>Batch Normalization</th>
-                  <th>Optimizer</th>
+                  <th>Folder</th>
+                  <th># Videos</th>
+                  <th># Keyframes</th>
                 </tr>
                 <tr>
-                  <td>cnn_model_v1.h5</td>
-                  <td>❌</td>
-                  <td>❌</td>
-                  <td>Adam</td>
+                  <td>L01</td>
+                  <td>31</td>
+                  <td>7,658</td>
                 </tr>
                 <tr>
-                  <td>cnn_model_v2.h5</td>
-                  <td>✅(20%)</td>
-                  <td>❌</td>
-                  <td>Adam</td>
+                  <td>L02</td>
+                  <td>30</td>
+                  <td>8,820</td>
                 </tr>
                 <tr>
-                  <td>cnn_model_v3.h5</td>
-                  <td>✅(20%)</td>
-                  <td>✅</td>
-                  <td>Adam</td>
+                  <td>L03</td>
+                  <td>31</td>
+                  <td>8,554</td>
                 </tr>
                 <tr>
-                  <td>cnn_model_v4.h5</td>
-                  <td>✅(20%)</td>
-                  <td>❌</td>
-                  <td>SGD</td>
+                  <td>L04</td>
+                  <td>31</td>
+                  <td>9,908</td>
+                </tr>
+                <tr>
+                  <td>L05</td>
+                  <td>28</td>
+                  <td>7,781</td>
+                </tr>
+                <tr>
+                  <td>L06</td>
+                  <td>28</td>
+                  <td>8,980</td>
+                </tr>
+                <tr>
+                  <td>L07</td>
+                  <td>31</td>
+                  <td>8,694</td>
+                </tr>
+                <tr>
+                  <td>L08</td>
+                  <td>29</td>
+                  <td>9,779</td>
+                </tr>
+                <tr>
+                  <td>L09</td>
+                  <td>30</td>
+                  <td>8,074</td>
+                </tr>
+                <tr>
+                  <td>L10</td>
+                  <td>30</td>
+                  <td>9,058</td>
+                </tr>
+                <tr>
+                  <td>L11</td>
+                  <td>31</td>
+                  <td>8,631</td>
+                </tr>
+                <tr>
+                  <td>L12</td>
+                  <td>31</td>
+                  <td>8,294</td>
+                </tr>
+                <tr>
+                  <td>L13</td>
+                  <td>30</td>
+                  <td>7,865</td>
+                </tr>
+                <tr>
+                  <td>L14</td>
+                  <td>30</td>
+                  <td>8,835</td>
+                </tr>
+                <tr>
+                  <td>L15</td>
+                  <td>31</td>
+                  <td>8,404</td>
+                </tr>
+                <tr>
+                  <td>L16</td>
+                  <td>31</td>
+                  <td>8,914</td>
+                </tr>
+                <tr>
+                  <td>L17</td>
+                  <td>33</td>
+                  <td>9,260</td>
+                </tr>
+                <tr>
+                  <td>L18</td>
+                  <td>23</td>
+                  <td>4,961</td>
+                </tr>
+                <tr>
+                  <td>L19</td>
+                  <td>99</td>
+                  <td>24,245</td>
+                </tr>
+                <tr>
+                  <td>L20</td>
+                  <td>100</td>
+                  <td>25,030</td>
                 </tr>
               </table>
-              Each model was trained with default settings: EPOCH = 100, system: V100 GPU Colab.
-              <br>
-              The training process of the models:
-              <br>
-              <img src="./assets/images/vn_speaker_recognition/model_training.png" class="img-responsive" style="display: block; margin: 0 auto;">  
-              <br>
-              Evaluate the experimental models: <br>
-              <table border="1">
-                <tr>
-                  <th>Model</th>
-                  <th>Loss</th>
-                  <th>Accuracy</th>
-                  <th>F1-Score</th>
-                </tr>
-                <tr>
-                  <td>cnn_model_v1.h5</td>
-                  <td>1.137325</td>
-                  <td>74.7%</td>
-                  <td>0.022222</td>
-                </tr>
-                <tr>
-                  <td>cnn_model_v2.h5</td>
-                  <td>0.859850</td>
-                  <td>74.3%</td>
-                  <td>0.024786</td>
-                </tr>
-                <tr>
-                  <td>cnn_model_v3.h5</td>
-                  <td>0.972959</td>
-                  <td>71.4%</td>
-                  <td>0.015385</td>
-                </tr>
-                <tr>
-                  <td>cnn_model_v4.h5</td>
-                  <td>0.914903</td>
-                  <td>43.8%</td>
-                  <td>0.022222</td>
-                </tr>
-              </table>
-              
             <br>
-            <img src="./assets/images/vn_speaker_recognition/roc.png" class="img-responsive" style="display: block; margin: 0 auto;">  
+            Advantages of the dataset:
+            <table border="1">
+              <tr>
+                <th style="width: 26%;">Advantages</th>
+                <th>Impact</th>
+              </tr>
+              <tr>
+                <td>Diversity</td>
+                <td>This dataset is diverse in content, covering events both within and outside the country, cultural activities, sports, travel, culinary, fashion, and news alerts.</td>
+              </tr>
+              <tr>
+                <td>Data Size</td>
+                <td>The dataset is large with a significant number of videos, providing the model with opportunities to learn from various types of data, improving its understanding and differentiation between contexts.</td>
+              </tr>
+              <tr>
+                <td>Accompanying Keyframes</td>
+                <td>The inclusion of accompanying keyframes by the organizers helps in saving time for extracting representative images for videos and content processing.</td>
+              </tr>
+            </table>
             <br>
-            The <strong>`cnn_model_v2.h5`</strong> model is the best among the 4 models, as it has the highest accuracy, sensitivity, and F1-Score, as well as the highest AUC. However, this model can still be improved by increasing its precision. One way to do this is by augmenting the training data. Another approach is to use more advanced training techniques, such as data augmentation.
-            Therefore, the <strong>`cnn_model_v2.h5`</strong> model will be used for deployment in the application.
+            Disadvantages of the dataset:
+            <table border="1">
+              <tr>
+                <th style="width: 26%;">Disadvantages</th>
+                <th>Impact</th>
+              </tr>
+              <tr>
+                <td>Image Quality</td>
+                <td>Some videos from security cameras have low image quality and lack color information, posing a challenge in extracting keyframes and using the CLIP model.</td>
+              </tr>
+              <tr>
+                <td>Content Diversity</td>
+                <td>The diversity of content in news videos poses requirements for diverse training data and the model's capability to understand and differentiate between various content types.</td>
+              </tr>
+              <tr>
+                <td>Data Size</td>
+                <td>A large dataset is both an advantage and a disadvantage as it requires significant computational resources.</td>
+              </tr>
+              <tr>
+                <td>Audio and Text Conversion</td>
+                <td>One issue with news videos is the amount of accompanying information summarized in the presenter's speech. Processing information from audio and text demands the ability to convert from speech to text.</td>
+              </tr>
+            </table>
+            <br>
+            The dataset is a crucial factor for the news video application.
+            The diversity of news video content needs to be represented in the dataset to ensure that the model can comprehend and distinguish between various types of videos.<br>
+            However, handling videos with low quality and multiple data sources, reliant on computational resources, poses a significant challenge.
             </p>
+            
+            <br>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            
+            <h3 class="h3 custom-header text-center">
+              <font color="#59aeba">Feature Extraction For Text Query And Keyframes</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <p>
+            
+            </p>
+            <br>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <h3 class="h3 custom-header text-center">
+              <font color="#59aeba">Cosine Similarity</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <p align="justify">
+            </p>
+            <br>
 
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <h3 class="h3 custom-header text-center">
-              <font color="#ffb20f">Deployment Demo</font>
+              <font color="#59aeba">The Limitations Of The Application</font>
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <p align="justify">
+            </p>
+
+            <br>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <h3 class="h3 custom-header text-center">
+              <font color="#59aeba">Deployment Demo</font>
+            </h3>
+            <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
+            <p align="justify">
+              This application interacts with Hadoop to access keyframe and video files from HDFS.<br>
+              The keyframe features are stored in a JSON file on HDFS and accessed via HTTP requests.
+              Videos are also accessed from HDFS by downloading the video content locally to extract video clips around similar keyframes. <br>
+              <br>
+              The application interface includes a text box for users to input queries.<br>
+              Due to resource limitations and the Vietnamese language processing capability of the CLIP model, queries need to be translated to English before being input into the application for optimal results.<br>
+              Besides retrieving the top 10 keyframes with the highest query similarity and a short 10-second clip extracted from the video containing the most similar keyframe,
+              the application also features a sidebar providing basic information about the extracted video, such as:<br>
+              <ul>
+                <li>Author: Video author's name</li>
+                <li>Channel_id: YouTube channel name</li>
+                <li>Channel_url: Link to the channel where the video was published</li>
+                <li>Description: Description of the video on YouTube</li>
+                <li>Keywords: Keywords related to the video segment</li>
+                <li>Length: Video length in seconds</li>
+                <li>Publish_date: Publication date of the video on YouTube</li>
+                <li>Thumbnail_url: URL of the video thumbnail</li>
+                <li>Title: Title of the video on YouTube</li>
+                <li>Watch_url: Link to watch the video on YouTube</li>
+              </ul>
+              <u>Note</u>: Additional information may not be complete for some videos as the channel author may not display or fill in this information on YouTube.<br>
+            </p>
+            
             <img src="./assets/images/vn_speaker_recognition/demo.gif" class="img-responsive">           
 
           </div>
