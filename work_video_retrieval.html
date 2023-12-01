@@ -377,6 +377,22 @@
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <p align="justify">
+              The Video Event Retrieval application has made progress in searching and retrieving events in videos based on text queries.<br>
+              However, it faces several limitations and unachieved capabilities due to computational resource constraints and specific characteristics of the CLIP model:<br>
+              <ul style="list-style-type:number">
+                <li><strong>Accuracy in Extracting Information from Home Security Videos:</strong></li>
+                    The CLIP model might encounter reduced effectiveness when applied to low-quality home security videos recorded in black and white with low light conditions. The accuracy of image recognition in such environments is a challenge, impacting the efficiency of event retrieval and reducing accuracy.<br>
+                <li><strong>Efficiency in Searching Information Not Present in Keyframes:</strong></li>
+                    Relying primarily on keyframes for search and retrieval might limit the effectiveness if specific user-requested information isn't included in the extracted keyframes. Developing a mechanism to analyze the entire video content instead of solely relying on keyframes may require enhancements in model capability or real-time object classification.
+                <li><strong>Ineffective Audio Information Extraction:</strong></li>
+                    The application's focus on image and text-based information extraction lacks efficiency in extracting valuable details from video audio, especially in news videos or scenarios with multiple simultaneous events.
+                    Extracting and processing audio, along with speech-to-text conversion, could demand additional resources and computation.
+                <li><strong>Inaccurate Vietnamese Text Extraction and OCR:</strong></li>
+                    Challenges persist in extracting Vietnamese text and recognizing it accurately within keyframes due to CLIP's primarily English focus. Limited understanding and search capability for Vietnamese text in queries might hinder effective searches in a Vietnamese context, requiring optimization and improvements in Vietnamese text recognition and OCR techniques.
+                <li><strong>Slow Computation Time and Application Response:</strong></li>
+                    The application's computational inefficiency, particularly due to the extensive dataset and model limitations, leads to slow response times, taking approximately 5-10 minutes for a single query result, affecting competition participation with time constraints.
+              </ul> <br>
+              These challenges highlight the need for improvements in extracting information from specific video types, enhancing language understanding and OCR for better accuracy, and optimizing computational efficiency for quicker responses.
             </p>
 
             <br>
