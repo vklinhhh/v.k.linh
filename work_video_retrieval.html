@@ -41,9 +41,25 @@
   th {
     background-color: #22232b;
   }
+  .formula {
+    font-size: 18px;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 20px;
+    }
+  .custom-blockquote {
+    font-size: 1.5em;
+    color: #f38f66; 
+    border: 2px solid #1e7ca7; /* Add a border */
+    padding: 10px; /* Add padding for spacing */
+    box-shadow: 0 4px 8px 0 rgba(124,185,144, 0.2);
+    transition: box-shadow 0.3s ease;
+    text-align: center;
+    }
 
-  
-
+  .custom-blockquote:hover {
+      box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px); 
+    }
 
 </style>
 </head>
@@ -104,8 +120,8 @@
             <h1 class="h2 custom-header" style="background-color: transparent;">001 : Video Event Retrieval for Vietnamese News</h1>
           </div>
           <p class="text-center">
-            I developed this project while participating in the AI-Challenge competition,
-            where I utilized cutting-edge AI technologies, including CLIP models and cosine similarity calculations, to retrieve event-specific videos from visual data based on Textual KIS queries.
+            I developed this project while participating in the AI-Challenge competition in 2023,
+            where I utilized cutting-edge AI technologies, including CLIP models and cosine similarity calculation, to retrieve event-specific videos from visual data based on Textual KIS queries.
           </p>
         </div>
       </div>     
@@ -359,7 +375,28 @@
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <p>
-            
+              <font size="3" color="#f38f66"><strong>Keyframe feature extraction:</strong></font><br>
+              Keyframe feature extraction is a crucial step in video processing and can facilitate concise and effective representations for image-based tasks within videos.<br>
+
+              The process of extracting keyframe features involves the following steps:<br>
+              <ul>
+                <li>Prepare the CLIP model: Initially, I load the CLIP model and necessary components such as the processor.</li>
+                <li>Identify the directory containing keyframes: Determine the path to the directory containing keyframes extracted from the video.</li>
+                <li>Retrieve a list of video-specific subdirectories: Gather all subdirectories containing keyframes corresponding to each video.</li>
+                <li>Extract features from each keyframe: For each keyframe in every video, I undertake the following steps:<br>
+                  - Open the keyframe image using the PIL library.<br>
+                  - Encode the keyframe image using the CLIP model to obtain its feature vector.<br>
+                  - Store the keyframe features and associate them with the relative path of the keyframe within each video.</li>
+                <li>Store the features into a JSON file: Finally, after extracting features from all keyframes, I store them in a JSON file for further data processing purposes.</li>
+              </ul>
+              <br>
+              <font size="3" color="#f38f66"><strong>Text feature extraction:</strong></font><br>
+              When a user inputs a text query and initiates the search process, the application utilizes the CLIP model to extract text features from the query.
+              This process involves the following steps:
+              <ul>
+                <li>Encode the Query: The text query gets encoded using the CLIP model employing a text encoder. This transforms the query into a vector representation based on its content.</li>
+                <li>Extract Text Features: After encoding, the model extracts text features from the vector representation. These features typically have a dimensionality of 512.</li>
+              </ul>
             </p>
             <br>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
@@ -368,9 +405,38 @@
             </h3>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <p align="justify">
-            </p>
+            After obtaining both the text features from the query and the keyframe features from the video, the comparison process is performed by calculating the cosine similarity. <br>
+            Cosine similarity is a measurement of similarity between two vectors in a multi-dimensional space. It's commonly used in various statistical, machine learning, natural language processing, and other fields for comparing data points.<br>
+            <div class="formula">
+              <blockquote class="custom-blockquote">
+                <span>cos(θ) = </span>
+                <span>&Sigma; A<sub>i</sub> * B<sub>i</sub> / (||A|| * ||B||)</span>
+              </blockquote>
+            </div>
+            In which:
+            <ul>
+              <li>cos(θ) is the cosine similarity.</li>
+              <li>A<sub>i</sub> and B<sub>i</sub> are elements of vectors A and B respectively.</li>
+              <li>&Sigma; denotes the sum of all elements in the vectors.</li>
+              <li>||A|| and ||B|| represent the magnitudes (Euclidean norms) of vectors A and B.</li>
+            </ul>
+            The important characteristics of cosine similarity include:
+            <ul>
+              <li><strong>Distance Value:</strong><br>
+                The result of cosine similarity ranges from -1 to 1. A value of 1 indicates complete similarity between two vectors, 0 indicates no similarity, and -1 represents complete dissimilarity (completely unlike each other).</li>
+              <li><strong>Size Independence:</strong><br>
+                Cosine similarity is not influenced by the size of vectors. This means it's an appropriate similarity measure when comparing similarity between vectors of different sizes.</li>
+              <li><strong>Operates in Multidimensional Space:</strong><br>
+                Cosine similarity works effectively in multidimensional space, where each dimension represents a distinct attribute of the data.</li>
+              <li><strong>Commonly Used in Comparison Tasks:</strong><br>
+                Cosine similarity is frequently employed in comparison tasks, such as comparing similarity between texts, images, sounds, or data features.</li>
+            </ul>
+            After the extraction and comparison process, the CLIP model will generate a cosine similarity score for each keyframe concerning the query.
+            These scores represent the level of similarity between the keyframe and the text query.<br>
+            The result is a list of keyframes sorted in descending order based on their similarity scores.<br>
+            Finally, upon obtaining the keyframe most similar to the text query, the application will access the video database on HDFS to extract a 10-second video clip based on the index of the keyframe.<br>
             <br>
-
+            </p>
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <h3 class="h3 custom-header text-center">
               <font color="#59aeba">The Limitations Of The Application</font>
@@ -378,7 +444,7 @@
             <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));">
             <p align="justify">
               The Video Event Retrieval application has made progress in searching and retrieving events in videos based on text queries.<br>
-              However, it faces several limitations and unachieved capabilities due to computational resource constraints and specific characteristics of the CLIP model:<br>
+              HoIver, it faces several limitations and unachieved capabilities due to computational resource constraints and specific characteristics of the CLIP model:<br>
               <ul style="list-style-type:number">
                 <li><strong>Accuracy in Extracting Information from Home Security Videos:</strong></li>
                     The CLIP model might encounter reduced effectiveness when applied to low-quality home security videos recorded in black and white with low light conditions. The accuracy of image recognition in such environments is a challenge, impacting the efficiency of event retrieval and reducing accuracy.<br>
@@ -393,6 +459,7 @@
                     The application's computational inefficiency, particularly due to the extensive dataset and model limitations, leads to slow response times, taking approximately 5-10 minutes for a single query result, affecting competition participation with time constraints.
               </ul> <br>
               These challenges highlight the need for improvements in extracting information from specific video types, enhancing language understanding and OCR for better accuracy, and optimizing computational efficiency for quicker responses.
+              
             </p>
 
             <br>
