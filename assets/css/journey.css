@@ -1,5 +1,5 @@
 /* My Journey — auto-playing chess game, milestones pop up on captures */
-.j-wrap { max-width: 600px; margin: 0 auto; padding: 8px 0 56px; display: flex; flex-direction: column; gap: 22px; }
+.j-wrap { max-width: 460px; margin: 0 auto; padding: 8px 0 56px; display: flex; flex-direction: column; gap: 22px; }
 
 /* board */
 .j-stage { position: relative; }
@@ -10,7 +10,7 @@
 }
 .j-sq {
   position: relative; display: flex; align-items: center; justify-content: center; background: #0f161d; color: var(--text);
-  font-size: clamp(24px, 7vw, 46px); line-height: 1; font-family: "Segoe UI Symbol", "DejaVu Sans", "Noto Sans Symbols 2", sans-serif;
+  font-size: clamp(22px, 6vw, 36px); line-height: 1; font-family: "Segoe UI Symbol", "DejaVu Sans", "Noto Sans Symbols 2", sans-serif;
   transition: background-color .25s ease;
 }
 .j-sq.l { background: #213040; }
