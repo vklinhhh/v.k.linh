@@ -47,7 +47,7 @@ img { max-width: 100%; }
   background-position: 60% center;
 }
 .t-bg { opacity: var(--bg-strength); }
-.t-scrim { background: linear-gradient(90deg, rgba(11,15,20,.92) 0%, rgba(11,15,20,.55) 55%, rgba(11,15,20,.35) 100%); }
+.t-scrim { background: linear-gradient(90deg, rgba(11,15,20,.92) 0%, rgba(11,15,20,.72) 55%, rgba(11,15,20,.6) 100%); }
 body:not(.t-home) .t-scrim { background: rgba(11,15,20,.55); }
 .t-spot, .t-glow, .t-reticle { opacity: 0; transition: opacity .35s ease; }
 .t-spot {
@@ -226,3 +226,52 @@ body:not(.t-home) .t-scrim { background: rgba(11,15,20,.55); }
   .js .t-reveal { opacity: 1; transform: none; }
 }
 @media (pointer: coarse) { .t-reticle, .t-spot, .t-glow { display: none; } }
+
+/* ---------- home: knight's tour ---------- */
+.t-tour-hero {
+  min-height: calc(100vh - 82px);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); gap: 40px; align-items: center;
+  padding: 16px 0 40px;
+}
+.t-tour-text { display: flex; flex-direction: column; gap: 18px; }
+.t-board { position: relative; width: 100%; max-width: min(720px, calc(100vh - 120px)); aspect-ratio: 1 / 1; justify-self: end; }
+.t-board-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); grid-template-rows: repeat(8, minmax(0, 1fr)); border: 1px solid rgba(var(--acc-rgb), .08); }
+.t-sq { position: relative; border-right: 1px solid rgba(var(--acc-rgb), .05); border-bottom: 1px solid rgba(var(--acc-rgb), .05); transition: background-color .15s ease; }
+.t-sq.d { background: rgba(var(--acc-rgb), .045); }
+.t-sq:hover { background: rgba(var(--acc-rgb), .16); }
+.t-sq span { position: absolute; left: 6px; top: 4px; font-size: 11px; color: var(--acc); opacity: 0; transition: opacity .15s ease; }
+.t-sq:hover span { opacity: 1; }
+.t-tour-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.t-tour-path { stroke-dasharray: 1500; stroke-dashoffset: 1500; animation: t-draw 3.2s ease-in-out .3s forwards; }
+@keyframes t-draw { to { stroke-dashoffset: 0; } }
+.t-node { opacity: 0; animation: t-pop .4s ease forwards; transform-box: fill-box; transform-origin: center; }
+@keyframes t-pop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+.t-n0 { animation-delay: .3s; } .t-n1 { animation-delay: .95s; } .t-n2 { animation-delay: 1.6s; }
+.t-n3 { animation-delay: 2.2s; } .t-n4 { animation-delay: 2.85s; } .t-n5 { animation-delay: 3.5s; }
+.t-knight {
+  position: absolute; left: 62.5%; top: 0; width: 12.5%; height: 12.5%;
+  display: flex; align-items: center; justify-content: center; background: var(--acc); color: var(--bg);
+  font-size: clamp(26px, 4vw, 52px); font-family: "Segoe UI Symbol", "DejaVu Sans", "Noto Sans Symbols 2", sans-serif;
+}
+.t-knight span { display: inline-block; animation: t-hop 2.4s ease-in-out 3.9s infinite; }
+@keyframes t-hop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6%); } }
+.t-tlabel {
+  position: absolute; white-space: nowrap; font-size: clamp(10px, 1vw, 12px); line-height: 1.5;
+  background: rgba(11,15,20,.9); border: 1px solid var(--line); padding: 2px 8px;
+}
+.t-tlabel b { color: var(--muted); font-weight: 400; }
+.t-tlabel.final { background: var(--acc); color: var(--bg); border-color: var(--acc); font-weight: 700; }
+.t-tour-list { display: none; list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); font-size: 13px; }
+.t-tour-list li { display: grid; grid-template-columns: 34px 52px minmax(0, 1fr); gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.t-tour-list li span:first-child { color: var(--acc); }
+.t-tour-list li span:nth-child(2) { color: var(--muted); }
+@media (max-width: 960px) {
+  .t-tour-hero { grid-template-columns: minmax(0, 1fr); min-height: 0; padding-top: 32px; }
+  .t-board { justify-self: stretch; max-width: none; }
+  .t-tlabel { display: none; }
+  .t-tour-list { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-tour-path { stroke-dashoffset: 0; }
+  .t-node { opacity: 1; }
+}
