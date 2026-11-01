@@ -11,7 +11,7 @@
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
 
-  <title>Education</title>
+  <title>My Journey | Linh Võ</title>
   <link href="./main.3f6952e4.css" rel="stylesheet">
   <script type="text/javascript" src="./layout/scripts/jquery.min.js"></script>
   <!-- / Waterwheel Carousel -->
@@ -48,7 +48,7 @@
               Who am I?</a></li>
             <li><a href="./learningjourney.html" title="">
               <img src="./assets/images/gif_image/education.gif" width="30px">
-              <strong>My Learning Journey</strong></a></li>
+              <strong>My Journey</strong></a></li>
             <li><a href="./certification.html" title="">
               <img src="./assets/images/gif_image/white_trophy.png" width="30px"> 
               My Certification</a></li>
@@ -64,7 +64,7 @@
           <div class="col-xs-12">
             <div class="section-container-spacer text-center">
               <h1 class="h2">
-                My Learning Journey
+                My Journey
               </h1>
             </div>
             <div class="row">
@@ -82,90 +82,99 @@
     </div>
   </div>
 
-  <!-- Roadmap/Timeline section -->
-  <div class="Timeline">
+  <!-- Journey: Experience + Education -->
+  <style>
+    .journey { max-width: 760px; margin: 0 auto 80px; padding: 0 16px; }
+    .journey h2 { font-size: 20px; color: #004165; margin: 48px 0 24px; letter-spacing: 1px; }
+    .journey h2 img { vertical-align: middle; margin-right: 8px; }
+    .jt { list-style: none; margin: 0; padding: 0 0 0 28px; border-left: 3px solid #004165; }
+    .jt > li { position: relative; margin-bottom: 28px; }
+    .jt > li:last-child { margin-bottom: 0; }
+    .jt > li::before { content: ""; position: absolute; left: -36.5px; top: 6px; width: 14px; height: 14px;
+      border-radius: 50%; background: #fff; border: 3px solid #004165; }
+    .jt > li.current::before { background: #004165; }
+    .jt .when { font-size: 12px; color: #6b7a86; text-transform: uppercase; letter-spacing: .5px; }
+    .jt .role { font-size: 15px; font-weight: 700; color: #000; margin: 2px 0; }
+    .jt .org { font-size: 13px; color: #004165; }
+    .jt .note { font-size: 12px; color: #444; margin-top: 4px; }
+    .jt .sub { list-style: none; padding: 0; margin: 6px 0 0; }
+    .jt .sub li { font-size: 13px; margin-bottom: 2px; }
+    .jt .tags { margin-top: 6px; }
+    .jt .tags span { display: inline-block; font-size: 11px; padding: 1px 8px; margin: 2px 4px 2px 0;
+      border: 1px solid #004165; border-radius: 10px; color: #004165; }
+    .badge-now { display: inline-block; font-size: 10px; font-weight: 700; color: #fff; background: #004165;
+      padding: 0 6px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
+  </style>
 
-    <svg height="5" width="200">
-      <line x1="0" y1="0" x2="200" y2="0" style="stroke:#004165;stroke-width:5" />
-      Sorry, your browser does not support inline SVG.
-    </svg>
-  
-    <div class="event1">
-  
-      <div class="event1Bubble">
-        <div class="eventTime">
-          <div class="DayDigit">2021</div>
-          <div class="Day">
-            <div class="MonthYear"></div>
-          </div>
-        </div>
-        <div class="eventTitle">Bachelor of Engineering | Logistics And Supply Chain Management</div>
-        <div class="Day">VNU - International University</div>
-      </div>
-  
-      <svg height="20" width="20">
-        <circle cx="10" cy="11" r="5" fill="#004165" />
-      </svg>
-    </div>
-  
-    <svg height="5" width="500">
-      <line x1="0" y1="0" x2="500" y2="0" style="stroke:#004165;stroke-width:5" />
-      Sorry, your browser does not support inline SVG.
-    </svg>
-    <div class="now">
-      NOW
-    </div>
-    <div class="event2">
-  
-      <div class="event2Bubble">
-        <div class="eventTime">
-          <div class="DayDigit">2023</div>
-        </div>
-        <div class="eventTitle">PROFESSIONAL DIPLOMA | Data Analytics, AI And Machine Learning </div>
-        <div class="Day">APTECH Computer Education</div>
-      </div>
-      <svg height="20" width="20">
-        <circle cx="10" cy="11" r="5" fill="#004165" />
-      </svg>
-    </div>
-  
-    <svg height="5" width="50">
-      <line x1="0" y1="0" x2="50" y2="0" style="stroke:#004165;stroke-width:5" />
-      Sorry, your browser does not support inline SVG.
-    </svg>
-  
-    <svg height="5" width="150">
-      <line x1="0" y1="0" x2="150" y2="0" style="stroke:rgba(162, 164, 163, 0.37);stroke-width:5" />
-      Sorry, your browser does not support inline SVG.
-    </svg>
-    <div class="event2">
-      <div class="event1Bubble">
-        <div class="eventTime">
-          <div class="DayDigit">2024</div>
-          <div class="Day">
-            Expected
-            <div class="MonthYear">End of December</div>
-          </div>
-        </div>
-        <div class="eventTitle">Master of Science | Artificial Intelligence</div>
-        <div class="Day">VNUHCM - University of Science</div>
-      </div>
-      <svg height="20" width="20">
-        <circle cx="10" cy="11" r="5" fill="rgba(162, 164, 163, 0.37)" />
-      </svg>
-    </div>
-    <svg height="5" width="50">
-      <line x1="0" y1="0" x2="50" y2="0" style="stroke:#004165;stroke-width:5" />
-    </svg>
-    <svg height="20" width="42">
-      <line x1="1" y1="0" x2="1" y2="20" style="stroke:#004165;stroke-width:2" />
-      <circle cx="11" cy="10" r="3" fill="#004165" />
-      <circle cx="21" cy="10" r="3" fill="#004165" />
-      <circle cx="31" cy="10" r="3" fill="#004165" />
-      <line x1="41" y1="0" x2="41" y2="20" style="stroke:#004165;stroke-width:2" />
-    </svg>
-  
+  <div class="journey">
+
+    <h2><img src="./assets/images/gif_image/black_chart.png" width="26px">Experience</h2>
+    <ul class="jt">
+      <li class="current">
+        <div class="when">Jul 2025 – Present <span class="badge-now">NOW</span></div>
+        <div class="role">Data Scientist</div>
+        <div class="org">Motorola Solutions · Ho Chi Minh City</div>
+        <div class="tags"><span>Computer Vision</span><span>Large Language Models</span></div>
+      </li>
+      <li>
+        <div class="when">Feb 2024 – Jun 2025</div>
+        <div class="role">Data Scientist</div>
+        <div class="org">XOMAD · Vietnam</div>
+        <div class="tags"><span>Machine Learning</span><span>Deep Learning</span></div>
+      </li>
+      <li>
+        <div class="when">Nov 2022 – Feb 2024</div>
+        <div class="role">Data Analyst, Commercial Business Intelligence</div>
+        <div class="org">TIKI · Ho Chi Minh City</div>
+        <div class="tags"><span>R</span><span>Google Sheets</span></div>
+      </li>
+      <li>
+        <div class="when">Jun 2022 – Nov 2022</div>
+        <div class="role">Data Analyst, Strategy &amp; Planning Analytics</div>
+        <div class="org">KAMEREO · Ho Chi Minh City</div>
+        <div class="tags"><span>Google Sheets</span><span>Product Promotion</span></div>
+      </li>
+      <li>
+        <div class="when">Dec 2020 – Jun 2022</div>
+        <div class="org" style="font-size:15px;font-weight:700;color:#000;">KDDI Corporation · Ho Chi Minh City</div>
+        <ul class="sub">
+          <li><strong>Senior Network Operator</strong> · Apr 2022 – Jun 2022</li>
+          <li><strong>Network Operations Center Operator</strong> · Dec 2020 – Apr 2022</li>
+        </ul>
+        <div class="tags"><span>IP VPN</span><span>Customer Service</span></div>
+      </li>
+      <li>
+        <div class="when">Jun 2020 – Dec 2020</div>
+        <div class="role">SQL Intern</div>
+        <div class="org">Scaleflex · Remote</div>
+        <div class="note">My very first "SELECT * FROM".</div>
+        <div class="tags"><span>SQL</span><span>Digital Asset Management</span></div>
+      </li>
+    </ul>
+
+    <h2><img src="./assets/images/gif_image/black_edu.png" width="26px">Education</h2>
+    <ul class="jt">
+      <li class="current">
+        <div class="when">2023 – 2026 · Graduated</div>
+        <div class="role">Master of Science | Artificial Intelligence</div>
+        <div class="org">VNUHCM - University of Science (HCMUS)</div>
+      </li>
+      <li>
+        <div class="when">2021 – 2023 · Distinction</div>
+        <div class="role">Professional Diploma | Data Science and Artificial Intelligence</div>
+        <div class="org">APTECH Computer Education</div>
+        <div class="note">Thesis: Vietnamese handwritten recognition using VietOCR with VGG19 and Transformer backbones (95/100).</div>
+      </li>
+      <li>
+        <div class="when">2015 – 2021</div>
+        <div class="role">Bachelor of Engineering | Logistics and Supply Chain Management</div>
+        <div class="org">VNU - International University</div>
+        <div class="note">Thesis: Optimizing inventory allocation with time-series demand forecasting.</div>
+      </li>
+    </ul>
+
   </div>
+
   <!-- Certificate section -->
 
   
