@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Education and work experience of Linh Võ.">
+  <meta name="description" content="Education and work experience of Linh Võ, told as a game of chess.">
   <meta name="theme-color" content="#0b0f14">
   <title>My Journey | Linh Võ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="./assets/css/terminal.css" rel="stylesheet">
+  <link href="./assets/css/journey.css" rel="stylesheet">
 </head>
 <body data-page="journey">
   <div class="t-bg" aria-hidden="true"></div>
@@ -31,231 +32,40 @@
   </header>
   <main>
     <section class="t-wrap t-head">
-      <p class="t-prompt"><b>$</b> git log --oneline ./journey</p>
+      <p class="t-prompt"><b>$</b> git log --format=pgn ./journey</p>
       <h1 class="t-title">My Journey</h1>
       <p class="t-lead"><em>"A journey of a thousand miles begins with a single step."</em> &nbsp;— Khổng Tử</p>
     </section>
-  <!-- Journey road: Learning (above) + Experience (below) -->
-  <style>
-    .road-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:20px; margin-bottom:60px; }
-    .road { position:relative; width:1260px; height:640px; margin:0 auto; }
-    .road-band { position:absolute; left:20px; right:130px; top:330px; height:26px; background:#1a232d;
-      border-radius:13px 0 0 13px; box-shadow: 0 3px 0 #05080b; }
-    .road-band::after { content:""; position:absolute; left:16px; right:0; top:50%; height:3px; margin-top:-1.5px;
-      background: repeating-linear-gradient(90deg, #fff 0 22px, transparent 22px 40px); opacity:.85; }
-    .road-end { position:absolute; left:1130px; top:330px; width:0; height:0;
-      border-top:13px solid transparent; border-bottom:13px solid transparent; border-left:26px solid #1a232d; }
-    .road-flag { position:absolute; left:1164px; top:260px; }
-    .road-flag .pole { position:absolute; left:0; top:0; width:3px; height:96px; background:#8b98a5; }
-    .road-flag .cloth { position:absolute; left:3px; top:0; padding:4px 8px; background:#4cc9f0; color:#0b0f14;
-      font-weight:700; font-size:12px; letter-spacing:1px; white-space:nowrap; }
-    .road-start { position:absolute; left:4px; top:364px; font-size:10px; color:#8b98a5; letter-spacing:1px; }
-    .ms { position:absolute; top:0; width:0; height:100%; }
-    .ms-dot { position:absolute; left:-8px; width:16px; height:16px; border-radius:50%; background:#0b0f14; border:3px solid; box-sizing:border-box; z-index:2; }
-    .ms-stem { position:absolute; left:-1px; width:2px; }
-    .ms-card { position:absolute; left:-105px; width:210px; background:rgba(14,20,26,.92); border:1px solid #222c37; border-top:4px solid;
-      padding:8px 10px; box-shadow:0 6px 18px rgba(0,0,0,.35); line-height:1.45; }
-    .ms-date { font-size:10px; color:#8b98a5; text-transform:uppercase; letter-spacing:.5px; }
-    .ms-title { font-size:12.5px; font-weight:700; color:#e6edf3; margin-top:2px; }
-    .ms-org { font-size:11px; margin-top:1px; }
-    .ms-extra { font-size:10.5px; color:#8b98a5; margin-top:2px; }
-    .ms-now { display:inline-block; margin-left:6px; padding:0 5px; font-size:9px; font-weight:700; color:#0b0f14; background:#4cc9f0; border-radius:2px; }
-    .learn .ms-dot, .learn .ms-card { border-color:#4cc9f0; }
-    .learn .ms-stem { background:#4cc9f0; }
-    .learn .ms-org { color:#4cc9f0; }
-    .work .ms-dot, .work .ms-card { border-color:#ffb224; }
-    .work .ms-stem { background:#ffb224; }
-    .work .ms-org { color:#ffb224; }
-    .ms-card { border-left-color:#222c37; border-right-color:#222c37; border-bottom-color:#222c37; }
-    .ms.current .ms-dot { background: currentColor; }
-    .learn.current .ms-dot { background:#4cc9f0; }
-    .work.current .ms-dot { background:#ffb224; }
-    /* ---------- animation ---------- */
-    .ms-card { transition: transform .25s ease, box-shadow .25s ease; }
-    .ms:hover .ms-card { transform: translateY(-4px); box-shadow:0 8px 26px -10px #4cc9f0; z-index:5; }
-    .ms:hover .ms-dot { transform: scale(1.35); }
-    .ms-dot { transition: transform .2s ease; }
-    .ms.current .ms-dot::after { content:""; position:absolute; inset:-9px; border-radius:50%; border:2px solid;
-      border-color:inherit; animation: pulse 1.8s ease-out infinite; }
-    @keyframes pulse { 0% { transform:scale(.5); opacity:.9; } 100% { transform:scale(1.6); opacity:0; } }
-    .road-car { position:absolute; left:24px; top:306px; width:58px; z-index:4; pointer-events:none;
-      transform: translateX(1048px); }
-    .road-car svg { display:block; }
-    .road-flag .cloth { transform-origin: left center; animation: wave 2.4s ease-in-out infinite; }
-    @keyframes wave { 0%,100% { transform: skewY(0deg) scaleX(1); } 50% { transform: skewY(-4deg) scaleX(.94); } }
-
-    /* intro: only when JS adds .anim, so content is visible without JS */
-    .road.anim .road-band { transform-origin:left center; transform:scaleX(0); }
-    .road.anim .road-end, .road.anim .road-flag { opacity:0; }
-    .road.anim .road-car { transform: translateX(0); opacity:0; }
-    .road.anim .ms-dot { transform: scale(0); }
-    .road.anim .ms-stem { transform: scaleY(0); }
-    .road.anim .up .ms-stem, .road.anim .learn .ms-stem { transform-origin: bottom; }
-    .road.anim .work .ms-stem { transform-origin: top; }
-    .road.anim .ms-card { opacity:0; }
-    .road.anim .learn .ms-card { transform: translateY(14px); }
-    .road.anim .work .ms-card { transform: translateY(-14px); }
-
-    .road.anim.go .road-band { transform:scaleX(1); transition: transform .8s cubic-bezier(.6,0,.3,1); }
-    .road.anim.go .road-band::after { animation: dashes .35s linear 11 ; }
-    @keyframes dashes { from { background-position:0 0; } to { background-position:-40px 0; } }
-    .road.anim.go .road-end { opacity:1; transition: opacity .3s .7s; }
-    .road.anim.go .road-car { opacity:1; transform: translateX(1048px);
-      transition: opacity .3s 0.49999999999999994s, transform 3.2s linear 0.7s; }
-    .road.anim.go .road-car svg { animation: bump .25s ease-in-out 13 0.7s; }
-    @keyframes bump { 50% { transform: translateY(-1.5px); } }
-    .road.anim.go .road-flag { opacity:1; transition: opacity .5s 3.7s; }
-    .road.anim.go .ms-dot { transform: scale(1); transition: transform .35s cubic-bezier(.3,1.6,.5,1) var(--d); }
-    .road.anim.go .ms-stem { transform: scaleY(1); transition: transform .35s ease calc(var(--d) + .08s); }
-    .road.anim.go .ms-card { opacity:1; transform:none; transition: opacity .4s ease calc(var(--d) + .2s), transform .4s ease calc(var(--d) + .2s), box-shadow .25s; }
-    .road.anim.go.done .ms-card { transition: transform .25s ease, box-shadow .25s ease; }
-    .road.anim.go.done .ms-dot { transition: transform .2s ease; }
-    .road.anim.go.done .ms:hover .ms-card { transform: translateY(-4px); }
-    .road.anim.go.done .ms:hover .ms-dot { transform: scale(1.35); }
-
-    @media (prefers-reduced-motion: reduce) {
-      .road.anim * { transition:none !important; animation:none !important; }
-    }
-  </style>
-
-  <div class="road-scroll">
-    <div class="road">
-      <div class="road-band"></div>
-      <div class="road-end"></div>
-      <div class="road-start">START</div>
-      <div class="road-flag"><span class="pole"></span><span class="cloth">NOW · 2026</span></div>
-      <div class="ms learn" style="left:128px;--d:0.88s">
-        <span class="ms-dot" style="top:335px"></span>
-        <span class="ms-stem" style="top:294px;height:36px"></span>
-        <div class="ms-card" style="bottom:346px">
-          <div class="ms-date">2015 – 2021</div>
-          <div class="ms-title">Bachelor of Engineering</div>
-          <div class="ms-org">VNU - International University</div>
-          <div class="ms-extra">Logistics &amp; Supply Chain Management</div>
+    <section class="t-wrap" id="j-game">
+      <div class="j-timeline">
+        <div class="j-tl-head"><span><b>2015 → now</b> · every bar is a step; click one to jump there</span><span class="t-muted">learning &amp; work overlap</span></div>
+        <div class="j-tl-grid">
+          <span class="j-lane-label learn" style="grid-row:1">learning</span>
+          <div class="j-lane" id="j-lane-learn" style="grid-row:1"></div>
+          <span class="j-lane-label work" style="grid-row:2">work</span>
+          <div class="j-lane" id="j-lane-work" style="grid-row:2"></div>
+          <div class="j-headbox" style="grid-column:2;grid-row:1 / 3"><div class="j-head" id="j-head"></div></div>
+          <div class="j-ticks" id="j-ticks" style="grid-row:3" aria-hidden="true"></div>
         </div>
       </div>
-      <div class="ms work" style="left:244px;--d:1.23s">
-        <span class="ms-dot" style="top:335px"></span>
-        <span class="ms-stem" style="top:356px;height:36px"></span>
-        <div class="ms-card" style="top:392px">
-          <div class="ms-date">Jun 2020 – Dec 2020</div>
-          <div class="ms-title">SQL Intern</div>
-          <div class="ms-org">Scaleflex</div>
-          <div class="ms-extra">My very first “SELECT * FROM”</div>
+      <div class="j-layout">
+        <div class="j-board-col">
+          <div class="j-board" id="j-board" role="img" aria-label="Chess board"></div>
+          <p class="j-caption" id="j-caption" aria-live="polite"></p>
+          <div class="j-controls">
+            <button class="t-btn t-btn--primary" type="button" id="j-play" aria-pressed="false">[ ▶ play ]</button>
+            <button class="t-btn" type="button" id="j-next">[ ⏭ next step ]</button>
+            <button class="t-btn" type="button" id="j-replay">[ ↺ replay ]</button>
+          </div>
+          <p class="j-credit">The moves: Morphy vs. Duke Karl &amp; Count Isouard, Paris 1858, the "Opera Game". Every milestone lands on a move; the latest lands on checkmate.</p>
+        </div>
+        <div class="j-list-wrap">
+          <ol class="j-list" id="j-list" aria-label="Milestones, oldest first"></ol>
         </div>
       </div>
-      <div class="ms work" style="left:361px;--d:1.59s">
-        <span class="ms-dot" style="top:335px"></span>
-        <span class="ms-stem" style="top:356px;height:166px"></span>
-        <div class="ms-card" style="top:522px">
-          <div class="ms-date">Dec 2020 – Jun 2022</div>
-          <div class="ms-title">Network Operator</div>
-          <div class="ms-org">KDDI Corporation</div>
-          <div class="ms-extra">NOC Operator → Senior Network Operator</div>
-        </div>
-      </div>
-      <div class="ms learn" style="left:478px;--d:1.95s">
-        <span class="ms-dot" style="top:335px"></span>
-        <span class="ms-stem" style="top:164px;height:166px"></span>
-        <div class="ms-card" style="bottom:476px">
-          <div class="ms-date">2021 – 2023</div>
-          <div class="ms-title">Professional Diploma</div>
-          <div class="ms-org">APTECH Computer Education</div>
-          <div class="ms-extra">Data Science &amp; AI · Distinction</div>
-        </div>
-      </div>
-      <div class="ms work" style="left:594px;--d:2.3s">
-        <span class="ms-dot" style="top:335px"></span>
-        <span class="ms-stem" style="top:356px;height:36px"></span>
-        <div class="ms-card" style="top:392px">
-          <div class="ms-date">Jun 2022 – Nov 2022</div>
-          <div class="ms-title">Data Analyst</div>
-          <div class="ms-org">KAMEREO</div>
-          <div class="ms-extra">Strategy &amp; Planning Analytics</div>
-        </div>
-      </div>
-      <div class="ms work" style="left:710px;--d:2.66s">
-        <span class="ms-dot" style="top:335px"></span>
-        <span class="ms-stem" style="top:356px;height:166px"></span>
-        <div class="ms-card" style="top:522px">
-          <div class="ms-date">Nov 2022 – Feb 2024</div>
-          <div class="ms-title">Data Analyst</div>
-          <div class="ms-org">TIKI</div>
-          <div class="ms-extra">Commercial Business Intelligence</div>
-        </div>
-      </div>
-      <div class="ms learn current" style="left:827px;--d:3.01s">
-        <span class="ms-dot" style="top:335px"></span>
-        <span class="ms-stem" style="top:294px;height:36px"></span>
-        <div class="ms-card" style="bottom:346px">
-          <div class="ms-date">2023 – 2026 · Graduated</div>
-          <div class="ms-title">Master of Science</div>
-          <div class="ms-org">VNUHCM - University of Science</div>
-          <div class="ms-extra">Artificial Intelligence</div>
-        </div>
-      </div>
-      <div class="ms work" style="left:944px;--d:3.37s">
-        <span class="ms-dot" style="top:335px"></span>
-        <span class="ms-stem" style="top:356px;height:36px"></span>
-        <div class="ms-card" style="top:392px">
-          <div class="ms-date">Feb 2024 – Jun 2025</div>
-          <div class="ms-title">Data Scientist</div>
-          <div class="ms-org">XOMAD</div>
-          <div class="ms-extra">Machine Learning · Deep Learning</div>
-        </div>
-      </div>
-      <div class="ms work current" style="left:1060px;--d:3.73s">
-        <span class="ms-dot" style="top:335px"></span>
-        <span class="ms-stem" style="top:356px;height:166px"></span>
-        <div class="ms-card" style="top:522px">
-          <div class="ms-date">Jul 2025 – Present<span class="ms-now">NOW</span></div>
-          <div class="ms-title">Data Scientist</div>
-          <div class="ms-org">Motorola Solutions</div>
-          <div class="ms-extra">Computer Vision · LLMs</div>
-        </div>
-      </div>
-      <div class="road-car" aria-hidden="true">
-        <svg width="58" height="30" viewBox="0 0 58 30">
-          <path d="M6 18 L10 10 Q12 6 17 6 L34 6 Q38 6 41 10 L46 15 L52 16 Q56 17 56 21 L56 23 L4 23 L4 21 Q4 18 6 18 Z" fill="#ffb224"/>
-          <path d="M14 10 Q15 8.5 17.5 8.5 L24 8.5 L24 15 L12 15 Z" fill="#cfe3ef"/>
-          <path d="M27 8.5 L33.5 8.5 Q36.5 8.5 38.5 11 L41.5 15 L27 15 Z" fill="#cfe3ef"/>
-          <circle cx="15" cy="23" r="5" fill="#05080b"/><circle cx="15" cy="23" r="2" fill="#bbb"/>
-          <circle cx="44" cy="23" r="5" fill="#05080b"/><circle cx="44" cy="23" r="2" fill="#bbb"/>
-          <rect x="52" y="17.5" width="4" height="2.5" rx="1" fill="#fff6c2"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-  <script>
-  (function () {
-    var road = document.querySelector('.road'), sc = document.querySelector('.road-scroll');
-    if (!road) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce || !('IntersectionObserver' in window)) return;
-    road.classList.add('anim');
-    var total = 4800;
-    var io = new IntersectionObserver(function (es) {
-      if (!es[0].isIntersecting) return;
-      io.disconnect();
-      requestAnimationFrame(function () { road.classList.add('go'); });
-      setTimeout(function () { road.classList.add('done'); }, total);
-      // on small screens, follow the car while it drives
-      if (sc.scrollWidth > sc.clientWidth + 10) {
-        var car = road.querySelector('.road-car'), stop = false, t0 = performance.now();
-        sc.addEventListener('touchstart', function () { stop = true; }, { passive: true });
-        (function follow(t) {
-          if (stop || t - t0 > total) return;
-          var r = car.getBoundingClientRect(), s = sc.getBoundingClientRect();
-          sc.scrollLeft += (r.left - s.left) - sc.clientWidth * 0.4;
-          requestAnimationFrame(follow);
-        })(t0);
-      }
-    }, { threshold: 0.35 });
-    io.observe(sc);
-  })();
-  </script>
-
-
+    </section>
+    <script src="./assets/js/vendor/chess.js"></script>
+    <script src="./assets/js/journey.js"></script>
   </main>
   <footer class="t-footer">
     <div class="t-wrap">
