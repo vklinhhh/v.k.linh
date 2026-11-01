@@ -8,8 +8,8 @@
   <title>My Journey | Linh Võ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="./assets/css/terminal.css?v=20261101b" rel="stylesheet">
-  <link href="./assets/css/journey.css?v=20261101b" rel="stylesheet">
+  <link href="./assets/css/terminal.css?v=20261101c" rel="stylesheet">
+  <link href="./assets/css/journey.css?v=20261101c" rel="stylesheet">
 </head>
 <body data-page="journey">
   <div class="t-bg" aria-hidden="true"></div>
@@ -32,31 +32,31 @@
   </header>
   <main>
     <section class="t-wrap t-head">
-      <p class="t-prompt"><b>$</b> git log --format=pgn ./journey</p>
+      <p class="t-prompt"><b>$</b> git log --graph ./journey</p>
       <h1 class="t-title">My Journey</h1>
       <p class="t-lead">Every capture in this game is a step in my journey. Sit back and watch it play out.</p>
     </section>
     <section class="t-wrap" id="j-game">
-      <div class="j-wrap">
-        <div class="j-stage">
-          <div class="j-board" id="j-board" role="img" aria-label="Chess board playing the Opera Game"></div>
-          <div class="j-pop" id="j-pop" role="status" aria-live="polite"></div>
+      <div class="j-layout">
+        <div class="j-wrap">
+          <div class="j-stage">
+            <div class="j-board" id="j-board" role="img" aria-label="Chess board playing the Opera Game, Paris 1858"></div>
+            <div class="j-pop" id="j-pop" aria-hidden="true"></div>
+          </div>
+          <div class="j-bar">
+            <span>Morphy · Paris 1858</span>
+            <button class="t-btn t-btn--primary j-play" type="button" id="j-play" aria-pressed="false">▶ play</button>
+          </div>
         </div>
-        <div class="j-bar">
-          <span class="j-key"><span class="learn">learning</span><span class="work">work</span></span>
-          <button class="t-btn t-btn--primary j-play" type="button" id="j-play" aria-pressed="false">▶ play</button>
-        </div>
-      </div>
-      <div class="j-road" id="j-road" aria-label="Milestones, oldest first">
-        <div class="j-road-in">
-          <div class="j-up"></div>
-          <div class="j-band"></div>
-          <div class="j-down"></div>
+        <div class="j-graph">
+          <div class="j-graph-head" aria-hidden="true"><span class="learn">edu</span><span class="work">work</span><span></span></div>
+          <ol class="j-log" id="j-log" aria-label="Milestones, oldest first" aria-live="polite"></ol>
+          <p class="j-headline" id="j-headline"></p>
         </div>
       </div>
     </section>
-    <script src="./assets/js/vendor/chess.js?v=20261101b"></script>
-    <script src="./assets/js/journey.js?v=20261101b"></script>
+    <script src="./assets/js/vendor/chess.js?v=20261101c"></script>
+    <script src="./assets/js/journey.js?v=20261101c"></script>
   </main>
   <footer class="t-footer">
     <div class="t-wrap">
@@ -65,6 +65,6 @@
     </div>
   </footer>
   </div>
-  <script src="./assets/js/terminal.js?v=20261101b"></script>
+  <script src="./assets/js/terminal.js?v=20261101c"></script>
 </body>
 </html>

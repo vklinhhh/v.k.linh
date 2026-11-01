@@ -1,7 +1,8 @@
-/* My Journey — career milestones told through an auto-playing chess game.
+/* My Journey — career milestones told through an auto-playing chess game,
+ * written to a git-style graph as the game goes.
  *
  * To add a milestone, add one object to MILESTONES (keep them in date order).
- * Milestones pop up on the game's captures; the last one always lands on checkmate.
+ * Milestones land on the game's captures; the last one always lands on checkmate.
  *   type:  'learn' or 'work'
  *   start: 'YYYY' or 'YYYY-MM'      end: same format, or null for "present"
  */
@@ -23,7 +24,7 @@
   /* Morphy vs. Duke Karl of Brunswick & Count Isouard, Paris 1858 ("the Opera Game") */
   var GAME = 'e4 e5 Nf3 d6 d4 Bg4 dxe5 Bxf3 Qxf3 dxe5 Bc4 Nf6 Qb3 Qe7 Nc3 c6 Bg5 b5 Nxb5 cxb5 Bxb5+ Nbd7 O-O-O Rd8 Rxd7 Rxd7 Rd1 Qe6 Bxd7+ Nxd7 Qb8+ Nxb8 Rd8#'.split(' ');
 
-  var STEP_MS = 650, HOLD_MS = 2800;
+  var STEP_MS = 650, HOLD_MS = 2600, FLY_AT = 1500;
   var GLYPH = { p: '♟︎', n: '♞', b: '♝', r: '♜', q: '♛', k: '♚', P: '♙', N: '♘', B: '♗', R: '♖', Q: '♕', K: '♔' };
   var FILES = 'abcdefgh';
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -32,13 +33,16 @@
   if (!root || typeof Chess === 'undefined') return;
   var boardEl = document.getElementById('j-board');
   var popEl = document.getElementById('j-pop');
-  var roadEl = document.getElementById('j-road');
+  var logEl = document.getElementById('j-log');
+  var headEl = document.getElementById('j-headline');
   var playBtn = document.getElementById('j-play');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function label(s) { if (!s) return 'now'; var p = String(s).split('-'); return p[1] ? MONTHS[+p[1] - 1] + ' ' + p[0] : p[0]; }
+  function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ('0000000' + (h >>> 0).toString(16)).slice(-7); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
-  /* ---------- which move shows which milestone ---------- */
+  /* ---------- which move writes which milestone ---------- */
   var plies = (function () {
     var probe = new Chess(), out = [];
     GAME.forEach(function (san) { var r = probe.move(san); out.push({ san: r.san, from: r.from, to: r.to, captured: r.captured }); });
@@ -46,17 +50,16 @@
   })();
   var LAST = plies.length - 1;
   var at = (function () {
-    var n = MILESTONES.length;
-    var pool = [];
+    var n = MILESTONES.length, pool = [], out = [];
     plies.forEach(function (p, i) { if (p.captured && i < LAST) pool.push(i); });
     if (pool.length < n - 1) { pool = []; for (var i = 0; i < LAST; i++) pool.push(i); }
-    var out = [];
     for (var k = 0; k < n - 1; k++) out.push(pool[n - 1 === 1 ? 0 : Math.round(k * (pool.length - 1) / (n - 2))]);
     out.push(LAST);
     return out;
   })();
   var milestoneAt = {};
   at.forEach(function (p, i) { milestoneAt[p] = i; });
+  function moveName(i) { return Math.floor(i / 2) + 1 + (i % 2 ? '… ' : '. ') + plies[i].san; }
 
   /* ---------- board ---------- */
   var sqEls = {};
@@ -67,97 +70,45 @@
     sqEls[FILES[f] + (8 - r)] = el;
   }
 
-  /* ---------- road: every milestone has a slot; learning above, work below ---------- */
-  roadEl.style.setProperty('--n', MILESTONES.length);
-  var upEl = roadEl.querySelector('.j-up'), downEl = roadEl.querySelector('.j-down'), bandEl = roadEl.querySelector('.j-band');
-  var prevBySide = {};
-  var slots = MILESTONES.map(function (m, i) {
-    var up = m.type === 'learn';
-    var prev = prevBySide[m.type];
-    var level = prev && i - prev.i <= 1 && prev.level === 0 ? 1 : 0;
-    prevBySide[m.type] = { i: i, level: level };
-
-    var dot = document.createElement('button');
-    dot.type = 'button';
-    dot.className = 'j-dot ' + m.type;
-    dot.setAttribute('aria-label', label(m.start) + ': ' + m.title + ', ' + m.org);
-    dot.addEventListener('click', function () { jumpTo(i); });
-    bandEl.appendChild(dot);
-
-    var stem = document.createElement('span');
-    stem.className = 'j-stem ' + m.type;
-    var card = document.createElement('div');
-    card.className = 'j-rc ' + m.type;
-    card.innerHTML = '<span class="j-rc-when">' + label(m.start) + ' – ' + label(m.end) + '</span>' +
-      '<strong class="j-rc-title">' + esc(m.title) + '</strong><span class="j-rc-org">' + esc(m.org) + '</span>';
-    card.addEventListener('click', function () { jumpTo(i); });
-    (up ? upEl : downEl).appendChild(stem);
-    (up ? upEl : downEl).appendChild(card);
-    return { dot: dot, stem: stem, card: card, up: up, level: level };
+  /* ---------- git graph: one row per milestone, hidden until written ---------- */
+  var firstOfType = {};
+  MILESTONES.forEach(function (m, i) { if (!(m.type in firstOfType)) firstOfType[m.type] = i; });
+  var rows = MILESTONES.map(function (m, i) {
+    var row = document.createElement('li');
+    row.className = 'j-row ' + m.type;
+    row.hidden = true;
+    var lanes = ['learn', 'work'].map(function (t) {
+      var started = i >= firstOfType[t];
+      var first = i === firstOfType[t];
+      return '<span class="j-lane ' + t + (started ? ' live' : '') + (first ? ' first' : '') + '">' + (m.type === t ? '<i></i>' : '') + '</span>';
+    }).join('');
+    row.innerHTML = lanes +
+      '<button type="button" class="j-commit">' +
+      '<span class="j-meta"><b>' + hash(m.title + m.org + m.start) + '</b> · ' + label(m.start) + ' – ' + label(m.end) + ' · <span class="j-move"></span></span>' +
+      '<span class="j-title">' + esc(m.title) + '</span>' +
+      '<span class="j-org">' + esc(m.org) + '</span>' +
+      (m.detail ? '<span class="j-detail">' + esc(m.detail) + '</span>' : '') +
+      '</button>';
+    row.querySelector('.j-move').textContent = moveName(at[i]);
+    row.querySelector('.j-commit').addEventListener('click', function () { jumpTo(i); });
+    logEl.appendChild(row);
+    return row;
   });
 
-  function layoutRoad() {
-    var W = bandEl.clientWidth, n = slots.length;
-    var cw0 = Math.round(Math.max(120, Math.min(180, W / n * 1.5)));
-    slots.forEach(function (s) { s.card.style.width = cw0 + 'px'; });
-    var cardH = 0;
-    slots.forEach(function (s) { cardH = Math.max(cardH, s.card.offsetHeight); });
-    var LEVEL = cardH + 12, STEM = 18;
-    var maxUp = 0, maxDown = 0;
-    slots.forEach(function (s, i) {
-      var x = (i + 0.5) / n * W;
-      var cw = s.card.offsetWidth;
-      s.dot.style.left = x + 'px';
-      s.stem.style.left = x + 'px';
-      s.card.style.left = Math.max(0, Math.min(W - cw, x - cw / 2)) + 'px';
-      var off = STEM + s.level * LEVEL;
-      s.stem.style.height = off + 'px';
-      if (s.up) { s.stem.style.bottom = '0'; s.card.style.bottom = off + 'px'; maxUp = Math.max(maxUp, off + cardH); }
-      else { s.stem.style.top = '0'; s.card.style.top = off + 'px'; maxDown = Math.max(maxDown, off + cardH); }
+  function showRows(upTo, newest) {
+    rows.forEach(function (row, i) {
+      row.hidden = i > upTo;
+      row.classList.toggle('head', i === newest);
+      if (i === newest) row.querySelector('.j-commit').setAttribute('aria-current', 'step');
+      else row.querySelector('.j-commit').removeAttribute('aria-current');
     });
-    upEl.style.height = maxUp + 'px';
-    downEl.style.height = maxDown + 'px';
-  }
-  layoutRoad();
-  window.addEventListener('resize', layoutRoad);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutRoad);
-  var dots = slots.map(function (s) { return s.dot; });
-
-  /* write a milestone onto the road; optionally fly the pop-up card down to its slot */
-  function record(i, fly) {
-    var s = slots[i];
-    if (s.card.classList.contains('on')) return;
-    if (!fly || reduce || !popEl.classList.contains('show')) { light(i); return; }
-    var from = popEl.getBoundingClientRect(), to = s.card.getBoundingClientRect();
-    var ghost = popEl.cloneNode(true);
-    ghost.removeAttribute('id');
-    ghost.className = popEl.className + ' j-fly';
-    ghost.style.cssText = 'position:fixed;left:' + from.left + 'px;top:' + from.top + 'px;width:' + from.width + 'px;margin:0;transform:none;opacity:1;';
-    document.body.appendChild(ghost);
-    hidePop();
-    requestAnimationFrame(function () {
-      var sx = to.width / from.width;
-      ghost.style.transform = 'translate(' + (to.left - from.left) + 'px,' + (to.top - from.top) + 'px) scale(' + sx + ')';
-      ghost.style.opacity = '0.2';
-    });
-    setTimeout(function () { ghost.remove(); light(i); }, 720);
-  }
-  function light(i) {
-    var c = slots[i].card;
-    c.classList.add('on'); slots[i].stem.classList.add('on');
-    c.classList.remove('landed'); void c.offsetWidth; c.classList.add('landed');
-    if (roadEl.scrollWidth > roadEl.clientWidth + 4) {
-      roadEl.scrollTo({ left: Math.max(0, c.offsetLeft - roadEl.clientWidth / 2 + c.offsetWidth / 2), behavior: reduce ? 'auto' : 'smooth' });
-    }
-  }
-  function setRecorded(upTo) {
-    slots.forEach(function (s, i) {
-      s.card.classList.toggle('on', i <= upTo); s.stem.classList.toggle('on', i <= upTo); s.card.classList.remove('landed');
-    });
+    headEl.innerHTML = upTo >= MILESTONES.length - 1
+      ? 'HEAD → <b>now</b>'
+      : 'HEAD → next capture<span class="t-cursor" aria-hidden="true"></span>';
   }
 
   /* ---------- playback ---------- */
-  var game, ply = -1, timer, playing = false, started = false;
+  var game, ply = -1, timer, flyTimer, playing = false, started = false, written = -1;
 
   function setPosition(toPly) {
     game = new Chess();
@@ -172,40 +123,57 @@
       var cls = 'j-sq' + ((r + f) % 2 === 0 ? ' l' : '') + (p && p.color === 'b' ? ' b' : '');
       if (last && (last.from === name || last.to === name)) cls += ' last';
       if (game.in_checkmate() && p && p.type === 'k' && p.color === 'b') cls += ' mate';
+      if (el.classList.contains('hit')) cls += ' hit';
       el.className = cls;
       el.innerHTML = p ? '<span>' + GLYPH[p.color === 'w' ? p.type.toUpperCase() : p.type] + '</span>' : '';
     }
-    var reached = -1;
-    at.forEach(function (p, i) { if (p <= ply) reached = i; });
-    dots.forEach(function (d, i) {
-      d.classList.toggle('done', i <= reached);
-      d.classList.toggle('on', i === reached);
-      if (i === reached) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current');
-    });
     playBtn.textContent = playing ? '❚❚ pause' : (ply >= LAST ? '↺ replay' : '▶ play');
     playBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
   }
 
-  /* pop the milestone card next to the square where the capture happened */
+  /* pop the milestone beside the capture square */
   function pop(i) {
     var m = MILESTONES[i], sq = plies[at[i]].to;
     var f = FILES.indexOf(sq[0]), rank = +sq[1];
-    var col = (f + 0.5) / 8 * 100, row = (8 - rank + 0.5) / 8 * 100;
     popEl.className = 'j-pop ' + m.type + (f >= 4 ? ' left' : ' right') + (rank <= 3 ? ' up' : '') + (rank >= 5 ? ' below' : ' above');
-    popEl.style.setProperty('--x', col + '%');
-    popEl.style.setProperty('--y', row + '%');
+    popEl.style.setProperty('--x', ((f + 0.5) / 8 * 100) + '%');
+    popEl.style.setProperty('--y', ((8 - rank + 0.5) / 8 * 100) + '%');
     popEl.innerHTML =
       '<span class="j-pop-when">' + label(m.start) + ' – ' + label(m.end) + '</span>' +
       '<strong class="j-pop-title">' + esc(m.title) + '</strong>' +
-      '<span class="j-pop-org">' + esc(m.org) + '</span>' +
-      (m.detail ? '<span class="j-pop-detail">' + esc(m.detail) + '</span>' : '');
+      '<span class="j-pop-org">' + esc(m.org) + '</span>';
     void popEl.offsetWidth;
     popEl.classList.add('show');
     var s = sqEls[sq];
     s.classList.add('hit');
-    setTimeout(function () { s.classList.remove('hit'); }, 700);
+    setTimeout(function () { s.classList.remove('hit'); }, 900);
   }
   function hidePop() { popEl.classList.remove('show'); }
+
+  /* write milestone i to the graph; fly the pop-up across when it is showing */
+  function write(i, fly) {
+    if (i <= written) return;
+    written = i;
+    showRows(i, i);
+    var row = rows[i];
+    if (!fly || reduce || !popEl.classList.contains('show')) { land(row); hidePop(); return; }
+    row.classList.add('pending');
+    var from = popEl.getBoundingClientRect(), to = row.querySelector('.j-commit').getBoundingClientRect();
+    var ghost = popEl.cloneNode(true);
+    ghost.removeAttribute('id');
+    ghost.className = popEl.className + ' j-fly';
+    ghost.style.cssText = 'position:fixed;left:' + from.left + 'px;top:' + from.top + 'px;width:' + from.width + 'px;margin:0;transform:none;opacity:1;';
+    document.body.appendChild(ghost);
+    hidePop();
+    requestAnimationFrame(function () {
+      ghost.style.transform = 'translate(' + (to.left - from.left) + 'px,' + (to.top - from.top) + 'px) scale(' + Math.min(1.4, to.width / from.width) + ',1)';
+      ghost.style.opacity = '0';
+    });
+    setTimeout(function () { ghost.remove(); row.classList.remove('pending'); land(row); }, 650);
+  }
+  function land(row) {
+    row.classList.remove('landed'); void row.offsetWidth; row.classList.add('landed');
+  }
 
   function tick() {
     clearTimeout(timer);
@@ -217,32 +185,38 @@
     if (ply in milestoneAt) {
       var mi = milestoneAt[ply];
       pop(mi);
-      if (ply === LAST) { setTimeout(function () { light(mi); }, 600); timer = setTimeout(tick, 0); }
-      else { setTimeout(function () { if (playing) record(mi, true); }, HOLD_MS - 900); timer = setTimeout(tick, HOLD_MS); }
+      clearTimeout(flyTimer);
+      flyTimer = setTimeout(function () { write(mi, true); }, FLY_AT);
+      timer = setTimeout(tick, ply === LAST ? 0 : HOLD_MS);
+    } else {
+      timer = setTimeout(tick, STEP_MS);
     }
-    else timer = setTimeout(tick, STEP_MS);
   }
 
+  function reached() { var d = -1; at.forEach(function (p, k) { if (p <= ply) d = k; }); return d; }
+
   function play() {
-    if (ply >= LAST) { setPosition(-1); hidePop(); setRecorded(-1); }
-    else { var done = -1; at.forEach(function (p, k) { if (p <= ply) done = k; }); slots.forEach(function (s, k) { if (k <= done && !s.card.classList.contains('on')) light(k); }); }
+    if (ply >= LAST) { setPosition(-1); hidePop(); written = -1; showRows(-1, -1); }
+    else if (reached() > written) { written = reached(); showRows(written, written); }
     playing = true; renderBoard();
     timer = setTimeout(tick, 350);
   }
   function pause() { playing = false; clearTimeout(timer); renderBoard(); }
-  function jumpTo(i) { started = true; pause(); setPosition(at[i]); renderBoard(); setRecorded(i); pop(i); }
+  function jumpTo(i) {
+    started = true; pause(); clearTimeout(flyTimer);
+    setPosition(at[i]); renderBoard();
+    written = i; showRows(i, i); land(rows[i]); pop(i);
+  }
 
   playBtn.addEventListener('click', function () { started = true; playing ? pause() : play(); });
 
-  /* reduced motion: show the final position and the latest milestone */
-  if (reduce) { setPosition(LAST); renderBoard(); setRecorded(MILESTONES.length - 1); pop(MILESTONES.length - 1); return; }
-  setPosition(-1); renderBoard();
+  /* reduced motion: the finished game with every milestone written */
+  if (reduce) { setPosition(LAST); renderBoard(); written = MILESTONES.length - 1; showRows(written, written); return; }
+  setPosition(-1); renderBoard(); showRows(-1, -1);
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
       if (es[0].isIntersecting && !started) { started = true; io.disconnect(); play(); }
     }, { threshold: 0.4 });
     io.observe(boardEl);
   } else { started = true; play(); }
-
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 })();
