@@ -1,125 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <meta content="width=device-width,initial-scale=1" name="viewport">
-  <meta content="description" name="description">
-  <meta name="google" content="notranslate" />
-
-  <!-- Disable tap highlight on IE -->
-  <meta name="msapplication-tap-highlight" content="no">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Education and work experience of Linh Võ.">
+  <meta name="theme-color" content="#0b0f14">
   <title>My Journey | Linh Võ</title>
-  <link href="./main.3f6952e4.css" rel="stylesheet">
-  <script type="text/javascript" src="./layout/scripts/jquery.min.js"></script>
-  <!-- / Waterwheel Carousel -->
-  <link href="main.70a66962.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="./assets/css/terminal.css" rel="stylesheet">
 </head>
-
-<body>
-  <div id="site-border-left"></div>
-  <div id="site-border-right"></div>
-  <div id="site-border-top"></div>
-  <div id="site-border-bottom"></div>
-  <!-- header -->
-  <header>
-    <nav class="navbar  navbar-fixed-top navbar-default">
-      <div class="container">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
-          aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-          <ul class="nav navbar-nav ">
-            <li><a href="./index.html" title="">
-              <img src="./assets/images/gif_image/white_robot.png" width="30px">
-              Hello</a></li>
-            <li><a href="./works.html" title="">
-              <img src="./assets/images/gif_image/white_chart.png" width="30px">
-              My Works</a></li>
-            <li><a href="./about.html" title="">
-              <img src="./assets/images/gif_image/white_dog.png" width="30px">
-              Who am I?</a></li>
-            <li><a href="./learningjourney.html" title="">
-              <img src="./assets/images/gif_image/education.gif" width="30px">
-              <strong>My Journey</strong></a></li>
-            <li><a href="./certification.html" title="">
-              <img src="./assets/images/gif_image/white_trophy.png" width="30px"> 
-              My Certification</a></li>
-          </ul>
-        </div>
-      </div>
+<body data-page="journey">
+  <div class="t-bg" aria-hidden="true"></div>
+  <div class="t-scrim" aria-hidden="true"></div>
+  <div class="t-spot" aria-hidden="true"></div>
+  <div class="t-glow" aria-hidden="true"></div>
+  <svg class="t-reticle" width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--acc)" aria-hidden="true"><path d="M1 8V1h7M20 1h7v7M27 20v7h-7M8 27H1v-7"/></svg>
+  <div class="t-page">
+  <header class="t-nav">
+    <a class="t-brand" href="./index.html">~/linh-vo<span>_</span></a>
+    <button class="t-burger" type="button" aria-expanded="false" aria-label="Open menu">menu</button>
+    <nav class="t-links" aria-label="Main">
+      <a href="./index.html" data-page="home">./home</a>
+      <a href="./works.html" data-page="work">./work</a>
+      <a href="./about.html" data-page="about">./about</a>
+      <a href="./learningjourney.html" data-page="journey">./journey</a>
+      <a href="./certification.html" data-page="certs">./certs</a>
+      <a href="./contact.html" data-page="contact">./contact</a>
     </nav>
   </header>
-  <div class="row">
-    <div class="section-container">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="section-container-spacer text-center">
-              <h1 class="h2">
-                My Journey
-              </h1>
-            </div>
-            <div class="row">
-              <div class="section-container-spacer">
-                <div class="text-center">
-                  <p><i><strong>"A journey of a thousand miles begins with a single step." </i><br>
-                      - Khổng Tử
-                    </strong></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <main>
+    <section class="t-wrap t-head">
+      <p class="t-prompt"><b>$</b> git log --oneline ./journey</p>
+      <h1 class="t-title">My Journey</h1>
+      <p class="t-lead"><em>"A journey of a thousand miles begins with a single step."</em> &nbsp;— Khổng Tử</p>
+    </section>
   <!-- Journey road: Learning (above) + Experience (below) -->
   <style>
     .road-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:20px; margin-bottom:60px; }
     .road { position:relative; width:1260px; height:640px; margin:0 auto; }
-    .road-band { position:absolute; left:20px; right:130px; top:330px; height:26px; background:#2f3b45;
-      border-radius:13px 0 0 13px; box-shadow: 0 3px 0 #1d262d; }
+    .road-band { position:absolute; left:20px; right:130px; top:330px; height:26px; background:#1a232d;
+      border-radius:13px 0 0 13px; box-shadow: 0 3px 0 #05080b; }
     .road-band::after { content:""; position:absolute; left:16px; right:0; top:50%; height:3px; margin-top:-1.5px;
       background: repeating-linear-gradient(90deg, #fff 0 22px, transparent 22px 40px); opacity:.85; }
     .road-end { position:absolute; left:1130px; top:330px; width:0; height:0;
-      border-top:13px solid transparent; border-bottom:13px solid transparent; border-left:26px solid #2f3b45; }
+      border-top:13px solid transparent; border-bottom:13px solid transparent; border-left:26px solid #1a232d; }
     .road-flag { position:absolute; left:1164px; top:260px; }
-    .road-flag .pole { position:absolute; left:0; top:0; width:3px; height:96px; background:#2f3b45; }
-    .road-flag .cloth { position:absolute; left:3px; top:0; padding:4px 8px; background:#004165; color:#fff;
+    .road-flag .pole { position:absolute; left:0; top:0; width:3px; height:96px; background:#8b98a5; }
+    .road-flag .cloth { position:absolute; left:3px; top:0; padding:4px 8px; background:#4cc9f0; color:#0b0f14;
       font-weight:700; font-size:12px; letter-spacing:1px; white-space:nowrap; }
-    .road-start { position:absolute; left:4px; top:364px; font-size:10px; color:#888; letter-spacing:1px; }
+    .road-start { position:absolute; left:4px; top:364px; font-size:10px; color:#8b98a5; letter-spacing:1px; }
     .ms { position:absolute; top:0; width:0; height:100%; }
-    .ms-dot { position:absolute; left:-8px; width:16px; height:16px; border-radius:50%; background:#fff; border:3px solid; box-sizing:border-box; z-index:2; }
+    .ms-dot { position:absolute; left:-8px; width:16px; height:16px; border-radius:50%; background:#0b0f14; border:3px solid; box-sizing:border-box; z-index:2; }
     .ms-stem { position:absolute; left:-1px; width:2px; }
-    .ms-card { position:absolute; left:-105px; width:210px; background:#fff; border:1px solid #d6dde2; border-top:4px solid;
-      padding:8px 10px; box-shadow:0 2px 8px rgba(0,0,0,.08); line-height:1.45; }
-    .ms-date { font-size:10px; color:#6b7a86; text-transform:uppercase; letter-spacing:.5px; }
-    .ms-title { font-size:13px; font-weight:700; color:#000; margin-top:2px; }
+    .ms-card { position:absolute; left:-105px; width:210px; background:rgba(14,20,26,.92); border:1px solid #222c37; border-top:4px solid;
+      padding:8px 10px; box-shadow:0 6px 18px rgba(0,0,0,.35); line-height:1.45; }
+    .ms-date { font-size:10px; color:#8b98a5; text-transform:uppercase; letter-spacing:.5px; }
+    .ms-title { font-size:12.5px; font-weight:700; color:#e6edf3; margin-top:2px; }
     .ms-org { font-size:11px; margin-top:1px; }
-    .ms-extra { font-size:10.5px; color:#555; margin-top:2px; }
-    .ms-now { display:inline-block; margin-left:6px; padding:0 5px; font-size:9px; font-weight:700; color:#fff; background:#004165; border-radius:2px; }
-    .learn .ms-dot, .learn .ms-card { border-color:#004165; }
-    .learn .ms-stem { background:#004165; }
-    .learn .ms-org { color:#004165; }
-    .work .ms-dot, .work .ms-card { border-color:#e0a100; }
-    .work .ms-stem { background:#e0a100; }
-    .work .ms-org { color:#9a6f00; }
-    .ms-card { border-left-color:#d6dde2; border-right-color:#d6dde2; border-bottom-color:#d6dde2; }
+    .ms-extra { font-size:10.5px; color:#8b98a5; margin-top:2px; }
+    .ms-now { display:inline-block; margin-left:6px; padding:0 5px; font-size:9px; font-weight:700; color:#0b0f14; background:#4cc9f0; border-radius:2px; }
+    .learn .ms-dot, .learn .ms-card { border-color:#4cc9f0; }
+    .learn .ms-stem { background:#4cc9f0; }
+    .learn .ms-org { color:#4cc9f0; }
+    .work .ms-dot, .work .ms-card { border-color:#ffb224; }
+    .work .ms-stem { background:#ffb224; }
+    .work .ms-org { color:#ffb224; }
+    .ms-card { border-left-color:#222c37; border-right-color:#222c37; border-bottom-color:#222c37; }
     .ms.current .ms-dot { background: currentColor; }
-    .learn.current .ms-dot { background:#004165; }
-    .work.current .ms-dot { background:#e0a100; }
+    .learn.current .ms-dot { background:#4cc9f0; }
+    .work.current .ms-dot { background:#ffb224; }
     /* ---------- animation ---------- */
     .ms-card { transition: transform .25s ease, box-shadow .25s ease; }
-    .ms:hover .ms-card { transform: translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.15); z-index:5; }
+    .ms:hover .ms-card { transform: translateY(-4px); box-shadow:0 8px 26px -10px #4cc9f0; z-index:5; }
     .ms:hover .ms-dot { transform: scale(1.35); }
     .ms-dot { transition: transform .2s ease; }
     .ms.current .ms-dot::after { content:""; position:absolute; inset:-9px; border-radius:50%; border:2px solid;
@@ -263,11 +216,11 @@
       </div>
       <div class="road-car" aria-hidden="true">
         <svg width="58" height="30" viewBox="0 0 58 30">
-          <path d="M6 18 L10 10 Q12 6 17 6 L34 6 Q38 6 41 10 L46 15 L52 16 Q56 17 56 21 L56 23 L4 23 L4 21 Q4 18 6 18 Z" fill="#e0a100"/>
+          <path d="M6 18 L10 10 Q12 6 17 6 L34 6 Q38 6 41 10 L46 15 L52 16 Q56 17 56 21 L56 23 L4 23 L4 21 Q4 18 6 18 Z" fill="#ffb224"/>
           <path d="M14 10 Q15 8.5 17.5 8.5 L24 8.5 L24 15 L12 15 Z" fill="#cfe3ef"/>
           <path d="M27 8.5 L33.5 8.5 Q36.5 8.5 38.5 11 L41.5 15 L27 15 Z" fill="#cfe3ef"/>
-          <circle cx="15" cy="23" r="5" fill="#1d262d"/><circle cx="15" cy="23" r="2" fill="#bbb"/>
-          <circle cx="44" cy="23" r="5" fill="#1d262d"/><circle cx="44" cy="23" r="2" fill="#bbb"/>
+          <circle cx="15" cy="23" r="5" fill="#05080b"/><circle cx="15" cy="23" r="2" fill="#bbb"/>
+          <circle cx="44" cy="23" r="5" fill="#05080b"/><circle cx="44" cy="23" r="2" fill="#bbb"/>
           <rect x="52" y="17.5" width="4" height="2.5" rx="1" fill="#fff6c2"/>
         </svg>
       </div>
@@ -303,10 +256,14 @@
   </script>
 
 
-  <!-- Certificate section -->
-
-  
-  <script type="text/javascript" src="./main.70a66962.js"></script>
+  </main>
+  <footer class="t-footer">
+    <div class="t-wrap">
+      <span>© 2026 Linh Võ · <span class="t-acc">exit 0</span></span>
+      <span><a href="https://github.com/vklinhhh/" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/linh-vo-2607/" target="_blank" rel="noopener">linkedin</a> · <a href="mailto:vokhanhlinh.2607@gmail.com">email</a></span>
+    </div>
+  </footer>
+  </div>
+  <script src="./assets/js/terminal.js"></script>
 </body>
-
 </html>

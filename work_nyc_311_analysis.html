@@ -46,54 +46,34 @@
       text-align: left;
     }
   </style>
+  <link href="./assets/css/terminal.css" rel="stylesheet">
+  <link href="./assets/css/terminal-detail.css" rel="stylesheet">
+  <meta name="theme-color" content="#0b0f14">
 </head>
 
-<body class="">
-  <div id="site-border-left"></div>
-  <div id="site-border-right"></div>
-  <div id="site-border-top"></div>
-  <div id="site-border-bottom"></div>
+<body data-page="work" class="t-detail">
+  <div class="t-bg" aria-hidden="true"></div>
+  <div class="t-scrim" aria-hidden="true"></div>
+  <div class="t-spot" aria-hidden="true"></div>
+  <div class="t-glow" aria-hidden="true"></div>
+  <svg class="t-reticle" width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--acc)" aria-hidden="true"><path d="M1 8V1h7M20 1h7v7M27 20v7h-7M8 27H1v-7"/></svg>
   <!-- Add your content of header -->
-  <header>
-    <nav class="navbar navbar-fixed-top navbar-default custom-header">
-      <div class="container">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
-          aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="./index.html" title="" style="color: #fff;">
-                <span class="fa-icon">
-                  <i class="fa fa-hand-peace-o" aria-hidden="true" style="font-size:16px;color:#fff;"></i>
-                </span>
-                Hello Page</a></li>
-            <li><a href="./works.html" title="" style="color: #fff;">
-                <span class="fa-icon">
-                  <i class="fa fa-bar-chart" aria-hidden="true" style="font-size:16px;color:#fff;"></i>
-                </span>
-                My Works</a></li>
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right navbar-small visible-md visible-lg">
-            <li><a href="./work_video_retrieval.html" style="color: #fff;">001</a></li>
-            <li><a href="./work_vietnamese_speaker_regconition.html" style="color: #fff;">002</a></li>
-            <li><a href="./work_scientific_abstract_classification.html" style="color: #fff;">003</a></li>
-            <li><a href="./work_dog_breed.html" style="color: #fff;">004</a></li>
-            <li><a href="./work_boston_regression.html" style="color: #fff;">005</a></li>
-            <li><a href="./work_nyc_311_analysis.html" class="active" style="color: #fff;">006</a></li>
-            <li><a href="./work_landmark.html" style="color: #fff;">007</a></li>
-            <li><a href="./work_customer_testimonial.html" style="color: #fff;">008</a></li>
-          </ul>
-
-        </div>
-      </div>
+    <header class="t-nav">
+    <a class="t-brand" href="./index.html">~/linh-vo<span>_</span></a>
+    <button class="t-burger" type="button" aria-expanded="false" aria-label="Open menu">menu</button>
+    <nav class="t-links" aria-label="Main">
+      <a href="./index.html" data-page="home">./home</a>
+      <a href="./works.html" data-page="work">./work</a>
+      <a href="./about.html" data-page="about">./about</a>
+      <a href="./learningjourney.html" data-page="journey">./journey</a>
+      <a href="./certification.html" data-page="certs">./certs</a>
+      <a href="./contact.html" data-page="contact">./contact</a>
     </nav>
   </header>
+  <div class="t-projbar"><div class="t-wrap">
+    <a href="./works.html" class="t-back">← cd ../work</a>
+    <span class="t-projnums"><a href="./work_video_retrieval.html">001</a> <a href="./work_vietnamese_speaker_regconition.html">002</a> <a href="./work_scientific_abstract_classification.html">003</a> <a href="./work_dog_breed.html">004</a> <a href="./work_boston_regression.html">005</a> <a href="./work_nyc_311_analysis.html" class="active" aria-current="page">006</a> <a href="./work_landmark.html">007</a> <a href="./work_customer_testimonial.html">008</a></span>
+  </div></div>
   <div class="section-container">
     <div class="container">
       <div class="row">
@@ -804,6 +784,17 @@
     }
     </script>
   <script type="text/javascript" src="./main.70a66962.js"></script>
+<section class="t-next"><div class="t-wrap">
+  <a href="./work_boston_regression.html" class="t-btn">← prev</a>
+  <a href="./work_landmark.html" class="t-btn t-btn--primary">next project →</a>
+</div></section>
+  <footer class="t-footer">
+    <div class="t-wrap">
+      <span>© 2026 Linh Võ · <span class="t-acc">exit 0</span></span>
+      <span><a href="https://github.com/vklinhhh/" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/linh-vo-2607/" target="_blank" rel="noopener">linkedin</a> · <a href="mailto:vokhanhlinh.2607@gmail.com">email</a></span>
+    </div>
+  </footer>
+<script src="./assets/js/terminal.js"></script>
 </body>
 
 </html>
