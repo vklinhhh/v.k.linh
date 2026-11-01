@@ -55,7 +55,7 @@
 .j-graph-head { display: grid; grid-template-columns: 30px 30px minmax(0, 1fr); font-size: 11px; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--line); margin-bottom: 6px; }
 .j-graph-head .learn { color: var(--acc); }
 .j-graph-head .work { color: var(--amber); }
-.j-log { list-style: none; margin: 0; }
+.j-log { list-style: none; margin: 0; padding: 0 6px 0 0; }
 .j-row { display: grid; grid-template-columns: 30px 30px minmax(0, 1fr); align-items: stretch; }
 .j-row[hidden] { display: none; }
 .j-row.pending .j-commit { opacity: 0; }
