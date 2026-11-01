@@ -34,33 +34,18 @@
     <section class="t-wrap t-head">
       <p class="t-prompt"><b>$</b> git log --format=pgn ./journey</p>
       <h1 class="t-title">My Journey</h1>
-      <p class="t-lead"><em>"A journey of a thousand miles begins with a single step."</em> &nbsp;— Khổng Tử</p>
+      <p class="t-lead">Every capture in this game is a step in my journey. Sit back and watch it play out.</p>
     </section>
     <section class="t-wrap" id="j-game">
-      <div class="j-timeline">
-        <div class="j-tl-head"><span><b>2015 → now</b> · every bar is a step; click one to jump there</span><span class="t-muted">learning &amp; work overlap</span></div>
-        <div class="j-tl-grid">
-          <span class="j-lane-label learn" style="grid-row:1">learning</span>
-          <div class="j-lane" id="j-lane-learn" style="grid-row:1"></div>
-          <span class="j-lane-label work" style="grid-row:2">work</span>
-          <div class="j-lane" id="j-lane-work" style="grid-row:2"></div>
-          <div class="j-headbox" style="grid-column:2;grid-row:1 / 3"><div class="j-head" id="j-head"></div></div>
-          <div class="j-ticks" id="j-ticks" style="grid-row:3" aria-hidden="true"></div>
+      <div class="j-wrap">
+        <div class="j-stage">
+          <div class="j-board" id="j-board" role="img" aria-label="Chess board playing the Opera Game"></div>
+          <div class="j-pop" id="j-pop" role="status" aria-live="polite"></div>
         </div>
-      </div>
-      <div class="j-layout">
-        <div class="j-board-col">
-          <div class="j-board" id="j-board" role="img" aria-label="Chess board"></div>
-          <p class="j-caption" id="j-caption" aria-live="polite"></p>
-          <div class="j-controls">
-            <button class="t-btn t-btn--primary" type="button" id="j-play" aria-pressed="false">[ ▶ play ]</button>
-            <button class="t-btn" type="button" id="j-next">[ ⏭ next step ]</button>
-            <button class="t-btn" type="button" id="j-replay">[ ↺ replay ]</button>
-          </div>
-          <p class="j-credit">The moves: Morphy vs. Duke Karl &amp; Count Isouard, Paris 1858, the "Opera Game". Every milestone lands on a move; the latest lands on checkmate.</p>
-        </div>
-        <div class="j-list-wrap">
-          <ol class="j-list" id="j-list" aria-label="Milestones, oldest first"></ol>
+        <div class="j-rail" id="j-rail" aria-label="Milestones by year"></div>
+        <div class="j-bar">
+          <span class="j-key"><span class="learn">learning</span><span class="work">work</span></span>
+          <button class="t-btn t-btn--primary j-play" type="button" id="j-play" aria-pressed="false">▶ play</button>
         </div>
       </div>
     </section>
