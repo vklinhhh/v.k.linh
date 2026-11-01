@@ -36,6 +36,21 @@
   var logEl = document.getElementById('j-log');
   var headEl = document.getElementById('j-headline');
   var playBtn = document.getElementById('j-play');
+  var graphEl = logEl.parentNode, wrapEl = boardEl.closest('.j-wrap');
+
+  /* the graph is exactly as tall as the board column; the log scrolls inside it */
+  function fitGraph() {
+    graphEl.style.height = window.innerWidth > 900 && wrapEl ? wrapEl.offsetHeight + 'px' : '';
+  }
+  fitGraph();
+  window.addEventListener('resize', fitGraph);
+  function scrollLogTo(row) {
+    if (!row || row.hidden) return;
+    var top = row.offsetTop;
+    var target = Math.max(0, top + row.offsetHeight - logEl.clientHeight + 8);
+    if (top < logEl.scrollTop) target = top;
+    logEl.scrollTop = target;
+  }
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function label(s) { if (!s) return 'now'; var p = String(s).split('-'); return p[1] ? MONTHS[+p[1] - 1] + ' ' + p[0] : p[0]; }
@@ -102,6 +117,7 @@
       if (i === newest) row.querySelector('.j-commit').setAttribute('aria-current', 'step');
       else row.querySelector('.j-commit').removeAttribute('aria-current');
     });
+    if (newest >= 0) scrollLogTo(rows[newest]);
     headEl.innerHTML = upTo >= MILESTONES.length - 1
       ? 'HEAD → <b>now</b>'
       : 'HEAD → next capture<span class="t-cursor" aria-hidden="true"></span>';
