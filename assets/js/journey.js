@@ -32,7 +32,7 @@
   if (!root || typeof Chess === 'undefined') return;
   var boardEl = document.getElementById('j-board');
   var popEl = document.getElementById('j-pop');
-  var railEl = document.getElementById('j-rail');
+  var roadEl = document.getElementById('j-road');
   var playBtn = document.getElementById('j-play');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -67,17 +67,94 @@
     sqEls[FILES[f] + (8 - r)] = el;
   }
 
-  /* ---------- year rail ---------- */
-  var dots = MILESTONES.map(function (m, i) {
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'j-dot ' + m.type;
-    b.innerHTML = '<i aria-hidden="true"></i><span>' + String(m.start).slice(0, 4) + '</span>';
-    b.setAttribute('aria-label', label(m.start) + ': ' + m.title + ', ' + m.org);
-    b.addEventListener('click', function () { jumpTo(i); });
-    railEl.appendChild(b);
-    return b;
+  /* ---------- road: every milestone has a slot; learning above, work below ---------- */
+  roadEl.style.setProperty('--n', MILESTONES.length);
+  var upEl = roadEl.querySelector('.j-up'), downEl = roadEl.querySelector('.j-down'), bandEl = roadEl.querySelector('.j-band');
+  var prevBySide = {};
+  var slots = MILESTONES.map(function (m, i) {
+    var up = m.type === 'learn';
+    var prev = prevBySide[m.type];
+    var level = prev && i - prev.i <= 1 && prev.level === 0 ? 1 : 0;
+    prevBySide[m.type] = { i: i, level: level };
+
+    var dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'j-dot ' + m.type;
+    dot.setAttribute('aria-label', label(m.start) + ': ' + m.title + ', ' + m.org);
+    dot.addEventListener('click', function () { jumpTo(i); });
+    bandEl.appendChild(dot);
+
+    var stem = document.createElement('span');
+    stem.className = 'j-stem ' + m.type;
+    var card = document.createElement('div');
+    card.className = 'j-rc ' + m.type;
+    card.innerHTML = '<span class="j-rc-when">' + label(m.start) + ' – ' + label(m.end) + '</span>' +
+      '<strong class="j-rc-title">' + esc(m.title) + '</strong><span class="j-rc-org">' + esc(m.org) + '</span>';
+    card.addEventListener('click', function () { jumpTo(i); });
+    (up ? upEl : downEl).appendChild(stem);
+    (up ? upEl : downEl).appendChild(card);
+    return { dot: dot, stem: stem, card: card, up: up, level: level };
   });
+
+  function layoutRoad() {
+    var W = bandEl.clientWidth, n = slots.length;
+    var cw0 = Math.round(Math.max(120, Math.min(180, W / n * 1.5)));
+    slots.forEach(function (s) { s.card.style.width = cw0 + 'px'; });
+    var cardH = 0;
+    slots.forEach(function (s) { cardH = Math.max(cardH, s.card.offsetHeight); });
+    var LEVEL = cardH + 12, STEM = 18;
+    var maxUp = 0, maxDown = 0;
+    slots.forEach(function (s, i) {
+      var x = (i + 0.5) / n * W;
+      var cw = s.card.offsetWidth;
+      s.dot.style.left = x + 'px';
+      s.stem.style.left = x + 'px';
+      s.card.style.left = Math.max(0, Math.min(W - cw, x - cw / 2)) + 'px';
+      var off = STEM + s.level * LEVEL;
+      s.stem.style.height = off + 'px';
+      if (s.up) { s.stem.style.bottom = '0'; s.card.style.bottom = off + 'px'; maxUp = Math.max(maxUp, off + cardH); }
+      else { s.stem.style.top = '0'; s.card.style.top = off + 'px'; maxDown = Math.max(maxDown, off + cardH); }
+    });
+    upEl.style.height = maxUp + 'px';
+    downEl.style.height = maxDown + 'px';
+  }
+  layoutRoad();
+  window.addEventListener('resize', layoutRoad);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutRoad);
+  var dots = slots.map(function (s) { return s.dot; });
+
+  /* write a milestone onto the road; optionally fly the pop-up card down to its slot */
+  function record(i, fly) {
+    var s = slots[i];
+    if (s.card.classList.contains('on')) return;
+    if (!fly || reduce || !popEl.classList.contains('show')) { light(i); return; }
+    var from = popEl.getBoundingClientRect(), to = s.card.getBoundingClientRect();
+    var ghost = popEl.cloneNode(true);
+    ghost.removeAttribute('id');
+    ghost.className = popEl.className + ' j-fly';
+    ghost.style.cssText = 'position:fixed;left:' + from.left + 'px;top:' + from.top + 'px;width:' + from.width + 'px;margin:0;transform:none;opacity:1;';
+    document.body.appendChild(ghost);
+    hidePop();
+    requestAnimationFrame(function () {
+      var sx = to.width / from.width;
+      ghost.style.transform = 'translate(' + (to.left - from.left) + 'px,' + (to.top - from.top) + 'px) scale(' + sx + ')';
+      ghost.style.opacity = '0.2';
+    });
+    setTimeout(function () { ghost.remove(); light(i); }, 720);
+  }
+  function light(i) {
+    var c = slots[i].card;
+    c.classList.add('on'); slots[i].stem.classList.add('on');
+    c.classList.remove('landed'); void c.offsetWidth; c.classList.add('landed');
+    if (roadEl.scrollWidth > roadEl.clientWidth + 4) {
+      roadEl.scrollTo({ left: Math.max(0, c.offsetLeft - roadEl.clientWidth / 2 + c.offsetWidth / 2), behavior: reduce ? 'auto' : 'smooth' });
+    }
+  }
+  function setRecorded(upTo) {
+    slots.forEach(function (s, i) {
+      s.card.classList.toggle('on', i <= upTo); s.stem.classList.toggle('on', i <= upTo); s.card.classList.remove('landed');
+    });
+  }
 
   /* ---------- playback ---------- */
   var game, ply = -1, timer, playing = false, started = false;
@@ -137,22 +214,28 @@
     hidePop();
     game.move(GAME[ply + 1]); ply++;
     renderBoard();
-    if (ply in milestoneAt) { pop(milestoneAt[ply]); timer = setTimeout(tick, ply === LAST ? 0 : HOLD_MS); }
+    if (ply in milestoneAt) {
+      var mi = milestoneAt[ply];
+      pop(mi);
+      if (ply === LAST) { setTimeout(function () { light(mi); }, 600); timer = setTimeout(tick, 0); }
+      else { setTimeout(function () { if (playing) record(mi, true); }, HOLD_MS - 900); timer = setTimeout(tick, HOLD_MS); }
+    }
     else timer = setTimeout(tick, STEP_MS);
   }
 
   function play() {
-    if (ply >= LAST) { setPosition(-1); hidePop(); }
+    if (ply >= LAST) { setPosition(-1); hidePop(); setRecorded(-1); }
+    else { var done = -1; at.forEach(function (p, k) { if (p <= ply) done = k; }); slots.forEach(function (s, k) { if (k <= done && !s.card.classList.contains('on')) light(k); }); }
     playing = true; renderBoard();
     timer = setTimeout(tick, 350);
   }
   function pause() { playing = false; clearTimeout(timer); renderBoard(); }
-  function jumpTo(i) { started = true; pause(); setPosition(at[i]); renderBoard(); pop(i); }
+  function jumpTo(i) { started = true; pause(); setPosition(at[i]); renderBoard(); setRecorded(i); pop(i); }
 
   playBtn.addEventListener('click', function () { started = true; playing ? pause() : play(); });
 
   /* reduced motion: show the final position and the latest milestone */
-  if (reduce) { setPosition(LAST); renderBoard(); pop(MILESTONES.length - 1); return; }
+  if (reduce) { setPosition(LAST); renderBoard(); setRecorded(MILESTONES.length - 1); pop(MILESTONES.length - 1); return; }
   setPosition(-1); renderBoard();
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
